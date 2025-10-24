@@ -57,33 +57,35 @@
 // }
 
 
-#include<bits/stdc++.h>
-using namespace std;
-int n,m;
-void solve(int n)
-{
-    if(n==0)return;
-    int t=n/m,l=n%m;
-    if(l<0)
-    {
-        t++;
-        l-=m;
-    }
-    solve(t);
-    if(l<10)
-    {
-        cout<<l;
-    }
-        //注意这个要写上char 否则可能输出的还是数字
-    else cout<<char(l-10+'A');
-}
-int main()
-{
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    cin>>n>>m;
-    cout<<n<<"=";
+// #include<bits/stdc++.h>
+// using namespace std;
+// int n,m;
+// void solve(int n)
+// {
+//     if(n==0)return;
+//     int t=n/m,l=n%m;
+//     if(l<0)
+//     {
+//         t++;
+//         l-=m;
+//     }
+//     solve(t);
+//     if(l<10)
+//     {
+//         cout<<l;
+//     }
+//     //注意这个要写上char 否则可能输出的还是数字
+//     else cout<<char(l-10+'A');
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m;
+//     cout<<n<<"=";
 
-    solve(n);
-    cout<<"(base"<<m<<")";
-    return 0;
-}
+//     solve(n);
+//     cout<<"(base"<<m<<")";
+//     return 0;
+// }
+
+

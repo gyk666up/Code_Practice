@@ -67,27 +67,3 @@
 // }
 
 
-#include<bits/stdc++.h>
-using namespace std;
-const int N=1e6+11;
-int x[N],y[N];
-int main()
-{
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    int n,k;cin>>n>>k;
-    for(int i=0;i<k;i++)
-    {
-        int xi,yi;cin>>xi>>yi;
-        x[i]=xi;
-        y[i]=yi;
-    }
-    sort(x,x+k);
-    sort(y,y+k);
-    int size_x=unique(x,x+k)-x;
-    int size_y=unique(y,y+k)-y;
-    int ans=0;
-    ans=n*size_x+n*size_y-size_x*size_y;
-
-    cout<<ans;
-    return 0;
-}
