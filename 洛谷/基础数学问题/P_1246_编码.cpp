@@ -86,22 +86,16 @@
 
 
 
-
-
-
 #include<bits/stdc++.h>
 using namespace std;
 int C(int n,int m)
 {
     if(n==m||m==0)return 1;
-    if(n<m)return 0;
+    else if(n<m)return 0;
 
-    if(n-m<m)m=n-m;
     long long res=1;
     for(int i=1;i<=m;i++)
-    {
-        res=res*(n-m+i)/i;
-    }
+    res=res*(n-m+i)/i;
     return res;
 }
 int main()
@@ -109,8 +103,6 @@ int main()
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     string s;cin>>s;
     int len=s.size();
-
-    //是小于Len!
     for(int i=1;i<len;i++)
     {
         if(s[i]<=s[i-1])
@@ -119,29 +111,31 @@ int main()
             return 0;
         }
     }
+
+    //选长度比它短短
     int sum1=0;
     for(int i=1;i<len;i++)
     {
         sum1+=C(26,i);
     }
 
+    //长度一样长的
     int sum2=0;
-
     int prev=-1;
     for(int i=0;i<len;i++)
     {
-        int curr=s[i]-'a';
+        int curr=s[i]-'a'; //（0～25）
+        //当前字母是j 后面还有25-（j-1）+1（得比j大）
+        //总共选len个字母 已经选了 i+1个还有len-i-1
         for(int j=prev+1;j<curr;j++)
         {
-            //这一行代码！！！
-            sum2+=C(26-j-1,len-i-1);
+            sum2+=C(26-j-1,len-1-i);
         }
-        prev=curr;
+        prev=curr;//!!!
     }
-    cout<<sum1+sum2+1;
+    cout<<sum1+sum2+1<<endl;
     return 0;
 }
-
 
 
 
