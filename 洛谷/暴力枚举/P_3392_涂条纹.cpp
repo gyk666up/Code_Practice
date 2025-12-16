@@ -106,36 +106,98 @@
 // }
 
 
-#include<bits/stdc++.h>
-using namespace std;
-const int N=100;
-char g[N][N];
-int n,m;
-int main()
-{
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    cin>>n>>m;
-    for(int i=1;i<=n;i++)
-    {
-        for(int j=1;j<=m;j++)cin>>g[i][j];
-    }
-    //白与蓝的界限 因为蓝和红至少有一行(白的下限)
-    int ans=0x3f3f3f3f;//最少的
-    for(int i=1;i<=n-2;i++)
-    {
-        //蓝红的界限(蓝的下限)
-        for(int j=i+1;j<=n-1;j++)
-        {
-            int res=0;
-            for(int k=1;k<=i;k++)
-                for(int v=1;v<=m;v++)if(g[k][v]!='W')res++;
-            for(int k=i+1;k<=j;k++)
-                for(int v=1;v<=m;v++)if(g[k][v]!='B')res++;
-            for(int k=j+1;k<=n;k++)
-                for(int v=1;v<=m;v++)if(g[k][v]!='R')res++;
-            ans=min(ans,res);
-        }
-    }
-    cout<<ans<<endl;
-    return 0;
-}
+// #include<bits/stdc++.h>
+// using namespace std;
+// const int N=100;
+// char g[N][N];
+// int n,m;
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m;
+//     for(int i=1;i<=n;i++)
+//     {
+//         for(int j=1;j<=m;j++)cin>>g[i][j];
+//     }
+//     //白与蓝的界限 因为蓝和红至少有一行(白的下限)
+//     int ans=0x3f3f3f3f;//最少的
+//     for(int i=1;i<=n-2;i++)
+//     {
+//         //蓝红的界限(蓝的下限)
+//         for(int j=i+1;j<=n-1;j++)
+//         {
+//             int res=0;
+//             for(int k=1;k<=i;k++)
+//                 for(int v=1;v<=m;v++)if(g[k][v]!='W')res++;
+//             for(int k=i+1;k<=j;k++)
+//                 for(int v=1;v<=m;v++)if(g[k][v]!='B')res++;
+//             for(int k=j+1;k<=n;k++)
+//                 for(int v=1;v<=m;v++)if(g[k][v]!='R')res++;
+//             ans=min(ans,res);
+//         }
+//     }
+//     cout<<ans<<endl;
+//     return 0;
+// }
+
+
+// //大体思路是对的 但是存在细节问题，比如变量重复j  变量的声明位置
+// #include<bits/stdc++.h>
+// using namespace std;
+// const int N=102;
+// char g[N][N];
+// int n,m;
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m;
+//     for(int i=1;i<=n;i++)
+//     {
+//         for(int j=1;j<=m;j++)
+//         {
+//             cin>>g[i][j];
+//         }
+//     }
+//     int ans=0x3f3f3f3f;
+//     //枚举白蓝边界  蓝红边界
+//     for(int i=1;i<=n-2;i++)
+//     {
+//         // int temp=0;
+//         // for(int k=1;k<=i;k++)
+//         // {
+//         //     for(int j=1;j<=m;j++)
+//         //     {
+//         //         if(g[k][j]!='W')temp++;
+//         //     }
+//         // }
+//         for(int j=i+1;j<=n-1;j++)
+//         {
+
+//             int temp=0;
+//         for(int k=1;k<=i;k++)
+//         {
+//             for(int v=1;v<=m;v++)
+//             {
+//                 if(g[k][v]!='W')temp++;
+//             }
+//         }
+//             for(int k=i+1;k<=j;k++)
+//             {
+//                 for(int v=1;v<=m;v++)
+//                 {
+//                     if(g[k][v]!='B')temp++;
+//                 }
+//             }
+//             for(int k=j+1;k<=n;k++)
+//             {
+//                 for(int v=1;v<=m;v++)
+//                 {
+//                     if(g[k][v]!='R')temp++;
+//                 }
+//             }
+//             ans=min(ans,temp);
+//         }
+//     }
+//     cout<<ans;
+//     return 0;
+// }

@@ -57,58 +57,103 @@
 // }
 
 
-#include<bits/stdc++.h>
-using namespace std;
-int a,b,c;
-int d[10]={0};
-int res=0;
-//本质就是全排列 加上一些限定条件
-bool is_ok(int d[])
-{
-    int x=100*d[1]+10*d[2]+d[3];
-    int y=100*d[4]+10*d[5]+d[6];
-    int z=100*d[7]+10*d[8]+d[9];
-    if(b*x==a*y&&c*y==b*z)
-    {
-        cout<<x<<" "<<y<<" "<<z<<endl;
-        return true;
-    }
-    return false;
-}
-bool st[10];
-void dfs(int x)
-{
-    if(x>9)
-    {
-        if(is_ok(d))
-        {
-            res++;
-        }
-      // for(int i=1;i<=9;i++)cout<<d[i];
-       // cout<<endl;
-        return;
-    }
-    for(int i=1;i<=9;i++)
-    {
-        if(!st[i])
-        {
-            d[x]=i;
-            st[i]=1;
-            dfs(x+1);
+// #include<bits/stdc++.h>
+// using namespace std;
+// int a,b,c;
+// int d[10]={0};
+// int res=0;
+// //本质就是全排列 加上一些限定条件
+// bool is_ok(int d[])
+// {
+//     int x=100*d[1]+10*d[2]+d[3];
+//     int y=100*d[4]+10*d[5]+d[6];
+//     int z=100*d[7]+10*d[8]+d[9];
+//     if(b*x==a*y&&c*y==b*z)
+//     {
+//         cout<<x<<" "<<y<<" "<<z<<endl;
+//         return true;
+//     }
+//     return false;
+// }
+// bool st[10];
+// void dfs(int x)
+// {
+//     if(x>9)
+//     {
+//         if(is_ok(d))
+//         {
+//             res++;
+//         }
+//       // for(int i=1;i<=9;i++)cout<<d[i];
+//        // cout<<endl;
+//         return;
+//     }
+//     for(int i=1;i<=9;i++)
+//     {
+//         if(!st[i])
+//         {
+//             d[x]=i;
+//             st[i]=1;
+//             dfs(x+1);
 
-            //恢复现场
-            d[x]=0;
-            //st[x]=0;
-            st[i]=0;
-        }
-    }
+//             //恢复现场
+//             d[x]=0;
+//             //st[x]=0;
+//             st[i]=0;
+//         }
+//     }
 
-}
-int main()
-{
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    cin>>a>>b>>c;
-    dfs(1);
-    if(!res)cout<<"No!!!";
-    return 0;
-}
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>a>>b>>c;
+//     dfs(1);
+//     if(!res)cout<<"No!!!";
+//     return 0;
+// }
+
+
+//没问题
+// #include<bits/stdc++.h>
+// using namespace std;
+// const int N=10;
+// int a[N];
+// int A,B,C;
+// int AA,BB,CC;
+// int ans=0;
+// bool st[N];
+// void dfs(int x)
+// {
+//     if(x>9)
+//     {
+//         AA=a[1]*100+a[2]*10+a[3];
+//         BB=a[4]*100+a[5]*10+a[6];
+//         CC=a[7]*100+a[8]*10+a[9];
+//         if(AA*B==BB*A&&BB*C==CC*B)
+//         {
+//             ans++;
+//             cout<<AA<<" "<<BB<<" "<<CC<<endl;
+//         }
+//     }
+//     for(int i=1;i<=9;i++)
+//     {
+//         if(!st[i])
+//         {
+//             st[i]=1;
+//             a[x]=i;
+//             dfs(x+1);
+           
+//             st[i]=0;
+//         }
+//     }
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>A>>B>>C;
+//     //全排列
+//     dfs(1);
+//     if(ans==0)cout<<"No!!!";
+//     return 0;
+// }

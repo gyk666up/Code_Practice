@@ -1,54 +1,54 @@
-//到达是哪里有问题啊
-#include<bits/stdc++.h>
-using namespace std;
+// //到达是哪里有问题啊
+// #include<bits/stdc++.h>
+// using namespace std;
 
-int ans=0;
-int sum=0;//需要的全部火柴数
-int n;
-const int N=1e4+33;
-int huo[N]={6,2,5,5,4,5,6,3,7,6};
-int a[4];
-int getneed(int x)
-{
-    int need=0;
-    if(x==0)return huo[0];
-    while(x)
-    {
-        need+=huo[x%10];
-        x/=10;
-    }
-    return need;
-}
-void dfs(int x)
-{
-    if(sum>n)return;
-    if(x>3)
-    {
-        if(sum==n)
-        {
-            if(a[1]+a[2]==a[3])ans++;
-        }
-        return;
-    }
-    //指数枚举型
-    for(int i=0;i<=1000;i++)
-    {
-        a[x]=i;
-        sum+=getneed(a[x]);
-        dfs(x+1);
-        sum-=getneed(a[x]);
-    }
-    return;
-}
-int main()
-{
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    cin>>n;
-    n-=4;
-    dfs(1);
-    cout<<ans;
-    return 0;
-}
+// int ans=0;
+// int sum=0;//需要的全部火柴数
+// int n;
+// const int N=1e4+33;
+// int huo[N]={6,2,5,5,4,5,6,3,7,6};
+// int a[4];
+// int getneed(int x)
+// {
+//     int need=0;
+//     if(x==0)return huo[0];
+//     while(x)
+//     {
+//         need+=huo[x%10];
+//         x/=10;
+//     }
+//     return need;
+// }
+// void dfs(int x)
+// {
+//     if(sum>n)return;
+//     if(x>3)
+//     {
+//         if(sum==n)
+//         {
+//             if(a[1]+a[2]==a[3])ans++;
+//         }
+//         return;
+//     }
+//     //指数枚举型
+//     for(int i=0;i<=1000;i++)
+//     {
+//         a[x]=i;
+//         sum+=getneed(a[x]);
+//         dfs(x+1);
+//         sum-=getneed(a[x]);
+//     }
+//     return;
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n;
+//     n-=4;
+//     dfs(1);
+//     cout<<ans;
+//     return 0;
+// }
 
 
 
@@ -103,3 +103,54 @@ int main()
 //     cout<<ans;
 //     return 0;
 // }
+
+
+//2025/12/16 这道题也掌握的不是很好
+#include<bits/stdc++.h>
+using namespace std;
+int n;
+int nums[10]={6,2,5,5,4,5,6,3,7,6};
+int a[4];
+int ans=0;
+int getmany(int x)
+{
+    //这行代码很细节
+    if(x==0)return nums[0];
+    int need=0;
+    while(x)
+    {
+        need+=nums[x%10];
+        x/=10;
+    }
+    return need;
+}
+void dfs(int x,int sum)
+{
+    if(sum>n)return;//这个剪枝很细节也很关键
+    if(x>3)
+    {
+        if(sum==n)
+        {
+            if(a[1]+a[2]==a[3])ans++;
+        }
+        return;
+    }
+
+    //这里有从0开始
+    for(int i=0;i<1000;i++)
+    {
+        a[x]=i;
+        int need=getmany(a[x]);
+        dfs(x+1,sum+need);
+    }
+}
+int main()
+{
+    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+    cin>>n;
+    n-=4;
+    //指数型枚举
+    dfs(1,0);
+    cout<<ans;
+    return 0;
+}
