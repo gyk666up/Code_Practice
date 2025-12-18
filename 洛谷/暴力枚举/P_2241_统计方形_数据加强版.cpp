@@ -37,19 +37,20 @@
 
 //如果你确定了矩形的右下角是 (i, j)，那么这个矩形的左上角可以是 $(1, 1)$ 到 $(i, j)$ 区域内的任意一个点。
 
-#include<bits/stdc++.h>
-using namespace std;
-int main()
-{
-    int n,m;cin>>n>>m;
-    long long ans1=0,ans2=0;
-    for(int i=1;i<=n;i++)
-    {
-        for(int j=1;j<=m;j++)
-        {
-            ans1+=min(i,j);
-            ans2+=i*j;
-        }
-    }
-    cout<<ans1<<" "<<ans2-ans1<<endl;
-}
+// #include<bits/stdc++.h>
+// using namespace std;
+// int main()
+// {
+//     int n,m;cin>>n>>m;
+//     long long ans1=0,ans2=0;
+//     for(int i=1;i<=n;i++)
+//     {
+//         for(int j=1;j<=m;j++)
+//         {
+//             ans1+=min(i,j);
+//             ans2+=i*j;
+//         }
+//     }
+//     cout<<ans1<<" "<<ans2-ans1<<endl;
+// }
+

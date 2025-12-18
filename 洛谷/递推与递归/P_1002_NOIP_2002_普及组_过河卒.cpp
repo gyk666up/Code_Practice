@@ -96,42 +96,141 @@
 
 
 
-//2025/8/19
+// //2025/8/19
+// #include<bits/stdc++.h>
+// using namespace std;
+// int n,m,mx,my;
+// int dx[]={2,2,1,1,-2,-2,-1,-1};
+// int dy[]={-1,1,2,-2,-1,1,2,-2};
+// int dp[30][30];
+// bool isvalid(int x,int y)
+// {
+//     if(x==mx&&y==my)return false;
+//     else{
+//         for(int i=0;i<8;i++)
+//         {
+//             if(x==mx+dx[i]&&y==my+dy[i])
+//             {
+//                 return false;
+//             }
+//         }
+//     }
+//     return true;
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m>>mx>>my;
+//     dp[0][0]=1;
+//     for(int i=0;i<=n;i++)
+//     {
+//         for(int j=0;j<=m;j++)
+//             if(isvalid(i,j))
+//             {
+//                 if(i==0&&j==0)continue;
+//                 if(i-1<0)dp[i][j]=dp[i][j-1];
+//                 else if(j-1<0)dp[i][j]=dp[i-1][j];
+//                 else dp[i][j]=dp[i-1][j]+dp[i][j-1];
+//             }
+//     }
+//     cout<<dp[n][m];
+//     return 0;
+// }
+
+
+//2025/12/17
+//bfs 思路级错误 bfs适合求最短的距离
+// #include<bits/stdc++.h>
+// using namespace std;
+// int dx[]={1,1,-1,-1,2,2,-2,-2};
+// int dy[]={2,-2,2,-2,1,-1,1,-1};
+// int ddx[]={1,0};
+// int ddy[]={0,1};
+// int end_x,end_y;
+// int Mx,My;
+// const int N=30;
+// bool st[N][N];
+// typedef pair<int,int>PII;
+// int ans=0;
+// void bfs(int x,int y)
+// {
+//     queue<PII>q;
+//     q.push({0,0});
+//     while(q.size())
+//     {
+//         int x=q.front().first;
+//         int y=q.front().second;
+//         q.pop();
+//         for(int i=0;i<2;i++)
+//         {
+//             // int xx=x+dx[i];
+//             // int yy=y+dy[i];
+//             int xx=x+ddx[i];
+//             int yy=y+ddy[i];
+//             if(xx<0||yy<0)continue;
+//             if(st[xx][yy])continue;
+            
+//             if(xx==end_x&&yy==end_y)ans++;
+//             else
+//             {
+//                 if(!st[xx][yy])
+//                 {
+//                     st[xx][yy]=1;
+//                     q.push({xx,yy}); 
+//                 }
+//             }
+//         }
+//     }
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>end_x>>end_y>>Mx>>My;
+//     st[Mx][My]=1;
+//     for(int i=0;i<8;i++)
+//     {
+//         int xx=Mx+dx[i];
+//         int yy=My+dy[i];
+//         st[xx][yy]=1;
+//     }
+//     st[0][0]=1;
+//     bfs(0,0);
+//     cout<<ans;
+//     return 0;
+// }
+
+//掌握的不好
 #include<bits/stdc++.h>
 using namespace std;
 int n,m,mx,my;
-int dx[]={2,2,1,1,-2,-2,-1,-1};
-int dy[]={-1,1,2,-2,-1,1,2,-2};
-int dp[30][30];
-bool isvalid(int x,int y)
-{
-    if(x==mx&&y==my)return false;
-    else{
-        for(int i=0;i<8;i++)
-        {
-            if(x==mx+dx[i]&&y==my+dy[i])
-            {
-                return false;
-            }
-        }
-    }
-    return true;
-}
+int dp[30][30];//dp[i][j]到达i，j的路径条数
+bool st[30][30];//标记不能走的位置
+int dx[]={1,1,-1,-1,2,2,-2,-2};
+int dy[]={2,-2,2,-2,1,-1,1,-1};
 int main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>n>>m>>mx>>my;
-    dp[0][0]=1;
+    for(int i=0;i<8;i++)
+    {
+        int xx=mx+dx[i];
+        int yy=my+dy[i];
+        if(xx<0||xx>n||yy<0||yy>m)continue;
+        st[xx][yy]=1;
+    }
+    st[mx][my]=1;
+    //dp[0][0]=1;
     for(int i=0;i<=n;i++)
     {
         for(int j=0;j<=m;j++)
-            if(isvalid(i,j))
-            {
-                if(i==0&&j==0)continue;
-                if(i-1<0)dp[i][j]=dp[i][j-1];
-                else if(j-1<0)dp[i][j]=dp[i-1][j];
-                else dp[i][j]=dp[i-1][j]+dp[i][j-1];
-            }
+        {
+            //这行代码很重要
+            if(i==0&&j==0)continue;
+            if(st[i][j])continue;
+            if(i-1<0)dp[i][j]=dp[i][j-1];
+            else if(j-1<0)dp[i][j]=dp[i-1][j];
+            else dp[i][j]=dp[i-1][j]+dp[i][j-1];
+        }
     }
     cout<<dp[n][m];
     return 0;

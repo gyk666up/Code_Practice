@@ -182,21 +182,22 @@
 // }
 
 
-//这个方法吊
-#include<bits/stdc++.h>
-using namespace std;
-const int M=10002;
-int a[M];
-int main()
-{
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    int n,m;cin>>n>>m;
-    for(int i=1;i<=n;i++)cin>>a[i];
-    while(m--)next_permutation(a+1,a+1+n);
-    for(int i=1;i<=n;i++)
-    {
-        if(i==1)cout<<a[i];
-        else cout<<" "<<a[i];
-    }
-    return 0;
-}
+// //这个方法吊
+// #include<bits/stdc++.h>
+// using namespace std;
+// const int M=10002;
+// int a[M];
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     int n,m;cin>>n>>m;
+//     for(int i=1;i<=n;i++)cin>>a[i];
+//     while(m--)next_permutation(a+1,a+1+n);
+//     for(int i=1;i<=n;i++)
+//     {
+//         if(i==1)cout<<a[i];
+//         else cout<<" "<<a[i];
+//     }
+//     return 0;
+// }
+

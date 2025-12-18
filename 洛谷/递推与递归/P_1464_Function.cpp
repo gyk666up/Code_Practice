@@ -8,13 +8,13 @@
 //     // 关键修正：用逗号分隔，确保键唯一
 //     string s = to_string(a) + "," + to_string(b) + "," + to_string(c);
 //     if (mp.count(s)) return mp[s];  // 命中缓存
-    
+
 //     // 条件判断（保持原逻辑）
 //     if (a <= 0 || b <= 0 || c <= 0) return mp[s] = 1;
 //     else if (a > 20 || b > 20 || c > 20) return mp[s] = w(20, 20, 20);
-//     else if (a < b && b < c) 
+//     else if (a < b && b < c)
 //         return mp[s] = w(a, b, c-1) + w(a, b-1, c-1) - w(a, b-1, c);
-//     else 
+//     else
 //         return mp[s] = w(a-1, b, c) + w(a-1, b-1, c) + w(a-1, b, c-1) - w(a-1, b-1, c-1);
 // }
 
@@ -29,7 +29,6 @@
 //     }
 //     return 0;
 // }
-
 
 // #include<bits/stdc++.h>
 // using namespace std;
@@ -55,37 +54,71 @@
 //         if(a==-1&&b==-1&&c==-1)break;
 //         printf("w(%lld, %lld, %lld) = %lld\n",a,b,c,w(a,b,c));
 //     }
-    
+
 //     return 0;
 // }
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// typedef long long ll;
+// ll w[30][30][30];
+// bool vis[30][30][30];//注意这种记忆化搜索的方式
+// //vis 数组很关键 不可以直接用w数组！！！
+// ll mw(long long a,long long b,long long c)
+// {
+//     if(a<=0 or b<=0 or c<=0) return 1;
+//     if(a>20 or b>20 or c>20) return mw(20,20,20);
+//     if(vis[a][b][c]) return w[a][b][c];
+//     if(a<b and b<c)
+//         w[a][b][c]=mw(a,b,c-1)+mw(a,b-1,c-1)-mw(a,b-1,c);
+//     else
+//         w[a][b][c]=mw(a-1,b,c)+mw(a-1,b-1,c)+mw(a-1,b,c-1)-mw(a-1,b-1,c-1);
+//     vis[a][b][c]=true;
+//     return w[a][b][c];
+// }
+// ll dp[30][30][30];
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     while(1)
+//     {
+//         ll a,b,c;cin>>a>>b>>c;
+//         if(a==-1&&b==-1&&c==-1)break;
+//          printf("w(%lld, %lld, %lld) = %d\n",a,b,c,mw(a,b,c));
+//     }
+//     return 0;
+// }
+
+
 #include<bits/stdc++.h>
 using namespace std;
-typedef long long ll;
-ll w[30][30][30];
-bool vis[30][30][30];//注意这种记忆化搜索的方式
-//vis 数组很关键 不可以直接用w数组！！！
-ll mw(long long a,long long b,long long c)
+
+#define int long long
+map<string,int>mp;
+int a,b,c;
+int w(int a,int b,int c)
 {
-    if(a<=0 or b<=0 or c<=0) return 1;
-    if(a>20 or b>20 or c>20) return mw(20,20,20);
-    if(vis[a][b][c]) return w[a][b][c];
-    if(a<b and b<c)
-        w[a][b][c]=mw(a,b,c-1)+mw(a,b-1,c-1)-mw(a,b-1,c);
-    else
-        w[a][b][c]=mw(a-1,b,c)+mw(a-1,b-1,c)+mw(a-1,b,c-1)-mw(a-1,b-1,c-1);
-    vis[a][b][c]=true;
-    return w[a][b][c];
+        string s="";
+        s+=to_string(a);
+        s+=",";
+        s+=to_string(b);
+        s+=",";
+        s+=to_string(c);
+        if(mp.count(s))return mp[s];
+    if(a<=0||b<=0||c<=0)return mp[s]=1;
+    else if(a>20||b>20||c>20) return mp[s]=w(20,20,20);
+    else if(a<b&&b<c)return mp[s]=w(a,b,c-1)+w(a,b-1,c-1)-w(a,b-1,c);
+    else return mp[s]=w(a-1,b,c)+w(a-1,b-1,c)+w(a-1,b,c-1)-w(a-1,b-1,c-1);
 }
-ll dp[30][30][30];
-int main()
+signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    while(1)
+    while(cin>>a>>b>>c)
     {
-        ll a,b,c;cin>>a>>b>>c;
         if(a==-1&&b==-1&&c==-1)break;
-         printf("w(%lld, %lld, %lld) = %d\n",a,b,c,mw(a,b,c));
+
+        //这里非常容易出错 此时a，b，c并不是int了 而是longlong类型的 注意输出格式是lld
+        printf("w(%lld, %lld, %lld) = %d\n",a,b,c,w(a,b,c));
     }
     return 0;
 }

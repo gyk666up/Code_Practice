@@ -69,25 +69,85 @@
 
 
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// int a[200];
+// const int N=1e3+11;
+// int dp[200][N];//dp[i][j]第i中菜 还剩j元的方案数
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     int n,m;cin>>n>>m;
+//      //dp[0][0] = 1;
+//     for(int i=1;i<=n;i++)cin>>a[i];
+//     for(int i=1;i<=n;i++)
+//     {
+//         for(int j=1;j<=m;j++)
+//         {
+//             if(j==a[i])dp[i][j]=dp[i-1][j]+1;//这样是因为没有写dp[0][0]=1
+//             else if(j>a[i])dp[i][j]=dp[i-1][j-a[i]]+dp[i-1][j];
+//             else dp[i][j]=dp[i-1][j];
+//         }
+//     }
+//     cout<<dp[n][m];
+//     return 0;
+// }
+
+
+
+// #include<bits/stdc++.h>
+// using namespace std;
+// const int N=102;
+// int dp[N][1002];//花费i道菜话费j元的方案数量
+// int n,m;
+// int a[N];
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m;
+//     for(int i=1;i<=n;i++)cin>>a[i];
+//     dp[0][0]=1;
+//     for(int i=1;i<=n;i++)
+//     {
+//         for(int j=0;j<=m;j++)
+//         {
+//             if(j<a[i])dp[i][j]=dp[i-1][j];
+//             else if(j>=a[i])
+//             dp[i][j]=dp[i-1][j]+dp[i-1][j-a[i]];
+//         }
+//     }
+//     cout<<dp[n][m];
+//     return 0;
+// }
+
+
+
 #include<bits/stdc++.h>
 using namespace std;
-int a[200];
-const int N=1e3+11;
-int dp[200][N];//dp[i][j]第i中菜 还剩j元的方案数
-int main()
+int n,m;
+#define int long long
+const int N=10002;
+int a[102];
+int dp[102][N];
+signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    int n,m;cin>>n>>m;
+    cin>>n>>m;
     for(int i=1;i<=n;i++)cin>>a[i];
+
+    dp[0][0]=1;
     for(int i=1;i<=n;i++)
     {
-        for(int j=1;j<=m;j++)
+        for(int j=0;j<=m;j++)
         {
-            if(j==a[i])dp[i][j]=dp[i-1][j]+1;
-            else if(j>a[i])dp[i][j]=dp[i-1][j-a[i]]+dp[i-1][j];
-            else dp[i][j]=dp[i-1][j];
+            if(j<a[i])dp[i][j]=dp[i-1][j];
+            else
+            {
+                dp[i][j]=dp[i-1][j]+dp[i-1][j-a[i]];
+            }
         }
     }
     cout<<dp[n][m];
+    
     return 0;
 }
