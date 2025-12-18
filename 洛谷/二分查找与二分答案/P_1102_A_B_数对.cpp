@@ -124,22 +124,73 @@
 //     cout<<ans;
 // }
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// int n,c;
+// const int N=2e5+11;
+// int a[N];
+// bool check1(int num,int x)
+// {
+//     if(num<x)return true;
+//     else return false;
+// }
+// bool check2(int num,int  x)
+// {
+//     if(num<=x)return true;
+//     else return false;
+// }
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>c;
+//     for(int i=1;i<=n;i++)cin>>a[i];
+//     sort(a+1,a+1+n);
+//     int ans=0;
+//     for(int i=1;i<=n-1;i++)
+//     {
+//         int key=a[i]+c;//枚举b+c 找合适的a
+
+//         //下面其实直接可以用C++库函数
+
+//     //    // 找第一个>=key
+//     //     int l=0,r=n+1;
+//     //     while(l+1!=r)
+//     //     {
+//     //         int mid=(l+r)/2;
+//     //         if(check1(a[mid],key))l=mid;
+//     //         else r=mid;
+//     //     }
+        
+//     //     int id1=r;
+
+//         //找第一个>key 两者相减就是等于key的数量
+
+//         // l=0,r=n+1;
+//         // while(l+1!=r)
+//         // {
+//         //     int mid=(l+r)/2;
+//         //     if(check2(a[mid],key))l=mid;
+//         //     else r=mid;
+//         // }
+//         // int id2=r;
+//         // ans+=(id2-id1);
+
+//         int id1=lower_bound(a+1,a+1+n,key)-a;
+//         int id2=upper_bound(a+1,a+1+n,key)-a;
+//         ans+=id2-id1;
+//     }
+//     cout<<ans;
+//     return 0;
+// }
+
+//这个方法更聪明一点
 #include<bits/stdc++.h>
 using namespace std;
 #define int long long
 int n,c;
 const int N=2e5+11;
 int a[N];
-bool check1(int num,int x)
-{
-    if(num<x)return true;
-    else return false;
-}
-bool check2(int num,int  x)
-{
-    if(num<=x)return true;
-    else return false;
-}
 signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
@@ -147,38 +198,11 @@ signed main()
     for(int i=1;i<=n;i++)cin>>a[i];
     sort(a+1,a+1+n);
     int ans=0;
-    for(int i=1;i<=n-1;i++)
+    for(int i=1;i<=n;i++)
     {
-        int key=a[i]+c;//枚举b+c 找合适的a
-
-        //下面其实直接可以用C++库函数
-
-    //    // 找第一个>=key
-    //     int l=0,r=n+1;
-    //     while(l+1!=r)
-    //     {
-    //         int mid=(l+r)/2;
-    //         if(check1(a[mid],key))l=mid;
-    //         else r=mid;
-    //     }
-        
-    //     int id1=r;
-
-        //找第一个>key 两者相减就是等于key的数量
-
-        // l=0,r=n+1;
-        // while(l+1!=r)
-        // {
-        //     int mid=(l+r)/2;
-        //     if(check2(a[mid],key))l=mid;
-        //     else r=mid;
-        // }
-        // int id2=r;
-        // ans+=(id2-id1);
-
-        int id1=lower_bound(a+1,a+1+n,key)-a;
-        int id2=upper_bound(a+1,a+1+n,key)-a;
-        ans+=id2-id1;
+        int B=a[i];
+        int A=B+c;
+         ans+=upper_bound(a+1,a+1+n,A)-lower_bound(a+1,a+1+n,A);
     }
     cout<<ans;
     return 0;

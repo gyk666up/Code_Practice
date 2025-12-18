@@ -76,16 +76,56 @@
 //    }
 // }
 
-//这个方案也好聪明啊 
-#include<bits/stdc++.h>
-using namespace std;
-int main(){
-	double a,b,c,d;
-	cin>>a>>b>>c>>d;
-	for(double i=-100;i<=100;i+=0.00001){//注意精度
-		if(abs((i*i*i*a)+(i*i*b)+(i*c)+d)<0.00001){//根据公式找到大概的值
-			cout<<fixed<<setprecision(2)<<i<<" ";//保留两位小数输出
-		}
-	}
-	return 0;
-}
+// //这个方案也好聪明啊 
+// #include<bits/stdc++.h>
+// using namespace std;
+// int main(){
+// 	double a,b,c,d;
+// 	cin>>a>>b>>c>>d;
+// 	for(double i=-100;i<=100;i+=0.00001){//注意精度
+// 		if(abs((i*i*i*a)+(i*i*b)+(i*c)+d)<0.00001){//根据公式找到大概的值
+// 			cout<<fixed<<setprecision(2)<<i<<" ";//保留两位小数输出
+// 		}
+// 	}
+// 	return 0;
+// }
+
+
+
+// 2025.12.18 这道题掌握的不好 重点复习
+//
+// 不对
+// #include<bits/stdc++.h>
+// using namespace std;
+// int main()
+// {
+// 	ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+// 	int a,b,c,d;cin>>a>>b>>c>>d;
+// 	for(double i=-100;i<=100;i+=0.0001)
+// 	{
+// 		if(a*i*i*i+b*i*i+c*i+d<=0&&a*(i+1)*(i+1)*(i+1)+b*(i+1)*(i+1)+c*(i+1)+d>=0)
+// 		{
+// 			cout<<fixed<<setprecision(2)<<i<<" ";
+// 			i+=1;
+// 		}
+// 	}
+// 	return 0;
+// }
+
+
+
+// #include<bits/stdc++.h>
+// using namespace std;
+// int main()
+// {
+// 	ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+// 	double a,b,c,d;cin>>a>>b>>c>>d;
+// 	for(double i=-100;i<=100;i+=0.00001)
+// 	{
+// 		if(abs(a*i*i*i+b*i*i+c*i+d)<0.00001)
+// 		{
+// 			cout<<fixed<<setprecision(2)<<i<<" ";
+// 		}
+// 	}
+// 	return 0;
+// }

@@ -73,16 +73,85 @@
 
 
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// int n,m;
+// const int N=1e6+11;
+// int a[N];
+// bool check(int num,int x)
+// {
+//     if(num<x)return true;
+//     return false;
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m;
+//     for(int i=1;i<=n;i++)cin>>a[i];
+//     while(m--)
+//     {
+//         int x;cin>>x;
+//         int l=0,r=n+1;
+//         //找第一个>=x
+//         while(l+1!=r)
+//         {
+//             int mid=(l+r)/2;
+//             if(check(a[mid],x))
+//             l=mid;
+//             else r=mid;
+//         }
+//         if(a[r]==x)cout<<r<<" ";
+//         else cout<<"-1 ";
+//     }
+//     return 0;
+// }
+
+
+//2025/12/18问题不大
+// #include<bits/stdc++.h>
+// using namespace std;
+// int n,m;
+// const int N=1e6+11;
+// int a[N];
+// bool check(int x,int target)
+// {
+//     if(x<target)return true;
+//     return false;
+// }
+// int find(int x)
+// {
+//     int l=0,r=n+1;
+//     int mid=(l+r)/2;
+//     while(l+1!=r)
+//     {
+//         int mid=(l+r)/2;
+//         if(check(a[mid],x))l=mid;
+//         else r=mid;
+//     }
+//     return r;
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m;
+//     for(int i=1;i<=n;i++)cin>>a[i];
+//     while(m--)
+//     {
+//         int x;cin>>x;
+//         if(a[find(x)]!=x)cout<<-1<<" ";
+//         else cout<<find(x)<<" ";
+//     }
+//     return 0;
+// }
+
+
+
+
 #include<bits/stdc++.h>
 using namespace std;
 int n,m;
 const int N=1e6+11;
 int a[N];
-bool check(int num,int x)
-{
-    if(num<x)return true;
-    return false;
-}
 int main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
@@ -91,17 +160,9 @@ int main()
     while(m--)
     {
         int x;cin>>x;
-        int l=0,r=n+1;
-        //找第一个>=x
-        while(l+1!=r)
-        {
-            int mid=(l+r)/2;
-            if(check(a[mid],x))
-            l=mid;
-            else r=mid;
-        }
-        if(a[r]==x)cout<<r<<" ";
-        else cout<<"-1 ";
+        int id=lower_bound(a+1,a+1+n,x)-a;
+        if(a[id]!=x)cout<<-1<<" ";
+        else cout<<id<<" ";
     }
     return 0;
 }
