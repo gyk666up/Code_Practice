@@ -50,6 +50,7 @@
 
 
 
+<<<<<<< HEAD
 // #include<bits/stdc++.h>
 // using namespace std;
 // #define int long long
@@ -92,6 +93,8 @@
 
 
 //2025/12/19 莫问题！
+=======
+>>>>>>> 910700d7e6c08f10eaba22dc51f3fd35dfed6e15
 #include<bits/stdc++.h>
 using namespace std;
 #define int long long
@@ -99,7 +102,12 @@ signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     int x;cin>>x;
+<<<<<<< HEAD
     string s;
+=======
+    string s="";
+    //先转换成二进制
+>>>>>>> 910700d7e6c08f10eaba22dc51f3fd35dfed6e15
     while(x)
     {
         s+=x%2+'0';
@@ -107,6 +115,7 @@ signed main()
     }
     reverse(s.begin(),s.end());
     int n=s.size();
+<<<<<<< HEAD
     while(n<32)
     {
         string temp="0";
@@ -129,5 +138,28 @@ signed main()
     all=all*2+b[i]-'0';
 
     cout<<all;
+=======
+    //好聪明啊（自己想到的）
+    while(n<32)
+    {
+        string s1="0";//这行代码的位置很重要
+        s1+=s;
+        s=s1;
+        n++;
+    }
+    int ans=0;
+    string before="",after="";
+    for(int i=0;i<16;i++)
+    {
+        before+=s[i];
+        after+=s[i+16];
+    }
+    after+=before;
+    for(int i=0;i<32;i++)
+    {
+        ans=ans*2+after[i]-'0';
+    }
+    cout<<ans;
+>>>>>>> 910700d7e6c08f10eaba22dc51f3fd35dfed6e15
     return 0;
 }

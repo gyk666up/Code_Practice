@@ -1,0 +1,1 @@
+{"name":"Local: P_3654_First_Step_ファーストステップ","url":"/Users/gyk/Desktop/Code/洛谷/暴力枚举/P_3654_First_Step_ファーストステップ.cpp","tests":[{"id":1765891166750,"input":"5 5 2\n.###.\n##.#.\n..#..\n#..#.\n#.###\n","output":"8"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/gyk/Desktop/Code/洛谷/暴力枚举/P_3654_First_Step_ファーストステップ.cpp","group":"local","local":true}

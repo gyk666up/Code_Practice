@@ -128,6 +128,7 @@
 // 		}
 // 	}
 // 	return 0;
+<<<<<<< HEAD
 // }
 
 #include<bits/stdc++.h>
@@ -146,3 +147,6 @@ int main()
     }
     return 0;
 }
+=======
+// }
+>>>>>>> 910700d7e6c08f10eaba22dc51f3fd35dfed6e15

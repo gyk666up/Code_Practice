@@ -44,6 +44,7 @@
 //     return 0;
 // }
 
+<<<<<<< HEAD
 // #include<bits/stdc++.h>
 // using namespace std;
 // int L,n,m;
@@ -85,3 +86,43 @@
 
 
 
+=======
+#include<bits/stdc++.h>
+using namespace std;
+int L,n,m;
+const int N=5e4+11;
+int a[N];
+bool check(int x)
+{
+    int cnt=0;//需要搬走的石头
+    int last=0;
+    for(int i=1;i<=n;i++)
+    {
+        //注意是小于不是小于等于
+        if(a[i]-a[last]<x)
+        {
+            //距离小于最短距离 需要搬走
+            cnt++;
+        }
+        else last=i;
+    }
+    if(L-a[last]<x) cnt++;
+    if(cnt<=m)return true;
+    return false;
+}
+int main()
+{
+    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+    cin>>L>>n>>m;
+    for(int i=1;i<=n;i++)cin>>a[i];
+    int l=0,r=0x3f3f3f3f;
+    while(l+1!=r)
+    {
+        int mid=(l+r)/2;
+        if(check(mid))l=mid;
+        else r=mid;
+    }
+    cout<<l;
+    return 0;
+}
+>>>>>>> 910700d7e6c08f10eaba22dc51f3fd35dfed6e15

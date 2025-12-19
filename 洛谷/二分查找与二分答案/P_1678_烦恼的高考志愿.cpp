@@ -105,6 +105,7 @@
 
 
 
+<<<<<<< HEAD
 // //这道题掌握的不是很好 12//18
 // //使用二分算法之前一定要先排序
 // #include<bits/stdc++.h>
@@ -145,12 +146,21 @@
 // }
 
 
+=======
+//这道题掌握的不是很好 12//18
+//使用二分算法之前一定要先排序
+>>>>>>> 910700d7e6c08f10eaba22dc51f3fd35dfed6e15
 #include<bits/stdc++.h>
 using namespace std;
 #define int long long
 int m,n;
 const int N=1e5+11;
+<<<<<<< HEAD
 int a[N];
+=======
+int sc[N];
+int ans=0;
+>>>>>>> 910700d7e6c08f10eaba22dc51f3fd35dfed6e15
 bool check(int x,int target)
 {
     if(x<=target)return true;
@@ -160,16 +170,23 @@ signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>m>>n;
+<<<<<<< HEAD
     for(int i=1;i<=m;i++)cin>>a[i];
     sort(a+1,a+1+m);
     int ans=0;
     for(int i=1;i<=n;i++)
+=======
+    for(int i=1;i<=m;i++)cin>>sc[i];
+    sort(sc+1,sc+1+m);
+    while(n--)
+>>>>>>> 910700d7e6c08f10eaba22dc51f3fd35dfed6e15
     {
         int x;cin>>x;
         int l=0,r=m+1;
         while(l+1!=r)
         {
             int mid=(l+r)/2;
+<<<<<<< HEAD
             if(check(a[mid],x))l=mid;
             else r=mid;
         }
@@ -180,6 +197,15 @@ signed main()
         if(x<a[1])ans+=a[1]-x;
         else ans+=min(temp1,temp2);
         ans+=min(temp1,temp2);
+=======
+            if(check(sc[mid],x))l=mid;
+            else r=mid;
+        }
+        int temp1=abs(sc[l]-x);
+        int temp2=abs(sc[l+1]-x);
+        if(x<sc[1])ans+=sc[1]-x;
+        else ans+=min(temp1,temp2);
+>>>>>>> 910700d7e6c08f10eaba22dc51f3fd35dfed6e15
     }
     cout<<ans;
     return 0;
