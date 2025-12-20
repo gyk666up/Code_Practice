@@ -68,31 +68,62 @@
 
 
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// const int N=2e4+11;
+// int a[N],b[N];
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     int n;cin>>n;
+//     for(int i=1;i<=n;i++)
+//     {
+//         cin>>a[i]>>b[i];
+//     }
+//     sort(a+1,a+1+n);
+//     sort(b+1,b+1+n);
+//     int ans=0;
+//     for(int i=1;i<=n;i++)
+//     {
+//         ans+=b[i]-a[i];
+//         if(i!=n)
+//         {
+//             if(b[i]>a[i+1])
+//             ans-=b[i]-a[i+1];
+//         }
+//     }
+//     cout<<ans;
+//     return 0;
+// }
+
+
+//还行 再多看看 //2025/12/20
 #include<bits/stdc++.h>
 using namespace std;
 #define int long long
+int n;
 const int N=2e4+11;
-int a[N],b[N];
+int a[N];
+int b[N];
 signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    int n;cin>>n;
+    cin>>n;
     for(int i=1;i<=n;i++)
     {
         cin>>a[i]>>b[i];
     }
     sort(a+1,a+1+n);
     sort(b+1,b+1+n);
+
     int ans=0;
-    for(int i=1;i<=n;i++)
+    for(int i=1;i+1<=n;i++)
     {
         ans+=b[i]-a[i];
-        if(i!=n)
-        {
-            if(b[i]>a[i+1])
-            ans-=b[i]-a[i+1];
-        }
+        if(b[i]>a[i+1])ans-=b[i]-a[i+1];
     }
+    ans+=b[n]-a[n];
     cout<<ans;
     return 0;
 }

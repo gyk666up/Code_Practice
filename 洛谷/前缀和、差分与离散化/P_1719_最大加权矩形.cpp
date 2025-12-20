@@ -48,10 +48,10 @@
 
 #include<bits/stdc++.h>
 using namespace std;
-const int N=122;
-int n;
+const int N=125;
 int a[N][N];
 int prefix[N][N];
+int n;
 int main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
@@ -66,7 +66,6 @@ int main()
     }
 
     int ans=0;
-    //枚举矩形
     for(int x1=1;x1<=n;x1++)
     {
         for(int y1=1;y1<=n;y1++)
@@ -84,4 +83,3 @@ int main()
     cout<<ans;
     return 0;
 }
-
