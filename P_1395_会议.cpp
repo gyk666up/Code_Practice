@@ -88,69 +88,76 @@
 // 。非v子树的节点(共n-sz [v]个)到v的距离比到 u多1，总距离增加n - sz[v]。
 // 。因此，v的距离和 =u的距离和-sz [v]+(n-sz [v])。
 
+
+
+
+
+//2025/12/21 感觉良好，尽管没有完全写出来，但对比之前已经进步很多了
 #include<bits/stdc++.h>
 using namespace std;
-#define int long long
 int n;
-const int N=5e4+66;
+const int N=5e4+11;
 vector<int>g[N];
-int sum_dist[N];//sum_dist[u]以节点u为根节点的距离和
-int siz[N];//每个子树的大小
-
-int ans_node=0x3f3f3f3f;//最佳节点和最短距离
-int ans_dist=0x3f3f3f3f;
+int siz[N];
+int sum_dist[N];//记录以u为根节点的距离和
+int ans_node;
+int ans_dist;
 void dfs1(int u,int fa)
 {
-    siz[u]=1;
-    for(int v:g[u])
+    siz[u]=1;//记得初始化
+    sum_dist[u]=0;
+    for(int i=0;i<g[u].size();i++)
     {
+        int v=g[u][i];
         if(v!=fa)
         {
             dfs1(v,u);
             siz[u]+=siz[v];
-            //v子树每个点到达u点距离等于到v到距离+1
-            //注意这里是累加操作 和下面的注意区别
+
+            //以v为根节点的子树中每个节点到u比v+1
             sum_dist[u]+=sum_dist[v]+siz[v];
-//              sum_dist[u] = sum_dist[v] + siz[v]; 是赋值操作，而非累加操作。
-// 原理：节点u的距离和 = 所有子节点v的「子树距离和（sum_dist [v]） + 子树大小（siz [v]，每个节点到 u 多 1）」的总和。
-    }
+        }
     }
 }
 void dfs2(int u,int fa)
 {
-    if(sum_dist[u]<ans_dist||sum_dist[u] == ans_dist&&u<ans_node)
+    //距离相同编号更小或者距离更小
+    if(sum_dist[u]<ans_dist||(sum_dist[u]==ans_dist&&u<ans_node))
     {
         ans_dist=sum_dist[u];
         ans_node=u;
     }
+
     //换根公式
-    for(int v:g[u])
+    for(int i=0;i<g[u].size();i++)
     {
+        int v=g[u][i];
         if(v!=fa)
         {
-            //dfs2(v,u);
-            sum_dist[v]=sum_dist[u]-siz[v]+(n-siz[v]);
-            dfs2(v,u);//为什么要放在这里！！！
+            sum_dist[v]=sum_dist[u]-siz[v]+n-siz[v];
+            dfs2(v,u);
         }
     }
 }
-signed main()
+int main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>n;
-    for(int i=0;i<n-1;i++)
+    //注意是n-1
+    for(int i=1;i<=n-1;i++)
     {
         int x,y;cin>>x>>y;
         g[x].push_back(y);
         g[y].push_back(x);
     }
-
-    //计算节点1的子树大小和距离和
+    
+    //计算以1为根节点的sum_dist和子树的大小
     dfs1(1,-1);
 
-    //计算最佳节点，和最短距离
+    ans_dist=0x3f3f3f3f;
+    ans_node=0x3f3f3f3f;
+    //计算以每个节点为根的距离和
     dfs2(1,-1);
-
     cout<<ans_node<<" "<<ans_dist;
     return 0;
 }

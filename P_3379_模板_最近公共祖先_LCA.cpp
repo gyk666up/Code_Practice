@@ -90,30 +90,38 @@
 // }
 
 
+
+
+
 #include<bits/stdc++.h>
 using namespace std;
 int n,m,s;
 const int N=5e5+11;
-const int Log=30;
 vector<int>g[N];
-int depth[N];//每个点的深度
-int fa[N][Log];
-void bfs(int x)
+int depth[N];
+const int Max=21;//2^20>5e5;
+int fa[N][Max];//0~2
+
+//bfs预处理fa和depth
+void bfs(int u)
 {
-    fa[x][0]=0;//// 根节点的父节点设为0（无意义）不可以设置成-1 会导致越界内存访问
-    depth[x]=1;
+    fa[u][0]=0;//可有可无！还是写上吧更加严谨一点，但注意不能赋值成负数
+    depth[u]=1;
     queue<int>q;
-    q.push(x);
+    q.push(u);
     while(q.size())
     {
-        int x=q.front();q.pop();
-        for(int v:g[x])
+        int u=q.front();q.pop();
+        for(int i=0;i<g[u].size();i++)
         {
-            if(v!=fa[x][0])
+            int v=g[u][i];
+            if(v!=fa[u][0])//注意这里，容易写成v!=u
             {
-                depth[v]=depth[x]+1;
-                fa[v][0]=x;
-                for(int k=1;k<Log;k++)
+                fa[v][0]=u;
+                depth[v]=depth[u]+1;
+
+                //注意这里也容易忘记写，而且范围别超—~Max-1
+                for(int k=1;k<Max;k++)
                 {
                     fa[v][k]=fa[fa[v][k-1]][k-1];
                 }
@@ -126,22 +134,25 @@ int lca(int x,int y)
 {
     if(depth[x]<depth[y])swap(x,y);
 
-    //让x往上挑
-    for(int k=Log-1;k>=0;k--)
+    //让x跳到和y相同的高度
+    for(int i=Max-1;i>=0;i--)
     {
-        if(depth[fa[x][k]]>=depth[y])
-        x=fa[x][k];
-    }
-    if(x==y)return x;
-
-    //同时往上挑(为什么这里从大往小跳. 好好想)
-    for(int k=Log-1;k>=0;k--)
-    {
-        //if(depth[fa[x][k]]!=depth[fa[y][k]])
-        if (fa[x][k] != 0 && fa[y][k] != 0 && fa[x][k] != fa[y][k]) 
+        if(depth[fa[x][i]]>=depth[y])
         {
-            x=fa[x][k];
-            y=fa[y][k];
+            x=fa[x][i];
+        }
+    }
+    //此时x和y的高度一样了
+    //这行代码很容易忽略
+    if(x==y)return x;
+    //越大越有可能 最大无非就是根节点 根节点肯定是他们的保底选择
+    //贪心
+    for(int i=Max-1;i>=0;i--)
+    {
+        if(fa[x][i]!=fa[y][i])
+        {
+            x=fa[x][i];
+            y=fa[y][i];
         }
     }
     return fa[x][0];
@@ -156,7 +167,7 @@ int main()
         g[x].push_back(y);
         g[y].push_back(x);
     }
-    bfs(s);//预处理
+    bfs(s);
     while(m--)
     {
         int x,y;cin>>x>>y;
