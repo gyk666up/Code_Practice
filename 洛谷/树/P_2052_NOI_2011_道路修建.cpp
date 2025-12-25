@@ -63,44 +63,88 @@
 // }
 
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// const int N=1e6+11;
+// int ans;
+// int sz[N];//sz[u]以u为根节点的子树大小
+// int n;
+// typedef struct node
+// {
+//     int to,w;
+// }edge;
+// vector<edge>g[N];
+// void dfs(int u,int p)
+// {
+//     sz[u]=1;
+//     for( auto [v,w]:g[u])
+//     {
+//         if(v!=p)
+//         {
+//             //ans+=w*abs(sz[v]-(n-sz[v]));
+//             dfs(v,u);
+//             sz[u]+=sz[v];
+//             ans+=w*abs(sz[v]-(n-sz[v]));
+//         }
+//     }
+// }
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n;
+//     for(int i=0;i<n-1;i++)
+//     {
+//         int x,y,w;cin>>x>>y>>w;
+//         //注意是双向边 容易少写一个
+//         g[x].push_back({y,w});
+//         g[y].push_back({x,w});
+//     }
+//     dfs(1,0);
+//     cout<<ans;
+//     return 0;
+// }
+
+
 #include<bits/stdc++.h>
 using namespace std;
-#define int long long
 const int N=1e6+11;
-int ans;
-int sz[N];//sz[u]以u为根节点的子树大小
-int n;
-typedef struct node
+#define int long long
+struct edge
 {
     int to,w;
-}edge;
+};
 vector<edge>g[N];
+int sz[N];//sz 是某条边一侧的点数 并不是“节点子树”
+int n;
+int ans;
 void dfs(int u,int p)
 {
     sz[u]=1;
-    for( auto [v,w]:g[u])
+    for(auto[v,w]:g[u])
     {
         if(v!=p)
         {
-            //ans+=w*abs(sz[v]-(n-sz[v]));
             dfs(v,u);
             sz[u]+=sz[v];
-            ans+=w*abs(sz[v]-(n-sz[v]));
+            //注意这行代码容易写错 v是u的儿子 断开这条边后  [ v 的整棵子树 ] | [ 剩下的所有点 ]
+            ans+=w*abs((sz[v]-(n-sz[v])));
         }
     }
 }
+
 signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>n;
     for(int i=0;i<n-1;i++)
     {
-        int x,y,w;cin>>x>>y>>w;
-        //注意是双向边 容易少写一个
-        g[x].push_back({y,w});
-        g[y].push_back({x,w});
+        int a,b,c;cin>>a>>b>>c;
+        g[a].push_back({b,c});
+        g[b].push_back({a,c});
     }
     dfs(1,0);
     cout<<ans;
     return 0;
 }
+

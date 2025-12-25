@@ -92,49 +92,113 @@
 
 
 
-//2025/12/21 感觉良好，尽管没有完全写出来，但对比之前已经进步很多了
+// //2025/12/21 感觉良好，尽管没有完全写出来，但对比之前已经进步很多了
+// #include<bits/stdc++.h>
+// using namespace std;
+// int n;
+// const int N=5e4+11;
+// vector<int>g[N];
+// int siz[N];
+// int sum_dist[N];//记录以u为根节点的距离和
+// int ans_node;
+// int ans_dist;
+// void dfs1(int u,int fa)
+// {
+//     siz[u]=1;//记得初始化
+//     sum_dist[u]=0;
+//     for(int i=0;i<g[u].size();i++)
+//     {
+//         int v=g[u][i];
+//         if(v!=fa)
+//         {
+//             dfs1(v,u);
+//             siz[u]+=siz[v];
+
+//             //以v为根节点的子树中每个节点到u比v+1
+//             sum_dist[u]+=sum_dist[v]+siz[v];
+//         }
+//     }
+// }
+// void dfs2(int u,int fa)
+// {
+//     //距离相同编号更小或者距离更小
+//     if(sum_dist[u]<ans_dist||(sum_dist[u]==ans_dist&&u<ans_node))
+//     {
+//         ans_dist=sum_dist[u];
+//         ans_node=u;
+//     }
+
+//     //换根公式
+//     for(int i=0;i<g[u].size();i++)
+//     {
+//         int v=g[u][i];
+//         if(v!=fa)
+//         {
+//             sum_dist[v]=sum_dist[u]-siz[v]+n-siz[v];
+//             dfs2(v,u);
+//         }
+//     }
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n;
+//     //注意是n-1
+//     for(int i=1;i<=n-1;i++)
+//     {
+//         int x,y;cin>>x>>y;
+//         g[x].push_back(y);
+//         g[y].push_back(x);
+//     }
+    
+//     //计算以1为根节点的sum_dist和子树的大小
+//     dfs1(1,-1);
+
+//     ans_dist=0x3f3f3f3f;
+//     ans_node=0x3f3f3f3f;
+//     //计算以每个节点为根的距离和
+//     dfs2(1,-1);
+//     cout<<ans_node<<" "<<ans_dist;
+//     return 0;
+// }
+
 #include<bits/stdc++.h>
 using namespace std;
 int n;
-const int N=5e4+11;
+const int N=5e4+33;
 vector<int>g[N];
-int siz[N];
-int sum_dist[N];//记录以u为根节点的距离和
+int sz[N];
+int sum_dist[N];
 int ans_node;
 int ans_dist;
-void dfs1(int u,int fa)
+void dfs1(int u ,int fa)
 {
-    siz[u]=1;//记得初始化
-    sum_dist[u]=0;
+    sz[u]=1;
     for(int i=0;i<g[u].size();i++)
     {
         int v=g[u][i];
         if(v!=fa)
         {
             dfs1(v,u);
-            siz[u]+=siz[v];
-
-            //以v为根节点的子树中每个节点到u比v+1
-            sum_dist[u]+=sum_dist[v]+siz[v];
+            sz[u]+=sz[v];
+            sum_dist[u]+=sum_dist[v]+sz[v];
         }
     }
 }
-void dfs2(int u,int fa)
+void dfs2(int u,int p)
 {
-    //距离相同编号更小或者距离更小
     if(sum_dist[u]<ans_dist||(sum_dist[u]==ans_dist&&u<ans_node))
     {
-        ans_dist=sum_dist[u];
         ans_node=u;
+        ans_dist=sum_dist[u];
     }
 
-    //换根公式
     for(int i=0;i<g[u].size();i++)
     {
         int v=g[u][i];
-        if(v!=fa)
+        if(v!=p)
         {
-            sum_dist[v]=sum_dist[u]-siz[v]+n-siz[v];
+            sum_dist[v]=sum_dist[u]-sz[v]+(n-sz[v]);
             dfs2(v,u);
         }
     }
@@ -143,21 +207,17 @@ int main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>n;
-    //注意是n-1
-    for(int i=1;i<=n-1;i++)
+    for(int i=0;i<n-1;i++)
     {
         int x,y;cin>>x>>y;
         g[x].push_back(y);
         g[y].push_back(x);
     }
-    
-    //计算以1为根节点的sum_dist和子树的大小
-    dfs1(1,-1);
-
-    ans_dist=0x3f3f3f3f;
+    dfs1(1,0);
     ans_node=0x3f3f3f3f;
-    //计算以每个节点为根的距离和
-    dfs2(1,-1);
+    ans_dist=0x3f3f3f3f;
+    dfs2(1,0);
+
     cout<<ans_node<<" "<<ans_dist;
     return 0;
 }
