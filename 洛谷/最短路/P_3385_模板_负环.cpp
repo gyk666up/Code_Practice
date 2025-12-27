@@ -119,44 +119,40 @@
 
 #include<bits/stdc++.h>
 using namespace std;
-int t;
-const int N=2e3+11;
+const int N=2e3+66;
 struct edge
 {
     int to,w;
 };
 vector<edge>g[N];
+int dist[N];
 int cnt[N];
 int inq[N];
-int dist[N];
 int n,m;
 bool spf(int x)
 {
-    memset(cnt,0,sizeof cnt);
     memset(dist,0x3f,sizeof dist);
+    memset(cnt,0,sizeof cnt);
     memset(inq,0,sizeof inq);
+
 
     queue<int>q;
     q.push(x);
-    dist[x]=0;
+    dist[x]=0;//!!!
     inq[x]=1;
     while(q.size())
     {
         int u=q.front();q.pop();
         inq[u]=0;
-        
-        for(auto t:g[u])
+        for(auto[v,w]:g[u])
         {
-            int v=t.to;
-            int w=t.w;
             if(dist[v]>dist[u]+w)
             {
                 dist[v]=dist[u]+w;
                 cnt[v]++;
-                
-                if(cnt[v]>=n)return true;
 
-                if(inq[v]!=0)
+                if(cnt[v]>=n)return true;
+                if(inq[v]==0)
                 {
                     inq[v]=1;
                     q.push(v);
@@ -169,7 +165,7 @@ bool spf(int x)
 int main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    cin>>t;
+    int t;cin>>t;
     while(t--)
     {
         cin>>n>>m;
@@ -178,10 +174,8 @@ int main()
         {
             int u,v,w;cin>>u>>v>>w;
             if(w>=0)
-            {
-                g[u].push_back({v,w});
-                g[v].push_back({u,w});
-            }
+            g[u].push_back({v,w}),
+            g[v].push_back({u,w});
             else g[u].push_back({v,w});
         }
         if(spf(1))cout<<"YES\n";

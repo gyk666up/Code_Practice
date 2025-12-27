@@ -133,37 +133,34 @@
 //     return 0;
 // }
 
-
 #include<bits/stdc++.h>
 using namespace std;
-#define int long long
-const int N=1e5+11;
 int n,m,s;
 struct edge
 {
     int to,w;
 };
+const int N=1e5+55;
 vector<edge>g[N];
+
 int dist[N];
-bool st[N];
 typedef pair<int,int>PII;
 void Dijkstra(int x)
 {
+    //memset(st,0,sizeof st);
     memset(dist,0x3f,sizeof dist);
-    
+
     dist[x]=0;
+
     priority_queue<PII,vector<PII>,greater<PII>>q;
-    //pair({到当前点的距离，点的编号})
-    q.push({0,x});
+    q.push({0,s});//当前距离和这个点
 
     while(q.size())
     {
         auto t=q.top();q.pop();
-        int d=t.first,x=t.second;
-        // if(st[x])continue;//别忘记判重
-        // st[x]=1;
-
-        for(auto[v,w]:g[x])
+        int d=t.first,u=t.second;
+        
+        for(auto [v,w]:g[u])
         {
             if(dist[v]>d+w)
             {
@@ -172,8 +169,9 @@ void Dijkstra(int x)
             }
         }
     }
+
 }
-signed main()
+int main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>n>>m>>s;
