@@ -104,56 +104,6 @@
 
 
 
-#include<bits/stdc++.h>
-using namespace std;
-int n;
-const int N=10002;
-int t[N];
-int dp[N];//每个杂物最早的完成时间
-int main()
-{
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    cin>>n;
-    for(int i=1;i<=n;i++)
-    {
-        int id,len;cin>>id>>len;
-        int x;
-        int max_pre_time=0;
-        while(cin>>x)
-        {
-            if(x==0)break;
-            if(dp[x]>max_pre_time)
-            {
-                max_pre_time=dp[x];
-            }
-        }
-        dp[id]=max_pre_time+len;
-    }
-    int ans=0;
-    for(int i=1;i<=n;i++)ans=max(ans,dp[i]);
-    cout<<ans;
-    return 0;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -223,3 +173,59 @@ int main()
 //     return 0;
 // }
     
+
+#include<bits/stdc++.h>
+using namespace std;
+int n;
+const int N=10002;
+int dp[N];
+int t[N];
+int earliest[N];//每项杂物最早的完成时间=最早开始时间+当前任务所需的时间
+int in_degree[N];
+vector<int>g[N];
+int main()
+{
+    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+    cin>>n;
+    for(int i=1;i<=n;i++)
+    {
+        int id,len;cin>>id>>len;
+        int pre;
+        t[id]=len;
+        while(cin>>pre)
+        {
+            if(pre==0)break;
+            in_degree[id]++;
+            g[pre].push_back(id);
+        }
+    }
+    queue<int>q;
+    for(int i=1;i<=n;i++)
+    {
+        if(in_degree[i]==0)
+        {
+            earliest[i]=t[i];
+            q.push(i);
+        }
+    }
+    while(q.size())
+    {
+        int x=q.front();q.pop();
+        for(int i=0;i<g[x].size();i++)
+        {
+            int y=g[x][i];
+            earliest[y]=max(earliest[x],earliest[y]);
+
+            in_degree[y]--;
+            if(in_degree[y]==0)
+            {
+                earliest[y]+=t[y];
+                q.push(y);
+            }
+        }
+    }
+    int ans=0;
+    for(int i=1;i<=n;i++)ans=max(ans,earliest[i]);
+    cout<<ans;
+    return 0;
+}
