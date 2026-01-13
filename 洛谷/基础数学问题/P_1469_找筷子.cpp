@@ -46,20 +46,39 @@
 
 
 
-//2025/12/19. 还记得嘿嘿 用异或😎
+// //2025/12/19. 还记得嘿嘿 用异或😎
+// #include<bits/stdc++.h>
+// using namespace std;
+// int n;
+// //开数组的话会mel
+// // const int N=1e7+11;
+// // int a[N];
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n;
+//     // for(int i=1;i<=n;i++)cin>>a[i];
+//     int ans=0;//初始化为0
+//     for(int i=1;i<=n;i++)
+//     {
+//         int x;cin>>x;
+//         ans^=x;
+//     }
+//     cout<<ans;
+//     return 0;
+// }
+
+
+
+//1 12 秒了
 #include<bits/stdc++.h>
 using namespace std;
-int n;
-//开数组的话会mel
-// const int N=1e7+11;
-// int a[N];
 int main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    cin>>n;
-    // for(int i=1;i<=n;i++)cin>>a[i];
-    int ans=0;//初始化为0
-    for(int i=1;i<=n;i++)
+    int ans=0;
+    int n;cin>>n;
+    for(int i=0;i<n;i++)
     {
         int x;cin>>x;
         ans^=x;

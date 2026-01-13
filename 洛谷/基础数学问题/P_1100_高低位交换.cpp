@@ -50,7 +50,6 @@
 
 
 
-<<<<<<< HEAD
 // #include<bits/stdc++.h>
 // using namespace std;
 // #define int long long
@@ -92,74 +91,86 @@
 // }
 
 
-//2025/12/19 莫问题！
-=======
->>>>>>> 910700d7e6c08f10eaba22dc51f3fd35dfed6e15
+// //2025/12/19 莫问题！
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     int x;cin>>x;
+//     string s;
+//     while(x)
+//     {
+//         s+=x%2+'0';
+//         x/=2;
+//     }
+//     reverse(s.begin(),s.end());
+//     int n=s.size();
+//     while(n<32)
+//     {
+//         string temp="0";
+//         temp+=s;
+//         s=temp;
+//         n++;
+//     }
+//     //cout<<s<<" ";
+//     string a;
+//     for(int i=0;i<16;i++)
+//     {
+//         a+=s[i];
+//     }
+//     //cout<<"A="<<a<<endl;;
+//     string b;
+//     for(int i=16;i<s.size();i++)b+=s[i];
+//     b+=a;
+//     int all=0;
+//     for(int i=0;i<b.size();i++)
+//     all=all*2+b[i]-'0';
+
+//     cout<<all;
+//     return 0;
+// }
+
+//问题不大
 #include<bits/stdc++.h>
 using namespace std;
 #define int long long
 signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    int x;cin>>x;
-<<<<<<< HEAD
-    string s;
-=======
+    int n;cin>>n;
     string s="";
-    //先转换成二进制
->>>>>>> 910700d7e6c08f10eaba22dc51f3fd35dfed6e15
-    while(x)
+    while(n)
     {
-        s+=x%2+'0';
-        x/=2;
+        s+=n%2+'0';
+        n/=2;
     }
     reverse(s.begin(),s.end());
-    int n=s.size();
-<<<<<<< HEAD
-    while(n<32)
+    int len=s.size();
+    while(len<32)
     {
-        string temp="0";
-        temp+=s;
-        s=temp;
-        n++;
+        string ss="0";
+        ss+=s;
+        s=ss;
+        len++;
     }
-    //cout<<s<<" ";
-    string a;
-    for(int i=0;i<16;i++)
-    {
-        a+=s[i];
-    }
-    //cout<<"A="<<a<<endl;;
-    string b;
-    for(int i=16;i<s.size();i++)b+=s[i];
-    b+=a;
-    int all=0;
-    for(int i=0;i<b.size();i++)
-    all=all*2+b[i]-'0';
-
-    cout<<all;
-=======
-    //好聪明啊（自己想到的）
-    while(n<32)
-    {
-        string s1="0";//这行代码的位置很重要
-        s1+=s;
-        s=s1;
-        n++;
-    }
-    int ans=0;
     string before="",after="";
     for(int i=0;i<16;i++)
     {
         before+=s[i];
         after+=s[i+16];
     }
+    //cout<<before<<" "<<after;
     after+=before;
-    for(int i=0;i<32;i++)
+    //cout<<"after= "<<after;
+    int x=0;
+    //注意after是2进制的
+    for(int i=0;i<after.size();i++)
     {
-        ans=ans*2+after[i]-'0';
+        x=x*2+after[i]-'0';
+       // cout<<x<<" ";
     }
-    cout<<ans;
->>>>>>> 910700d7e6c08f10eaba22dc51f3fd35dfed6e15
+    cout<<x;
     return 0;
 }

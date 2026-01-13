@@ -191,11 +191,66 @@
 // }
 
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// const int N=2005;
+// int c[N][N];//C(i,j)%k的余数
+// int pre[N][N];
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     int t,k;cin>>t>>k;
+//     for(int i=0;i<=2000;i++)
+//     {
+//         for(int j=0;j<=i;j++)
+//         {
+//             if(i==j||j==0)c[i][j]=1;
+//             else c[i][j]=(c[i-1][j]+c[i-1][j-1])%k;
+//         }
+//     }
+//     for(int i=0;i<=2000;i++)
+//     {
+//         for(int j=0;j<=2000;j++)
+//         {
+//             // int curr=((i==j||j==0)&&j<=i);
+//             // if(i==j||j==0&&j<=i)curr=((c[i][j]==0)?1:0);
+//             //着重看一下这一行代码 ，上面的这两行代码不对
+//             int curr=(j<=i&&c[i][j]==0)?1:0;
+//             if(i==0&&j==0)pre[i][j]=curr;
+//             else if(i==0)pre[i][j]=pre[i][j-1]+curr;
+//             else if(j==0)pre[i][j]=pre[i-1][j]+curr;
+//             else 
+//             {
+//                 pre[i][j]=pre[i-1][j]+pre[i][j-1]-pre[i-1][j-1]+curr;
+//             }
+//             if(i<=j)
+//             pre[i][j]=pre[i][i];
+//         }
+//     }
+//     while(t--)
+//     {
+//         int n,m;cin>>n>>m;
+//         cout<<pre[n][min(n,m)]<<endl;
+//     }
+//     return 0;
+// }
+
+
+
+
+
+
+
+
+
+
+
 #include<bits/stdc++.h>
 using namespace std;
-const int N=2005;
-int c[N][N];//C(i,j)%k的余数
-int pre[N][N];
+const int N=2002;
+int c[N][N];
+int b[N][N];
+int prefix[N][N];
 int main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
@@ -204,42 +259,34 @@ int main()
     {
         for(int j=0;j<=i;j++)
         {
-            if(i==j||j==0)c[i][j]=1;
-            else c[i][j]=(c[i-1][j]+c[i-1][j-1])%k;
+            if(j==0||j==i)//这里别写错了是j==0
+            {
+                c[i][j]=1%k;
+                if(c[i][j]==0)b[i][j]=1;
+            }
+            else
+            {
+                c[i][j]=(c[i-1][j]+c[i-1][j-1])%k;
+                if(c[i][j]==0)b[i][j]=1;
+            }
+            // if(c[i][j]==0)b[i][j]=1;
+            // else b[i][j]=0;
         }
     }
     for(int i=0;i<=2000;i++)
     {
         for(int j=0;j<=2000;j++)
         {
-            // int curr=((i==j||j==0)&&j<=i);
-            // if(i==j||j==0&&j<=i)curr=((c[i][j]==0)?1:0);
-            //着重看一下这一行代码 ，上面的这两行代码不对
-            int curr=(j<=i&&c[i][j]==0)?1:0;
-            if(i==0&&j==0)pre[i][j]=curr;
-            else if(i==0)pre[i][j]=pre[i][j-1]+curr;
-            else if(j==0)pre[i][j]=pre[i-1][j]+curr;
-            else 
-            {
-                pre[i][j]=pre[i-1][j]+pre[i][j-1]-pre[i-1][j-1]+curr;
-            }
-            if(i<=j)
-            pre[i][j]=pre[i][i];
+            prefix[i][j]=b[i][j];
+            if(i)prefix[i][j]+=prefix[i-1][j];
+            if(j)prefix[i][j]+=prefix[i][j-1];
+            if(i&&j)prefix[i][j]-=prefix[i-1][j-1];
         }
     }
     while(t--)
     {
         int n,m;cin>>n>>m;
-        cout<<pre[n][min(n,m)]<<endl;
+        cout<<prefix[n][m]<<endl;;
     }
     return 0;
 }
-
-
-
-
-
-
-
-
-

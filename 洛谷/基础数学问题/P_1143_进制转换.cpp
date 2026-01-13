@@ -96,7 +96,44 @@
 
 
 
-//秒了 2025/12/19
+// //秒了 2025/12/19
+// #include<bits/stdc++.h>
+// using namespace std;
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     int n;cin>>n;
+//     string s;cin>>s;
+//     int m;cin>>m;
+//     int res=0;
+//     for(int i=0;i<s.size();i++)
+//     {
+//         if(s[i]>='0'&&s[i]<='9')
+//         res=res*n+s[i]-'0';
+//         else
+//         res=res*n+s[i]-'A'+10;
+//     }
+
+//     string ss;
+//     while(res)
+//     {
+//         if(res%m<=9)
+//         ss+=res%m+'0';
+//         else ss+=res%m-10+'A';
+//         res/=m;
+//     }
+//     reverse(ss.begin(),ss.end());
+//     for(int i=0;i<ss.size();i++)
+//     {
+//         cout<<ss[i];
+//     }
+//     return 0;
+// }
+
+
+
+
+//复习 2026/1/12 没问题
 #include<bits/stdc++.h>
 using namespace std;
 int main()
@@ -105,27 +142,29 @@ int main()
     int n;cin>>n;
     string s;cin>>s;
     int m;cin>>m;
-    int res=0;
+    int x=0;
+    //先转换到10进制
     for(int i=0;i<s.size();i++)
     {
         if(s[i]>='0'&&s[i]<='9')
-        res=res*n+s[i]-'0';
+        x=x*n+s[i]-'0';
         else
-        res=res*n+s[i]-'A'+10;
+        {
+            x=x*n+s[i]-'A'+10;
+        }
     }
-
-    string ss;
-    while(res)
+    
+    string ss="";
+    while(x)
     {
-        if(res%m<=9)
-        ss+=res%m+'0';
-        else ss+=res%m-10+'A';
-        res/=m;
+        if(x%m<10)
+        ss+=x%m+'0';
+        else
+        ss+=x%m-10+'A';
+
+        x/=m;
     }
     reverse(ss.begin(),ss.end());
-    for(int i=0;i<ss.size();i++)
-    {
-        cout<<ss[i];
-    }
+    cout<<ss;
     return 0;
 }

@@ -92,41 +92,43 @@
 //     return 0;
 // }
 
-#include<bits/stdc++.h>
-using namespace std;
-const int N=1e3+666;
-int dist[N];
-struct edge
-{
-    int to,w;
-};
-vector<edge>g[N];
-int main()
-{
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    int n,m;cin>>n>>m;
-    for(int i=0;i<m;i++)
-    {
-        int u,v,w;cin>>u>>v>>w;
-        g[u].push_back({v,w});
-    }
-    memset(dist,-0x3f,sizeof dist);
-    dist[1]=0;
-    queue<int>q;
-    q.push(1);
-    while(q.size())
-    {
-        int x=q.front();q.pop();
-        for(auto[v,w]:g[x])
-        {
-            if(dist[v]<dist[x]+w)
-            {
-                dist[v]=dist[x]+w;
-                q.push(v);
-            }
-        }
-    }
-    if(dist[n]<-1e9)cout<<-1;
-    else cout<<dist[n];
-    return 0;
-}
+// #include<bits/stdc++.h>
+// using namespace std;
+// const int N=1e3+666;
+// int dist[N];
+// struct edge
+// {
+//     int to,w;
+// };
+// vector<edge>g[N];
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     int n,m;cin>>n>>m;
+//     for(int i=0;i<m;i++)
+//     {
+//         int u,v,w;cin>>u>>v>>w;
+//         g[u].push_back({v,w});
+//     }
+//     memset(dist,-0x3f,sizeof dist);
+//     dist[1]=0;
+//     queue<int>q;
+//     q.push(1);
+//     while(q.size())
+//     {
+//         int x=q.front();q.pop();
+//         for(auto[v,w]:g[x])
+//         {
+//             if(dist[v]<dist[x]+w)
+//             {
+//                 dist[v]=dist[x]+w;
+//                 q.push(v);
+//             }
+//         }
+//     }
+//     if(dist[n]<-1e9)cout<<-1;
+//     else cout<<dist[n];
+//     return 0;
+// }
+
+

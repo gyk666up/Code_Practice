@@ -55,25 +55,47 @@
 // }
 
 
-//没什么大问题 
+// //没什么大问题 
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// int n;
+// const int N=52;
+// int a[N];
+// const int p=1e9+7;
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n;
+//     for(int i=1;i<=n;i++)cin>>a[i];
+//     sort(a+1,a+1+n);//这个是关键
+//     int res=1;
+//     for(int i=1;i<=n;i++)
+//     {
+//         res*=a[i]-i+1;
+//         res%=p;
+//     }
+//     cout<<res;
+//     return 0;
+// }
+
 #include<bits/stdc++.h>
 using namespace std;
 #define int long long
-int n;
-const int N=52;
-int a[N];
 const int p=1e9+7;
+const int N=60;
+int n;
+int a[N];
 signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>n;
     for(int i=1;i<=n;i++)cin>>a[i];
-    sort(a+1,a+1+n);//这个是关键
+    sort(a+1,a+1+n);
     int res=1;
     for(int i=1;i<=n;i++)
     {
-        res*=a[i]-i+1;
-        res%=p;
+        res=(res*(a[i]-(i-1)))%p;
     }
     cout<<res;
     return 0;

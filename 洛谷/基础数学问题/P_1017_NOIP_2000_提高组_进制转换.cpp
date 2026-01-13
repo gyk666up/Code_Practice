@@ -28,7 +28,7 @@
 //除法（a / b）：结果向零取整（直接截断小数部分,截断小数部分，向 0 的方向靠近)
 //由于除数为负且余数的绝对值必定小于除数的绝对值，所以余数减除数必定不为负。因此当余数为负时只需将商加 1，余数减除数就可以了。
 
-
+//下面的方法好理解，本质上一致的
 // #include<bits/stdc++.h>
 // using namespace std;
 // int n,m;
@@ -89,3 +89,141 @@
 // }
 
 
+
+// #include<bits/stdc++.h>
+// using namespace std;
+// int n,r;
+// void solve()
+// {
+//     int l
+//     while(n)
+//     {
+//         n
+//     }
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>r;
+//     solve();
+
+//     return 0;
+// }
+
+
+//余数不能为负，负了就加 |R|，并修正商
+//负进制 = 除基取余 + 余数修正
+
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+//     int n, R;
+//     cin >> n >> R;
+
+//     int orig = n;
+//     int base = R;
+//     vector<int> digit;
+
+//     if (n == 0)
+//         digit.push_back(0);
+
+//     while (n != 0)
+//     {
+//         int r = n % R;
+//         //负数
+//         if (r < 0)
+//         {
+//             r += abs(R);
+//             n = (n - r) / R;
+//         }
+//         //这就是以前经常写的正数
+//         else
+//         {
+//             n /= R;
+//         }
+//         digit.push_back(r);
+//     }
+
+//     cout << orig << "=";
+//     for (int i = digit.size() - 1; i >= 0; i--)
+//     {
+//         if (digit[i] < 10) cout << char('0' + digit[i]);
+//         else cout << char('A' + digit[i] - 10);
+//     }
+//     cout << "(base" << base << ")";
+// }
+
+
+// #include<bits/stdc++.h>
+// using namespace std;
+// int main()
+// {
+//     //有这一行代码的话 printf和cout就不要混用了，否则会导致输出乱序
+//     //ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     int n,R;cin>>n>>R;
+//     int origin=n;
+//     vector<int>digit;
+//     if(n==0)digit.push_back(0);
+//     while(n!=0)
+//     {
+//         int r=n%R;
+//         if(r<0)
+//         {
+//             r+=abs(R);//向高位接一个
+//             n=(n-r)/R;
+//         }
+//         else
+//         {
+//             n/=R;
+//         }
+//         digit.push_back(r);
+//     }
+//     printf("%d=",origin);
+//     for(int i=digit.size()-1;i>=0;i--)
+//     {
+//         if(digit[i]>=10)cout<<char(digit[i]-10+'A');
+//         else cout<<digit[i];
+//     }
+
+//     printf("(base%d)",R);
+//     return 0;
+// }
+
+
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+    int x,R;cin>>x>>R;
+    int origin=x;
+    vector<int>digit;
+    while(x!=0)
+    {
+        int r=x%R;
+        if(r<0)
+        {
+            r+=abs(R);
+            x=(x-r)/R;
+
+            digit.push_back(r);
+        }
+        else
+        {
+            x/=R;
+            digit.push_back(r);
+        }
+    }
+    cout<<origin<<"=";
+    for(int i=digit.size()-1;i>=0;i--)
+    {
+        if(digit[i]<10)
+        cout<<digit[i];
+        else cout<<(char)(digit[i]-10+'A');
+    }
+    cout<<"(base"<<R<<")";
+    return 0;
+}
