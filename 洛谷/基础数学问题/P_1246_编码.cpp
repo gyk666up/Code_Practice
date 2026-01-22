@@ -59,7 +59,6 @@
 //     {
 //         sum1+=C(26,k);
 //     }
-
 //     //计算当前长度下，比该单词更小的组合数之(sum2) 这段代码好好理解一下
 //     //字母是严格升序的，也就是说不存在adc这种情况
 //     int sum2=0;
@@ -86,24 +85,183 @@
 
 
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// int C(int n,int m)
+// {
+//     if(n==m||m==0)return 1;
+//     else if(n<m)return 0;
+
+//     long long res=1;
+//     for(int i=1;i<=m;i++)
+//     res=res*(n-m+i)/i;
+//     return res;
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     string s;cin>>s;
+//     int len=s.size();
+//     for(int i=1;i<len;i++)
+//     {
+//         if(s[i]<=s[i-1])
+//         {
+//             cout<<"0";
+//             return 0;
+//         }
+//     }
+
+//     //选长度比它短短
+//     int sum1=0;
+//     for(int i=1;i<len;i++)
+//     {
+//         sum1+=C(26,i);
+//     }
+
+//     //长度一样长的
+//     int sum2=0;
+//     int prev=-1;
+//     for(int i=0;i<len;i++)
+//     {
+//         int curr=s[i]-'a'; //（0～25）
+//         //当前字母是j 后面还有25-（j+1）+1（得比j大）
+//         //总共选len个字母 已经选了 i+1个还有len-i-1
+//         for(int j=prev+1;j<curr;j++)
+//         {
+//             sum2+=C(26-j-1,len-1-i);
+//         }
+//         prev=curr;//!!!
+//     }
+//     cout<<sum1+sum2+1<<endl;
+//     return 0;
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//思路 字符串比他短的都在他前面 +和他一样长的但比他小的
+//哎！还是没写出来 2026/1/13
+// #include<bits/stdc++.h>
+// using namespace std;
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     string s;cin>>s;
+//     int len=s.size();
+//     if(len>6)
+//     {
+//         cout<<0;
+//         return 0;
+//     }
+//     for(int i=0;i<len-1;i++)
+//     {
+
+//     }
+//     int pre=s[0];
+//     for(int i=0;i<len;i++)
+//     {
+
+//     }
+//     return 0;
+// }
+
+
+
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// int C(int n,int m)
+// {
+//     if(m==0||n==m)return 1;
+//     if(n<m)return 0;
+//     if(n-m<m)m=n-m;
+
+//     int res=1;
+//     for(int i=1;i<=m;i++)
+//     res=res*(n-m+i)/i;
+
+//     return res;
+// }
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     string s;cin>>s;
+//     int len=s.size();
+//     for(int i=1;i<len;i++)
+//     {
+//         if(s[i]<=s[i-1])
+//         {
+//             cout<<"0";
+//             return 0;
+//         }
+//     }
+//     int sum1=0;
+//     //长度比len小的都在其前面  
+//     //这里枚举的是长度 因此是从1到len-1
+//     for(int i=1;i<=len-1;i++)
+//     {
+//         sum1+=C(26,i);
+//     }
+
+//     int sum2=0;
+//     int prev=-1;//将26个字母转换为0～25
+
+//     for(int i=0;i<len;i++)
+//     {
+//         int curr=s[i]-'a';
+//         //j确定了 之后还要从25-j 已经选了i+1个 还要选len-i-1个
+//         for(int j=prev+1;j<curr;j++)
+//         {
+//             sum2+=C(25-j,len-i-1);
+//         }
+//         prev=curr;
+//     }
+//     cout<<sum1+sum2+1;
+
+//     return 0;
+// }
+
 #include<bits/stdc++.h>
 using namespace std;
+#define int long long
 int C(int n,int m)
 {
     if(n==m||m==0)return 1;
-    else if(n<m)return 0;
-
-    long long res=1;
+    if(n<m)return 0;
+    if(n-m<m)m=n-m;
+    
+    int res=1;
     for(int i=1;i<=m;i++)
     res=res*(n-m+i)/i;
+
     return res;
 }
-int main()
+signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     string s;cin>>s;
     int len=s.size();
-    for(int i=1;i<len;i++)
+    for(int i=1;i<s.size();i++)
     {
         if(s[i]<=s[i-1])
         {
@@ -111,50 +269,24 @@ int main()
             return 0;
         }
     }
-
-    //选长度比它短短
-    int sum1=0;
-    for(int i=1;i<len;i++)
+    int ans=0;
+    for(int i=1;i<=len-1;i++)
     {
-        sum1+=C(26,i);
+        ans+=C(26,i);
     }
 
-    //长度一样长的
-    int sum2=0;
     int prev=-1;
     for(int i=0;i<len;i++)
     {
-        int curr=s[i]-'a'; //（0～25）
-        //当前字母是j 后面还有25-（j-1）+1（得比j大）
-        //总共选len个字母 已经选了 i+1个还有len-i-1
+        int curr=s[i]-'a';
+
         for(int j=prev+1;j<curr;j++)
         {
-            sum2+=C(26-j-1,len-1-i);
+            ans+=C(25-j,len-i-1);
         }
-        prev=curr;//!!!
+
+        prev=curr;
     }
-    cout<<sum1+sum2+1<<endl;
+    cout<<ans+1;
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

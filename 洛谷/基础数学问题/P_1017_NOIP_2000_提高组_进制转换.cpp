@@ -192,37 +192,30 @@
 //     return 0;
 // }
 
-
 #include<bits/stdc++.h>
 using namespace std;
 int main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    int x,R;cin>>x>>R;
-    int origin=x;
+    int n,R;cin>>n>>R;
+    int origin=n;
     vector<int>digit;
-    while(x!=0)
+    while(n)
     {
-        int r=x%R;
+        int r=n%R;
         if(r<0)
         {
             r+=abs(R);
-            x=(x-r)/R;
-
-            digit.push_back(r);
+            n-=r;
         }
-        else
-        {
-            x/=R;
-            digit.push_back(r);
-        }
+        digit.push_back(r);
+        n/=R;
     }
     cout<<origin<<"=";
     for(int i=digit.size()-1;i>=0;i--)
     {
-        if(digit[i]<10)
-        cout<<digit[i];
-        else cout<<(char)(digit[i]-10+'A');
+        if(digit[i]>=10)cout<<(char)(digit[i]-10+'A');
+        else cout<<digit[i];
     }
     cout<<"(base"<<R<<")";
     return 0;

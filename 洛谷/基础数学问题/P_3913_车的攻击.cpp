@@ -67,23 +67,44 @@
 // }
 
 
-//2025/12/19 这个方法更好 上面的太麻烦
-//不过要注意  如果要使用set的话太慢会有几个点会被卡住，unordered_set更快
+// //2025/12/19 这个方法更好 上面的太麻烦
+// //不过要注意  如果要使用set的话太慢会有几个点会被卡住，unordered_set更快
+// #include<bits/stdc++.h>
+// using namespace std;
+// int n,k;
+// unordered_set<int>row;//统计不同的行和列的数量
+// unordered_set<int>col;
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>k;
+//     for(int i=1;i<=k;i++)
+//     {
+//         int x,y;cin>>x>>y;
+//         row.insert(x);
+//         col.insert(y);
+//     }
+//     cout<<(row.size()+col.size())*n-row.size()*col.size();
+//     return 0;
+// }
+
+
+
 #include<bits/stdc++.h>
 using namespace std;
-int n,k;
-unordered_set<int>row;//统计不同的行和列的数量
-unordered_set<int>col;
 int main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    cin>>n>>k;
-    for(int i=1;i<=k;i++)
+    int n,k;cin>>n>>k;
+    unordered_set<int>rows;//set会被卡
+    unordered_set<int>cols;
+    for(int i=0;i<k;i++)
     {
-        int x,y;cin>>x>>y;
-        row.insert(x);
-        col.insert(y);
+        int r,c;cin>>r>>c;
+        rows.insert(r);
+        cols.insert(c);
     }
-    cout<<(row.size()+col.size())*n-row.size()*col.size();
+    cout<<(rows.size()+cols.size())*n-rows.size()*cols.size();
+
     return 0;
 }

@@ -62,3 +62,57 @@
 
 
 
+//最后一个点tl
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// int x,y;
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>x>>y;
+//     int ans=0;
+//     while(x&&y)
+//     {
+//         if(x==y)
+//         {
+//             ans+=4*x;
+//             break;
+//         }
+//         if(x<y)
+//         {
+//             ans+=4*x;
+//             y-=x;
+//         }
+//         else if(y<x)
+//         {
+//             ans+=4*y;
+//             x-=y;
+//         }
+//     }
+//     cout<<ans;
+//     return 0;
+// }
+
+#include<bits/stdc++.h>
+using namespace std;
+#define int long long
+signed main()
+{
+    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+    int x,y;cin>>x>>y;
+    int ans=0;
+    while(x&&y)
+    {
+        if(x<y)
+        {
+            ans+=4*x*(y/x),y%=x;
+        }
+        else    
+        {
+            ans+=4*y*(x/y),x%=y;
+        }
+    }
+    cout<<ans;
+    return 0;
+}

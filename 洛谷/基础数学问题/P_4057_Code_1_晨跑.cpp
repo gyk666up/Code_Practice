@@ -71,22 +71,42 @@
 // }
 
 
-//这道题掌握的不好 不知道三个数的最小公倍数该怎么求->先求其中两个数字的最小公倍数
+// //这道题掌握的不好 不知道三个数的最小公倍数该怎么求->先求其中两个数字的最小公倍数
+// #include<bits/stdc++.h>
+// using namespace std;
+// int gcd(int x,int y)
+// {
+//     if(y==0)return x;
+//     return gcd(y,x%y);
+// }
+// int lcm(int x,int y)
+// {
+//     return x*y/gcd(x,y);
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     //三个数的最小公倍数
+//     int a,b,c;cin>>a>>b>>c;
+//     cout<<lcm(a,lcm(b,c));
+// }
+
 #include<bits/stdc++.h>
 using namespace std;
-int gcd(int x,int y)
+#define int long long
+int __gcd(int x,int y)
 {
     if(y==0)return x;
-    return gcd(y,x%y);
+    return __gcd(y,x%y);
 }
 int lcm(int x,int y)
 {
-    return x*y/gcd(x,y);
+    return x*y/__gcd(x,y);
 }
-int main()
+signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    //三个数的最小公倍数
     int a,b,c;cin>>a>>b>>c;
     cout<<lcm(a,lcm(b,c));
+    return 0;
 }

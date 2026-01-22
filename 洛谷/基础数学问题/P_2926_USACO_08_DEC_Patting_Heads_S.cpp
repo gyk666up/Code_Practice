@@ -74,33 +74,72 @@
 
 
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// const int N=1e6+11;
+// int cnt[N];
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     int n;cin>>n;
+//     vector<int>A(n,0);
+//     for(int i=0;i<n;i++)
+//     {
+//         cin>>A[i];
+//         cnt[A[i]]++;
+//     }
+//     for(int x:A)
+//     {
+//         //寻找x的因数 两个因数一个一定>=sqrt(x),一个<=sqrt(x)
+//         int ans=0;//统计最后的拍头次数
+//         for(int i=1;i*i<=x;i++)
+//         {
+//             if(x%i==0)
+//             {
+//                 ans+=cnt[i];
+//                 if(i!=x/i)ans+=cnt[x/i];
+//             }
+//         }
+//         //减去自身
+//         ans--;
+//         cout<<ans<<endl;
+//     }
+
+//     return 0;
+// }
+
+
+
 #include<bits/stdc++.h>
 using namespace std;
-const int N=1e6+11;
-int cnt[N];
+int n;
+const int N=1000005;
+int a[N],cnt[N];
 int main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    int n;cin>>n;
-    vector<int>A(n,0);
-    for(int i=0;i<n;i++)
+    cin>>n;
+    for(int i=1;i<=n;i++)
     {
-        cin>>A[i];
-        cnt[A[i]]++;
+        cin>>a[i];
+        cnt[a[i]]++;
     }
-    for(int x:A)
+    for(int i=1;i<=n;i++)
     {
-        //寻找x的因数 两个因数一个一定>=sqrt(x),一个<=sqrt(x)
-        int ans=0;//统计最后的拍头次数
-        for(int i=1;i*i<=x;i++)
+        int x=a[i];
+        int ans=0;
+        for(int d=1;d*d<=x;d++)
         {
-            if(x%i==0)
+            if(x%d==0)
             {
-                ans+=cnt[i];
-                if(i!=x/i)ans+=cnt[x/i];
+                ans+=cnt[d];
+                if(x/d!=d)
+                {
+                ans+=cnt[x/d];
+                }
             }
+            
         }
-        //减去自身
         ans--;
         cout<<ans<<endl;
     }

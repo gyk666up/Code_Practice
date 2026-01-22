@@ -56,33 +56,35 @@
 
 
 
-//这道题掌握的不太好
-//有个结论 x*y==最大公约数*最小公倍数
-#include<bits/stdc++.h>
-using namespace std;
-int p,q;
-int gcd(int x,int y)
-{
-    if(y==0)return x;
-    return gcd(y,x%y);
-}
-int main()
-{
-    ios::sync_with_stdio(0),cin.tie(0),cin.tie(0);
-    int x,y;cin>>x>>y;
-    y*=x;
-    int ans=0;
-    for(int i=1;i<=sqrt(y);i++)
-    {
-        //p=i，q=y/i 可以交换，所以是两种情况
-        //枚举所有可能的 (P, Q) 乘积组合。
-        if(y%i==0&&__gcd(y/i,i)==x)//C++函数库里面有这个__gcd函数
-        {
-            if(y/i!=i)ans+=2;
-            else ans++;
-        }
-    }
-    cout<<ans;
+// //这道题掌握的不太好
+// //有个结论 x*y==最大公约数*最小公倍数
+// #include<bits/stdc++.h>
+// using namespace std;
+// int p,q;
+// int gcd(int x,int y)
+// {
+//     if(y==0)return x;
+//     return gcd(y,x%y);
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cin.tie(0);
+//     int x,y;cin>>x>>y;
+//     y*=x;
+//     int ans=0;
+//     for(int i=1;i<=sqrt(y);i++)
+//     {
+//         //p=i，q=y/i 可以交换，所以是两种情况
+//         //枚举所有可能的 (P, Q) 乘积组合。
+//         if(y%i==0&&__gcd(y/i,i)==x)//C++函数库里面有这个__gcd函数
+//         {
+//             if(y/i!=i)ans+=2;
+//             else ans++;
+//         }
+//     }
+//     cout<<ans;
     
-    return 0;
-}
+//     return 0;
+// }
+
+
