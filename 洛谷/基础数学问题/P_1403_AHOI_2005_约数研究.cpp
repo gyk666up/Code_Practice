@@ -68,6 +68,7 @@
 // }
 
 
+
 #include<bits/stdc++.h>
 using namespace std;
 const int N=1e6+11;
@@ -76,15 +77,17 @@ int main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     int n;cin>>n;
-    int ans=0;
+    for(int i=1;i<=n;i++)csin>>a[i];
+    int s=0;
     for(int i=1;i<=n;i++)
     {
         for(int j=i;j<=n;j+=i)
         {
             a[j]++;
         }
-        ans+=a[i];
+        s+=a[i];
     }
-    cout<<ans;
+    cout<<s;
+
     return 0;
 }

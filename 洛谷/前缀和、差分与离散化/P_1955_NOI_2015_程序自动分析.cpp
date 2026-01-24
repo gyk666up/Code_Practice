@@ -195,11 +195,15 @@
 // }
 
 
+
+
+//这道题还是不会
 #include<bits/stdc++.h>
 using namespace std;
+typedef pair<int,int>PII;
+vector<PII>eq;
+vector<PII>neq;
 vector<int>all;
-vector<pair<int,int>>eq;
-vector<pair<int,int>>neq;
 const int N=2e5+11;
 int fa[N];
 int find(int x)
@@ -210,7 +214,7 @@ int find(int x)
 void merge(int x,int y)
 {
     int xx=find(x),yy=find(y);
-    if(xx==yy)return;
+    if(xx==yy)return ;
     fa[yy]=xx;
 }
 int discretize(int x)
@@ -223,42 +227,50 @@ int main()
     int t;cin>>t;
     while(t--)
     {
+        eq.clear();
+        neq.clear();
+        all.clear();
         int n;cin>>n;
-        all.clear();neq.clear();eq.clear();
         for(int i=0;i<n;i++)
         {
-            int x,y,z;cin>>x>>y>>z;
-            if(z==1)eq.push_back({x,y});
-            else if(z==0)neq.push_back({x,y});
-            all.push_back(x);
-            all.push_back(y);
+            int a,b,e;cin>>a>>b>>e;
+            if(e==1)
+            {
+                eq.push_back({a,b});
+            }
+            else
+            neq.push_back({a,b});
+
+            all.push_back(a);
+            all.push_back(b);
         }
         sort(all.begin(),all.end());
-    all.erase(unique(all.begin(),all.end()),all.end());
-    int m=all.size();
-    //这行代码容易忘记！！！
-    for(int i=1;i<=m;i++)fa[i]=i;
-    for(int i=0;i<eq.size();i++)
-    {
-        int x=discretize(eq[i].first);
-        int y=discretize(eq[i].second);
-        merge(x,y);
-    }
-    bool flg=1;
-    for(int i=0;i<neq.size();i++)
-    {
-        int x=discretize(neq[i].first);
-        int y=discretize(neq[i].second);
-        if(find(x)==find(y))
+
+        all.erase(unique(all.begin(),all.end()),all.end());
+
+        int m=all.size();
+        for(int i=1;i<=m;i++)fa[i]=i;//并查集注意初始化
+        for(int i=0;i<eq.size();i++)
         {
-            flg=0;
-            break;
+            int x=discretize(eq[i].first);
+            int y=discretize(eq[i].second);
+            merge(x,y);
         }
+
+        bool flg=1;
+        for(int i=0;i<neq.size();i++)
+        {
+            int x=discretize(neq[i].first);
+            int y=discretize(neq[i].second);
+
+            if(find(x)==find(y))
+            {
+                flg=0;
+                break;
+            }
+        }
+        if(flg)cout<<"YES\n";
+        else cout<<"NO\n";
     }
-    if(flg)cout<<"YES\n";
-    else cout<<"NO\n";
-    }
-    
-    
     return 0;
 }

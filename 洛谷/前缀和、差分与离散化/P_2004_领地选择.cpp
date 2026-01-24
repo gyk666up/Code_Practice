@@ -112,18 +112,58 @@
 
 
 
-//注意下面的那一行代码很关键，很重要
+// //注意下面的那一行代码很关键，很重要
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// const int N=1e3+22;
+// int prefix[N][N];
+// int a[N][N];
+// int n,m,c;
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m>>c;
+//     for(int i=1;i<=n;i++)
+//     {
+//         for(int j=1;j<=m;j++)
+//         {
+//             cin>>a[i][j];
+//             prefix[i][j]=prefix[i-1][j]+prefix[i][j-1]-prefix[i-1][j-1]+a[i][j];
+//         }
+//     }
+    
+//     int ans=0;
+//     int I=-1,J=-1;
+//     for(int x1=1;x1<=n;x1++)
+//     {
+//         for(int y1=1;y1<=m;y1++)
+//         {
+//             int x2=x1+c-1;int y2=y1+c-1;
+//             int temp=prefix[x2][y2]+prefix[x1-1][y1-1]-prefix[x2][y1-1]-prefix[x1-1][y2];
+//             if(x2>n||y2>m)break;
+//             if(temp>ans)
+//             {
+//                 ans=temp;
+//                 I=x1;
+//                 J=y1;
+//             }
+//         }
+//     }
+//     cout<<I<<" "<<J;
+//     return 0;
+// }
+
+
 #include<bits/stdc++.h>
 using namespace std;
 #define int long long
-const int N=1e3+22;
-int prefix[N][N];
-int a[N][N];
-int n,m,c;
+const int N=1e3+66;
+int a[N][N],prefix[N][N];
 signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    cin>>n>>m>>c;
+    int n,m,c;cin>>n>>m>>c;
     for(int i=1;i<=n;i++)
     {
         for(int j=1;j<=m;j++)
@@ -132,24 +172,23 @@ signed main()
             prefix[i][j]=prefix[i-1][j]+prefix[i][j-1]-prefix[i-1][j-1]+a[i][j];
         }
     }
-    
+    int best_i=-1,best_j=-1;
     int ans=0;
-    int I=-1,J=-1;
     for(int x1=1;x1<=n;x1++)
     {
-        for(int y1=1;y1<=m;y1++)
+        for(int y1=1;y1<=n;y1++)
         {
-            int x2=x1+c-1;int y2=y1+c-1;
+            int x2=x1+c-1,y2=y1+c-1;
+            if(x2>n||y2>m)break;//注意这行代码
             int temp=prefix[x2][y2]+prefix[x1-1][y1-1]-prefix[x2][y1-1]-prefix[x1-1][y2];
-            if(x2>n||y2>m)break;
-            if(temp>ans)
+            
+            if(ans<temp)
             {
                 ans=temp;
-                I=x1;
-                J=y1;
+                best_i=x1,best_j=y1;
             }
         }
     }
-    cout<<I<<" "<<J;
+    cout<<best_i<<" "<<best_j;
     return 0;
 }

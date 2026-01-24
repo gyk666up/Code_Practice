@@ -230,9 +230,115 @@
 
 
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// struct cow
+// {
+//     int x,id;
+//     bool operator<(const cow&u)
+//     {
+//         return x<u.x;
+//     }
+// };
+// int n;
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n;
+//     vector<cow>cows(n);
+//     //注意multiset 只有这个集合是可以允许多个一样的值存在的 其他的集合都会自动去重
+//     set<int>kinds;
+//     for(int i=0;i<n;i++)
+//     {
+//         cin>>cows[i].x>>cows[i].id;
+//         kinds.insert(cows[i].id);
+//     }
+//     int m=kinds.size();
+//     sort(cows.begin(),cows.end());
+//     int l=0;
+//     map<int,int>mp;//统计窗口中不同品种的数量
+//     int curr_kind=0;
+//     int ans=0x3f3f3f3f;
+//     for(int r=0;r<n;r++)
+//     {
+//         //这里面的代码顺序很重要
+//         int x=cows[r].x;
+//         int id=cows[r].id;
+
+//         if(mp[id]==0)curr_kind++;
+//         mp[id]++;
+
+//         //先变化最后在移动
+//         while(curr_kind==m)
+//         {
+//             mp[cows[l].id]--;
+//             ans=min(ans,cows[r].x-cows[l].x);
+
+//             if(mp[cows[l].id]==0)curr_kind--;
+
+//             l++;
+//         }
+//     }
+//     cout<<ans<<endl;
+//     return 0;
+// }
+
+
+// //这道题也不熟
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// struct cow
+// {
+//     int x,id;
+//     bool operator<(const cow&u)
+//     {
+//         return x<u.x;
+//     }
+// };
+// int n;
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n;
+//     vector<cow>cows(n);
+//     set<int>kinds;
+//     for(int i=0;i<n;i++)
+//     {
+//         cin>>cows[i].x>>cows[i].id;
+//         kinds.insert(cows[i].id);
+//     }
+//     sort(cows.begin(),cows.end());
+//     int k=kinds.size();
+
+//     int curr_kinds=0;
+//     map<int,int>mp;//统计窗口中不同品种的数量
+//     int l=0;
+//     int ans=0x3f3f3f3f;
+//     for(int r=0;r<n;r++)
+//     {
+//         int x=cows[r].x;
+//         int id=cows[r].id;
+//         if(mp[id]==0)curr_kinds++;
+//         mp[id]++;
+
+//         while(curr_kinds==k)
+//         {
+//             mp[cows[l].id]--;
+//             ans=min(cows[r].x-cows[l].x,ans);
+//             if(mp[cows[l].id]==0)curr_kinds--;
+
+//             l++;
+//         }
+//     }
+//     cout<<ans;
+//     return 0;
+// }
+
 #include<bits/stdc++.h>
 using namespace std;
-#define int long long
+const int N=5e4+66;
 struct cow
 {
     int x,id;
@@ -241,13 +347,11 @@ struct cow
         return x<u.x;
     }
 };
-int n;
-signed main()
+int main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    cin>>n;
+    int n;cin>>n;
     vector<cow>cows(n);
-    //注意multiset 只有这个集合是可以允许多个一样的值存在的 其他的集合都会自动去重
     set<int>kinds;
     for(int i=0;i<n;i++)
     {
@@ -257,29 +361,26 @@ signed main()
     int m=kinds.size();
     sort(cows.begin(),cows.end());
     int l=0;
-    map<int,int>mp;//统计窗口中不同品种的数量
-    int curr_kind=0;
+    int curr_kinds=0;
+    map<int,int>mp;
     int ans=0x3f3f3f3f;
     for(int r=0;r<n;r++)
     {
-        //这里面的代码顺序很重要
-        int x=cows[r].x;
         int id=cows[r].id;
-
-        if(mp[id]==0)curr_kind++;
+        if(mp[id]==0)curr_kinds++;
         mp[id]++;
 
-        //先变化最后在移动
-        while(curr_kind==m)
-        {
-            mp[cows[l].id]--;
-            ans=min(ans,cows[r].x-cows[l].x);
 
-            if(mp[cows[l].id]==0)curr_kind--;
+        while(curr_kinds==m)
+        {
+            ans=min(ans,cows[r].x-cows[l].x);
+            mp[cows[l].id]--;
+            if(mp[cows[l].id]==0)curr_kinds--;
 
             l++;
         }
     }
-    cout<<ans<<endl;
+    cout<<ans;
+    
     return 0;
 }

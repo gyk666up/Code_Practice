@@ -46,16 +46,16 @@
 // }
 
 
+
 #include<bits/stdc++.h>
 using namespace std;
-const int N=125;
+const int N=122;
 int a[N][N];
 int prefix[N][N];
-int n;
 int main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    cin>>n;
+    int n;cin>>n;
     for(int i=1;i<=n;i++)
     {
         for(int j=1;j<=n;j++)
@@ -64,7 +64,6 @@ int main()
             prefix[i][j]=prefix[i-1][j]+prefix[i][j-1]-prefix[i-1][j-1]+a[i][j];
         }
     }
-
     int ans=0;
     for(int x1=1;x1<=n;x1++)
     {
