@@ -147,97 +147,103 @@
 
 
 
+
 // #include<bits/stdc++.h>
 // using namespace std;
-// const int N=1e5+66;
+// struct node
+// {
+//     //函数值。 第几个函数。 当前的x
+//     int val,id,idx;
+//     node(int v,int i,int idx):val(v),id(i),idx(idx){};
+//     bool operator<(const node&u)const
+//     {
+//         return val>u.val;
+//     }
+// };
+// const int N=1e4+66;
 // int A[N],B[N],C[N];
 // int main()
 // {
 //     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
 //     int n,m;cin>>n>>m;
-//     priority_queue<int>q;
+//     priority_queue<node>q;
 //     for(int i=1;i<=n;i++)
 //     {
 //         cin>>A[i]>>B[i]>>C[i];
-//         //找m个函数值
-//         for(int j=1;j<=m;j++)
-//         {
-//             int val=A[i]*j*j+B[i]*j+C[i];
-//             if(i==1)q.push(val);
-//             else
-//             {
-//                 if(val<q.top())
-//                 {
-//                     q.push(val);
-//                     q.pop();
-//                 }
-//                 else break;//函数是递增的 当前的不可能之后的更不可能（对于同一个函数）
-//             }
-//         }
 //     }
-//     vector<int>res(m);
-//     for(int i=0;i<m;i++)
+
+//     //对于每个函数第一个值肯定是最小的
+//     for(int i=1;i<=n;i++)
 //     {
-//         res[i]=q.top();q.pop();
+//         int val=A[i]*1+B[i]*1+C[i];
+//         q.emplace(val,i,1);
 //     }
-//     for(int i=m-1;i>=0;i--)
+
+//     //注意这两个的区别
+//     //vector<int>res(m);
+//     vector<int>res;//取前m个
+//     for(int i=1;i<=m;i++)
 //     {
-//         cout<<res[i]<<" ";
+//         node top=q.top();q.pop();
+//         res.push_back(top.val);
+
+
+//         //保证每个函数有一个函数值
+//         int next=top.idx+1;
+//         int val=A[top.id]*next*next+B[top.id]*next+C[top.id];
+//         q.emplace(val,top.id,next);
+//     }
+// // 你初始化了大小为 m 的 vector：cpp运行
+// // vector<int> res(m); // 初始包含m个默认值0的元素
+// // 但后续用res.push_back(top.val)添加元素，这会导致：
+// // res 前 m 个元素是初始的 0，后 m 个元素是正确的函数值；
+// // 最后输出res[i]（i 从 0 到 m-1）时，实际输出的是前 m 个 0，而非正确结果。
+//     for(int i=0;i<m;i++)cout<<res[i]<<" ";
+//     return 0;
+// }
+
+
+
+// //不要担心参数多，参数多其实本质上来讲更容易
+// #include<bits/stdc++.h>
+// using namespace std;
+// struct node
+// {
+//     int a,b,c;
+//     int val;
+//     int x;
+//     node(int a,int b,int c,int val,int x){this->a=a,this->b=b,this->c=c,this->val=val,this->x=x;};
+//     bool operator< (const node &u)const//两个const缺一不可
+//     {
+//         return val>u.val;
+//     }
+//     //小数在前
+// };
+// //priority_queue<node,vector<node>,greater<node>>q; 这个不能直接用
+// priority_queue<node>q;
+// int n,m;
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m;
+//     for(int i=1;i<=n;i++)
+//     {
+//         int a,b,c;cin>>a>>b>>c;
+//         int val=a*1+b+c;
+//         q.emplace(a,b,c,val,1);
+//     }
+//     int cnt=0;
+//     while(cnt<m)
+//     {
+//         cnt++;
+//         cout<<q.top().val<<" ";
+//         int nex=q.top().x+1;
+//         int a=q.top().a,b=q.top().b,c=q.top().c;//先把a，b,c表示出来，否则q.pop() 再利用q.top()来表示abc 就会出错
+//         q.pop();//注意这个问题
+//         int val=a*nex*nex+b*nex+c;
+//         q.emplace(a,b,c,val,nex);
 //     }
 //     return 0;
 // }
 
 
-#include<bits/stdc++.h>
-using namespace std;
-struct node
-{
-    //函数值。 第几个函数。 当前的x
-    int val,id,idx;
-    node(int v,int i,int idx):val(v),id(i),idx(idx){};
-    bool operator<(const node&u)const
-    {
-        return val>u.val;
-    }
-};
-const int N=1e4+66;
-int A[N],B[N],C[N];
-int main()
-{
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    int n,m;cin>>n>>m;
-    priority_queue<node>q;
-    for(int i=1;i<=n;i++)
-    {
-        cin>>A[i]>>B[i]>>C[i];
-    }
-
-    //对于每个函数第一个值肯定是最小的
-    for(int i=1;i<=n;i++)
-    {
-        int val=A[i]*1+B[i]*1+C[i];
-        q.emplace(val,i,1);
-    }
-
-    //注意这两个的区别
-    //vector<int>res(m);
-    vector<int>res;//取前m个
-    for(int i=1;i<=m;i++)
-    {
-        node top=q.top();q.pop();
-        res.push_back(top.val);
-
-
-        //保证每个函数有一个函数值
-        int next=top.idx+1;
-        int val=A[top.id]*next*next+B[top.id]*next+C[top.id];
-        q.emplace(val,top.id,next);
-    }
-// 你初始化了大小为 m 的 vector：cpp运行
-// vector<int> res(m); // 初始包含m个默认值0的元素
-// 但后续用res.push_back(top.val)添加元素，这会导致：
-// res 前 m 个元素是初始的 0，后 m 个元素是正确的函数值；
-// 最后输出res[i]（i 从 0 到 m-1）时，实际输出的是前 m 个 0，而非正确结果。
-    for(int i=0;i<m;i++)cout<<res[i]<<" ";
-    return 0;
-}

@@ -56,11 +56,14 @@
 
 
 
+
 // 双堆法的本质是把所有已输入的元素，分成「左半部分」和「右半部分」：
 // 大根堆（max_heap）：专门存「左半部分的元素」—— 这些元素是所有元素里较小的一半。
 // 大根堆的堆顶是「左半部分最大的元素」（因为大根堆的特性是 “顶最大”）。
 // 小根堆（min_heap）：专门存「右半部分的元素」—— 这些元素是所有元素里较大的一半。
 // 小根堆的堆顶是「右半部分最小的元素」（因为小根堆的特性是 “顶最小”）。
+
+//这个思路不好，用下面的那个思路
 // #include<bits/stdc++.h>
 // using namespace std;
 
@@ -94,37 +97,102 @@
 
 
 
+
+
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// const int N = 1e5 + 11;
+// int n;
+
+// // 左边：大根堆，维护较小的一半
+// priority_queue<int> mi_queue;
+
+// // 右边：小根堆，维护较大的一半
+// priority_queue<int, vector<int>, greater<int>> ma_queue;
+
+// int main()
+// {
+//     ios::sync_with_stdio(0);
+//     cin.tie(0);
+
+//     cin >> n;
+//     for(int i = 1; i <= n; i++)
+//     {
+//         int x;
+//         cin >> x;
+
+//         // ① 压入阶段：先判断放哪一个堆
+//         if(mi_queue.empty() || x <= mi_queue.top())
+//             mi_queue.push(x);
+//         else
+//             ma_queue.push(x);
+
+//         // ② 调整大小关系
+//         // 保证 mi_queue.size() == ma_queue.size() 或多 1
+//         if(mi_queue.size() > ma_queue.size() + 1)
+//         {
+//             ma_queue.push(mi_queue.top());
+//             mi_queue.pop();
+//         }
+//         else if(ma_queue.size() > mi_queue.size())
+//         {
+//             mi_queue.push(ma_queue.top());
+//             ma_queue.pop();
+//         }
+
+//         // ③ 奇数次输出中位数
+//         if(i % 2 == 1)
+//         {
+//             cout << mi_queue.top() << '\n';
+//         }
+//     }
+
+//     return 0;
+// }
+
+// //以后都按照这个末班来
+// //1 100 2 3 4 不能无脑压入左边
+//  4 2 1     3 100
+//中位数应该是3 实际输出4
+// //双根堆一旦在“压入阶段”放错边，后面只靠 pop(top) 是永远补不回来的
 // #include<bits/stdc++.h>
 // using namespace std;
 // int n;
+// priority_queue<int>mi_heap;
+// priority_queue<int,vector<int>,greater<int>>ma_heap;
 // int main()
 // {
 //     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
 //     cin>>n;
-//     priority_queue<int>left_heap;
-//     priority_queue<int,vector<int>,greater<int>>right_heap;
 //     for(int i=1;i<=n;i++)
 //     {
 //         int x;cin>>x;
-//         left_heap.push(x);
+//         if(mi_heap.empty()||x<=mi_heap.top())
+//         {
+//             mi_heap.push(x);
+//         }
+//         else ma_heap.push(x);
 
-//         if(left_heap.size()>right_heap.size()+1)
+//         //只会出现 mi_heap.size()==ma_heap.size()||ma_heap.size()+1==mi_heap.size()
+//         if(mi_heap.size()>ma_heap.size()+1)
 //         {
-//             right_heap.push(left_heap.top());
-//             left_heap.pop();
+//             ma_heap.push(mi_heap.top());
+//             mi_heap.pop();
 //         }
-//         //要保证右根堆不为空 否则会报错 左根堆不会空的
-//         //保证左根堆的堆顶《=右根堆的堆顶
-//         if(!right_heap.empty()&&left_heap.top()>right_heap.top())
+
+//         if(ma_heap.size()>mi_heap.size())
 //         {
-//             int a=left_heap.top();int b=right_heap.top();
-//             left_heap.pop();right_heap.pop();
-//             left_heap.push(b);
-//             right_heap.push(a);
+//             mi_heap.push(ma_heap.top());
+//             ma_heap.pop();
 //         }
-//         if(i%2==1)
-//         cout<<left_heap.top()<<endl;
+
+//         if(i%2==1)cout<<mi_heap.top()<<endl;
 //     }
+
+
 //     return 0;
 // }
+
 

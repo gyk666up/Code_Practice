@@ -1,3 +1,4 @@
+//我的思路：wrong
 // #include<bits/stdc++.h>
 // using namespace std;
 // int n;
@@ -204,15 +205,191 @@
 //     return 0;
 // }
 
-//理解整个代码的逻辑，即使再长的代码也没有问题
+// //理解整个代码的逻辑，即使再长的代码也没有问题
+// #include<bits/stdc++.h>
+// using namespace std;
+// int n;
+// struct node
+// {
+//     int diff;
+//     int l,r;
+//     int id1,id2;
+//     bool operator<(const node&u)const
+//     {
+//         if(diff!=u.diff)return diff>u.diff;
+//         else return l>u.l;
+//     }
+// };
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n;
+//     string s;cin>>s;
+//     s=" "+s;
+//     vector<int>a(n+1);
+//     for(int i=1;i<=n;i++)cin>>a[i];
+
+//     priority_queue<node>q;
+//     //初始化队列
+//     for(int i=1;i<n;i++)
+//     {
+//         if(s[i]!=s[i+1])
+//         {
+//             int diff=abs(a[i]-a[i+1]);
+//             q.push({diff,i,i+1,i,i+1});
+//         }
+//     }
+
+//     vector<int>left(n+2);
+//     vector<int>right(n+2);
+//     for(int i=1;i<=n;i++)
+//     {
+//         left[i]=i-1;
+//         right[i]=i+1;
+//     }
+//     right[n]=0;//最右边和最左边的节点邻居节点是空
+
+//     vector<pair<int,int>>res;//存结果
+//     vector<int>deleted(n+1,false);//标记节点是否还可用
+//     while(q.size())
+//     {
+//         node top=q.top();q.pop();
+//         int l=top.l;
+//         int r=top.r;
+//         if(deleted[l]||deleted[r]||right[l]!=r||left[r]!=l)
+//         {
+//             continue;
+//         }
+//         res.push_back({top.id1,top.id2});
+
+//         //删除符合的节点
+//         deleted[l]=1;
+//         deleted[r]=1;
+
+//         int ll=left[l];
+//         int rr=right[r];
+//         if(ll!=0)left[rr]=ll;
+//         if(rr!=0)right[ll]=rr;
+
+//         //判断是否新符合条件
+//         if(ll&&rr&&left[rr]==ll&&right[ll]==rr)
+//         {
+//             int diff=abs(a[ll]-a[rr]);
+//             q.push({diff,ll,rr,ll,rr});
+//         }
+//     }
+//     cout<<res.size()<<endl;
+//     for(int i=0;i<res.size();i++)
+//     {
+//         auto t=res[i];
+//         cout<<t.first<<" "<<t.second<<endl;
+//     }
+//     return 0;
+// }
+
+
+
+
+// //2026/2/4 还是不会写第一遍
+// #include<bits/stdc++.h>
+// using namespace std;
+// const int N=2e5+11;
+// int n;
+// char s[N];
+// int a[N];
+// struct node
+// {
+//     int diff;
+//     int l,r;//左右元素的下标
+//     int id1,id2;//左右元素的编号 编号不会变 但是左右元素的下标是可以变化的
+//     bool operator<(const node&u)const
+//     {
+//         if(diff!=u.diff)return diff>u.diff;
+//         else return l>u.l;
+//     }
+// };//排序和sort相反
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n;
+//     for(int i=1;i<=n;i++)cin>>s[i];
+//     for(int i=1;i<=n;i++)cin>>a[i];
+//     priority_queue<node>q;
+//     for(int i=1;i+1<=n;i++)
+//     {
+//         if(s[i]!=s[i+1])
+//         {
+//             int diff=abs(a[i]-a[i+1]);
+//             q.push({diff,i,i+1,i,i+1});
+//         }
+//     }
+//     vector<int>le(n+2),ri(n+2);
+//     for(int i=1;i<=n;i++)
+//     {
+//         le[i]=i-1;
+//         ri[i]=i+1;
+//     }
+//     ri[n]=0;
+//     vector<pair<int,int>>res;
+//     vector<bool>deleted(n+2);
+//     while(q.size())
+//     {
+//         auto t=q.top();
+//         q.pop();
+//         int l=t.l,r=t.r;
+//         // if(!deleted[l]&&!deleted[r])
+//         // {
+//         //     res.push_back({l,r});
+//         // }
+
+//         if(deleted[l]||deleted[r])continue;
+//         res.push_back({l,r});
+//         deleted[l]=deleted[r]=1;
+
+//         int ll=le[l];
+//         int rr=ri[r];
+
+//         if(ll!=0)ri[ll]=rr;
+//         if(rr!=0)le[rr]=ll;
+
+//         // if(s[ll]!=s[rr])
+//         // {
+//         //     int diff=abs(a[ll]-a[rr]);
+//         //     q.push({diff,ll,rr,ll,rr});
+//         // }
+
+//         //判断是否新符合条件
+//         if(ll&&rr&&le[rr]==ll&&ri[ll]==rr)
+//         {
+//             if(s[ll]!=s[ee])
+//             {
+//                 int diff=abs(a[ll]-a[rr]);
+//                  q.push({diff,ll,rr,ll,rr});
+//             }
+//         }
+//     }
+//     cout<<res.size()<<endl;
+//     for(auto t:res)
+//     {
+//         cout<<t.first<<" "<<t.second<<endl;
+//     }
+//     return 0;
+// }
+
+
 #include<bits/stdc++.h>
 using namespace std;
 int n;
+const int N=2e5+11;
+char s[N];
+int a[N];
+int le[N];
+int ri[N];
 struct node
 {
     int diff;
-    int l,r;
-    int id1,id2;
+    int id1,id2;//左右元素的编号
+    int l,r;//左右元素的下标
     bool operator<(const node&u)const
     {
         if(diff!=u.diff)return diff>u.diff;
@@ -223,15 +400,12 @@ int main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>n;
-    string s;cin>>s;
-    s=" "+s;
-    vector<int>a(n+1);
+    priority_queue<node>q;
+    for(int i=1;i<=n;i++)cin>>s[i];
     for(int i=1;i<=n;i++)cin>>a[i];
 
-    priority_queue<node>q;
-    //初始化队列
-    for(int i=1;i<n;i++)
-    {
+    for(int i=1;i+1<=n;i++)
+    {  
         if(s[i]!=s[i+1])
         {
             int diff=abs(a[i]-a[i+1]);
@@ -239,49 +413,49 @@ int main()
         }
     }
 
-    vector<int>left(n+2);
-    vector<int>right(n+2);
     for(int i=1;i<=n;i++)
     {
-        left[i]=i-1;
-        right[i]=i+1;
+        le[i]=i-1;
+        ri[i]=i+1;
     }
-    right[n]=0;//最右边和最左边的节点邻居节点是空
+    ri[n]=0;
 
-    vector<pair<int,int>>res;//存结果
-    vector<int>deleted(n+1,false);//标记节点是否还可用
+    vector<int>deleted(n+2);//标记这个元素是否已经出去了
+    vector<pair<int,int>>res;
     while(q.size())
     {
-        node top=q.top();q.pop();
-        int l=top.l;
-        int r=top.r;
-        if(deleted[l]||deleted[r]||right[l]!=r||left[r]!=l)
+        auto t=q.top();q.pop();
+        int diff=t.diff;
+        int l=t.l,r=t.r;
+        if(deleted[l]||deleted[r])continue;
+    
+        res.push_back({l,r});
+        deleted[l]=deleted[r]=1;
+        int ll=le[l],rr=ri[r];
+
+        if(ll!=0)
         {
-            continue;
+            ri[ll]=rr;
         }
-        res.push_back({top.id1,top.id2});
-
-        //删除符合的节点
-        deleted[l]=1;
-        deleted[r]=1;
-
-        int ll=left[l];
-        int rr=right[r];
-        if(ll!=0)left[rr]=ll;
-        if(rr!=0)right[ll]=rr;
-
-        //判断是否新符合条件
-        if(ll&&rr&&left[rr]==ll&&right[ll]==rr)
+        if(rr!=0)
         {
-            int diff=abs(a[ll]-a[rr]);
-            q.push({diff,ll,rr,ll,rr});
+            le[rr]=ll;
         }
+
+        if(ll&&rr)
+        {
+            if(s[ll]!=s[rr])
+            {
+                int diff=abs(a[ll]-a[rr]);
+                q.push({diff,ll,rr,ll,rr});
+            }
+        }    
     }
     cout<<res.size()<<endl;
-    for(int i=0;i<res.size();i++)
+    for(auto t:res)
     {
-        auto t=res[i];
         cout<<t.first<<" "<<t.second<<endl;
     }
+
     return 0;
 }

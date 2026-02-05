@@ -113,25 +113,30 @@
 
 #include<bits/stdc++.h>
 using namespace std;
-int n;
 #define int long long
-const int N=5e5+66;
+int n;
+int ans;
+const int N=5e5+11;
 int a[N];
-int ans=0;
-
-int merge_sort(int l,int r)
+void merge_sort(int l,int r)
 {
-    if(l>=r)return 0;
+    if(l>=r)return ;
+
     int mid=(l+r)/2;
-    int i=l,j=mid+1,k=0;
-    int cnt=merge_sort(l,mid)+merge_sort(mid+1,r);
+    merge_sort(l,mid),merge_sort(mid+1,r);
+
+    int i=l,j=mid+1;
+    int k=0;
     vector<int>temp(r-l+1);
     while(i<=mid&&j<=r)
     {
-        if(a[i]<=a[j])temp[k++]=a[i++];
+        if(a[i]<=a[j])
+        {
+            temp[k++]=a[i++];
+        }
         else
         {
-            cnt+=mid-i+1;
+            ans+=mid-i+1;
             temp[k++]=a[j++];
         }
     }
@@ -139,14 +144,13 @@ int merge_sort(int l,int r)
     while(j<=r)temp[k++]=a[j++];
 
     for(int i=0;i<k;i++)a[l+i]=temp[i];
-    return cnt;
 }
 signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>n;
     for(int i=1;i<=n;i++)cin>>a[i];
-    ans=merge_sort(1,n);
+    merge_sort(1,n);
     cout<<ans;
     return 0;
 }
