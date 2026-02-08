@@ -199,27 +199,79 @@
 // }
 
 
-//2025/12/23 这道题不是很熟
+// //2025/12/23 这道题不是很熟
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// const int N=2e5+11;
+// const int p=10007;
+// int n;
+// vector<int>g[N];
+// int w[N];
+// int ans,anssum;
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n;
+//     for(int i=0;i<n-1;i++)
+//     {
+//         int x,y;cin>>x>>y;
+//         g[x].push_back(y);
+//         g[y].push_back(x);
+//     }
+//     for(int i=1;i<=n;i++)cin>>w[i];
+//     for(int i=1;i<=n;i++)
+//     {
+//         int sum1=0,sum2=0,mx1=0,mx2=0;
+//         for(int j=0;j<g[i].size();j++)
+//         {
+//             int v=g[i][j];
+//             int val=w[v];
+//             sum1+=val;
+//             sum2+=val*val;
+//             if(val>mx1)
+//             {
+//                 mx2=mx1;
+//                 mx1=val;
+//                 // mx1=val;
+//                 // mx2=mx1;
+//             }
+//             else if(val>mx2)
+//             {
+//                 mx2=val;
+//             }
+//         }
+//             anssum=(anssum+(sum1*sum1-sum2)%p)%p;
+//             if(mx2>0)
+//             ans=max(ans,mx1*mx2);
+//     }
+//     cout<<ans<<" "<<anssum%p;
+//     return 0;
+// }
+
 #include<bits/stdc++.h>
 using namespace std;
 #define int long long
+int n;
 const int N=2e5+11;
 const int p=10007;
-int n;
 vector<int>g[N];
 int w[N];
-int ans,anssum;
+
+int ans=0;
+int anssum=0;
 signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>n;
     for(int i=0;i<n-1;i++)
     {
-        int x,y;cin>>x>>y;
-        g[x].push_back(y);
-        g[y].push_back(x);
+        int u,v;cin>>u>>v;
+        g[u].push_back(v);
+        g[v].push_back(u);
     }
     for(int i=1;i<=n;i++)cin>>w[i];
+
     for(int i=1;i<=n;i++)
     {
         int sum1=0,sum2=0,mx1=0,mx2=0;
@@ -227,24 +279,27 @@ signed main()
         {
             int v=g[i][j];
             int val=w[v];
+
             sum1+=val;
             sum2+=val*val;
+
             if(val>mx1)
             {
+                // mx1=val;
                 mx2=mx1;
                 mx1=val;
-                // mx1=val;
-                // mx2=mx1;
+
             }
+
             else if(val>mx2)
             {
                 mx2=val;
             }
         }
-            anssum=(anssum+(sum1*sum1-sum2)%p)%p;
-            if(mx2>0)
-            ans=max(ans,mx1*mx2);
+        anssum=(anssum+(sum1*sum1-sum2)%p)%p;
+        if(mx2>0)
+        ans=max(ans,mx1*mx2);
     }
-    cout<<ans<<" "<<anssum%p;
+    cout<<ans<<" "<<anssum;
     return 0;
 }

@@ -178,72 +178,73 @@
 
 
 
-#include<bits/stdc++.h>
-using namespace std;
-int n,m,s;
-const int Log=21;
-const int N=5e5+66;
-vector<int>g[N];
-int depth[N];
-int fa[N][Log];
-void bfs(int x)
-{
-    fa[x][0]=0;
-    depth[x]=1;
-    queue<int>q;
-    q.push(x);
-    while(q.size())
-    {
-        int x=q.front();q.pop();
-        for(int i=0;i<g[x].size();i++)
-        {
-            int y=g[x][i];
-            if(y!=fa[x][0])
-            {
-                depth[y]=depth[x]+1;
-                fa[y][0]=x;//我靠这行代码一直忘呢
-                for(int i=1;i<=Log-1;i++)
-                {
-                    fa[y][i]=fa[fa[y][i-1]][i-1];
-                }
-                q.push(y);
-            }
-        }
-    }
-}
-int lca(int x,int y)
-{
-    if(depth[x]<depth[y])swap(x,y);
+// #include<bits/stdc++.h>
+// using namespace std;
+// int n,m,s;
+// const int Log=21;
+// const int N=5e5+66;
+// vector<int>g[N];
+// int depth[N];
+// int fa[N][Log];
+// void bfs(int x)
+// {
+//     fa[x][0]=0;
+//     depth[x]=1;
+//     queue<int>q;
+//     q.push(x);
+//     while(q.size())
+//     {
+//         int x=q.front();q.pop();
+//         for(int i=0;i<g[x].size();i++)
+//         {
+//             int y=g[x][i];
+//             if(y!=fa[x][0])
+//             {
+//                 depth[y]=depth[x]+1;
+//                 fa[y][0]=x;//我靠这行代码一直忘呢
+//                 for(int i=1;i<=Log-1;i++)
+//                 {
+//                     fa[y][i]=fa[fa[y][i-1]][i-1];
+//                 }
+//                 q.push(y);
+//             }
+//         }
+//     }
+// }
+// int lca(int x,int y)
+// {
+//     if(depth[x]<depth[y])swap(x,y);
 
-    for(int i=Log-1;i>=0;i--)
-    {
-        if(depth[fa[x][i]]>=depth[y])x=fa[x][i];
-    }
+//     for(int i=Log-1;i>=0;i--)
+//     {
+//         if(depth[fa[x][i]]>=depth[y])x=fa[x][i];
+//     }
 
-    if(x==y)return x;
+//     if(x==y)return x;
 
-    for(int i=Log-1;i>=0;i--)
-    {
-        if(fa[x][i]!=fa[y][i])
-        x=fa[x][i],y=fa[y][i];
-    }
-    return fa[x][0];
-}
-int main()
-{
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    cin>>n>>m>>s;
-    for(int i=0;i<n-1;i++)
-    {
-        int x,y;cin>>x>>y;
-        g[x].push_back(y);
-        g[y].push_back(x);
-    }
-    bfs(s);
-    while(m--)
-    {
-        int x,y;cin>>x>>y;
-        cout<<lca(x,y)<<endl;
-    }
-    return 0;
-}
+//     for(int i=Log-1;i>=0;i--)
+//     {
+//         if(fa[x][i]!=fa[y][i])
+//         x=fa[x][i],y=fa[y][i];
+//     }
+//     return fa[x][0];
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m>>s;
+//     for(int i=0;i<n-1;i++)
+//     {
+//         int x,y;cin>>x>>y;
+//         g[x].push_back(y);
+//         g[y].push_back(x);
+//     }
+//     bfs(s);
+//     while(m--)
+//     {
+//         int x,y;cin>>x>>y;
+//         cout<<lca(x,y)<<endl;
+//     }
+//     return 0;
+// }
+

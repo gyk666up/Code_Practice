@@ -122,3 +122,47 @@
 //     cout<<ans;
 //     return 0;
 // }
+
+
+
+// //2026/2/5
+// #include<bits/stdc++.h>
+// using namespace std;
+// const int N=1e5+11;
+// int n,d;
+// int st[N];
+// vector<int>g[N];
+// void dfs(int x,int dist)
+// {
+//     if(dist>d)return;
+//     st[x]=1;
+//     for(int i=0;i<g[x].size();i++)
+//     {
+//         int y=g[x][i];
+//         if(!st[y])
+//         {
+//             dfs(y,dist+1);
+//         }
+//     }
+// }
+
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>d;
+//     for(int i=0;i<n-1;i++)
+//     {
+//         int u,v;cin>>u>>v;
+//         g[u].push_back(v);
+//         g[v].push_back(u);//无向边
+//     }
+//     int cnt=0;
+//     dfs(1,0);
+//     for(int i=1;i<=n;i++)
+//     {
+//         if(st[i])cnt++;
+//     }
+//     cout<<cnt-1;
+//     return 0;
+// }
+

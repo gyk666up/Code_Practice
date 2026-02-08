@@ -193,42 +193,40 @@
 // 	return 0;
 // }
 
-
 #include<bits/stdc++.h>
 using namespace std;
-const int N=1e5+11;
-vector<int>g[N];
 int n,m;
-string s;
+const int N=1e5+66;
 int fa[N];
+char s[N];
 int find(int x)
 {
-    if(x==fa[x])return x;
+    if(fa[x]==x)return x;
     return fa[x]=find(fa[x]);
 }
 void merge(int x,int y)
 {
     int xx=find(x),yy=find(y);
-    if(xx==yy)return;
+    if(xx==yy)return ;
     fa[yy]=xx;
 }
 int main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    cin>>n>>m>>s;
-    s=" "+s;
-    //并查集初始化！！！！！！！！！！！！！！！
+    cin>>n>>m;
+    for(int i=1;i<=n;i++)cin>>s[i];
     for(int i=1;i<=n;i++)fa[i]=i;
-    for(int i=1;i<=n-1;i++)
+
+    for(int i=0;i<n-1;i++)
     {
         int x,y;cin>>x>>y;
         if(s[x]==s[y])merge(x,y);
     }
     for(int i=1;i<=m;i++)
     {
-        int x,y;char c;cin>>x>>y>>c;
-        if(s[x]!=c&&find(x)==find(y))cout<<'0';
-        else cout<<'1';
+        int a,b;char c;cin>>a>>b>>c;
+        if(find(a)==find(b)&&s[a]!=c)cout<<0;
+        else cout<<1;
     }
     return 0;
 }

@@ -338,22 +338,112 @@
 // }
 
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// const int N=5e4+11;
+// const int Log=21;
+// vector<int>g[N];
+// int depth[N];
+// int cnt[N];
+// int fa[N][Log];
+// int n,k;
+// int ans;
+// void bfs(int x)
+// {
+//     fa[x][0]=0;
+//     depth[x]=1;
+//     queue<int>q;
+//     q.push(x);
+//     while(q.size())
+//     {
+//         int x=q.front();q.pop();
+//         for(int i=0;i<g[x].size();i++)
+//         {
+//             int y=g[x][i];
+//             if(y!=fa[x][0])
+//             {
+//                 depth[y]=depth[x]+1;
+//                 fa[y][0]=x;
+//                 for(int i=1;i<=Log-1;i++)
+//                 {
+//                     fa[y][i]=fa[fa[y][i-1]][i-1];
+//                 }
+//                 q.push(y);
+//             }
+//         }
+//     }
+// }
+// int lca(int x,int y)
+// {
+//     if(depth[x]<depth[y])swap(x,y);
+
+//     for(int i=Log-1;i>=0;i--)
+//     {
+//         if(depth[fa[x][i]]>=depth[y])x=fa[x][i];
+//     }
+//     if(x==y)return x;
+
+//     for(int i=Log-1;i>=0;i--)
+//     {
+//         if(fa[x][i]!=fa[y][i])
+//         x=fa[x][i],y=fa[y][i];
+//     }
+//     return fa[x][0];
+// }
+// void dfs(int x)
+// {
+//     for(int i=0;i<g[x].size();i++)
+//     {
+//         int y=g[x][i];
+//         if(y!=fa[x][0])
+//         {
+//             dfs(y);
+//             cnt[x]+=cnt[y];
+//         }
+//     }
+//     ans=max(ans,cnt[x]);
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>k;
+//     for(int i=0;i<n-1;i++)
+//     {
+//         int x,y;cin>>x>>y;
+//         g[x].push_back(y);
+//         g[y].push_back(x);
+//     }
+//     bfs(1);
+//     while(k--)
+//     {
+//         int s,t;cin>>s>>t;
+//         cnt[s]++;
+//         cnt[t]++;
+//         int w=lca(s,t);
+//         cnt[w]--;
+//         if(fa[w][0])cnt[fa[w][0]]--;
+//     }
+//     dfs(1);
+//     cout<<ans;
+//     return 0;
+// }
+
 #include<bits/stdc++.h>
 using namespace std;
-const int N=5e4+11;
-const int Log=21;
-vector<int>g[N];
-int depth[N];
-int cnt[N];
-int fa[N][Log];
 int n,k;
+const int N=5e4+11;
+vector<int>g[N];
+int cnt[N];
+int depth[N];
+int fa[N][23];
 int ans;
+
 void bfs(int x)
 {
-    fa[x][0]=0;
-    depth[x]=1;
     queue<int>q;
     q.push(x);
+    depth[x]=1;
+    fa[x][0]=0;
     while(q.size())
     {
         int x=q.front();q.pop();
@@ -364,7 +454,8 @@ void bfs(int x)
             {
                 depth[y]=depth[x]+1;
                 fa[y][0]=x;
-                for(int i=1;i<=Log-1;i++)
+
+                for(int i=1;i<=22;i++)
                 {
                     fa[y][i]=fa[fa[y][i-1]][i-1];
                 }
@@ -377,17 +468,20 @@ int lca(int x,int y)
 {
     if(depth[x]<depth[y])swap(x,y);
 
-    for(int i=Log-1;i>=0;i--)
+    for(int i=22;i>=0;i--)
     {
-        if(depth[fa[x][i]]>=depth[y])x=fa[x][i];
+        if(depth[fa[x][i]]>=depth[y])
+        x=fa[x][i];
     }
+
     if(x==y)return x;
 
-    for(int i=Log-1;i>=0;i--)
+    for(int i=22;i>=0;i--)
     {
         if(fa[x][i]!=fa[y][i])
         x=fa[x][i],y=fa[y][i];
     }
+
     return fa[x][0];
 }
 void dfs(int x)
@@ -414,6 +508,7 @@ int main()
         g[y].push_back(x);
     }
     bfs(1);
+
     while(k--)
     {
         int s,t;cin>>s>>t;

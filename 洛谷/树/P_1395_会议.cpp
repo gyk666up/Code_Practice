@@ -162,62 +162,131 @@
 //     return 0;
 // }
 
-#include<bits/stdc++.h>
-using namespace std;
-int n;
-const int N=5e4+33;
-vector<int>g[N];
-int sz[N];
-int sum_dist[N];
-int ans_node;
-int ans_dist;
-void dfs1(int u ,int fa)
-{
-    sz[u]=1;
-    for(int i=0;i<g[u].size();i++)
-    {
-        int v=g[u][i];
-        if(v!=fa)
-        {
-            dfs1(v,u);
-            sz[u]+=sz[v];
-            sum_dist[u]+=sum_dist[v]+sz[v];
-        }
-    }
-}
-void dfs2(int u,int p)
-{
-    if(sum_dist[u]<ans_dist||(sum_dist[u]==ans_dist&&u<ans_node))
-    {
-        ans_node=u;
-        ans_dist=sum_dist[u];
-    }
+// #include<bits/stdc++.h>
+// using namespace std;
+// const int N=5e4+66;
+// vector<int>g[N];
+// int n;
+// int siz[N];//siz[i]以i为根节点的子树大小
+// int sum_dist[N];//sum_dist[i]:以i为根节点的距离和
+// int dist=0x3f3f3f3f;
+// int ans=0x3f3f3f3f;
+// //第一遍 DFS：算“以 1 为根”的子树信息
+// //第二遍 DFS：只能用公式推，绝对不能再调用第一遍 DFS
+// void dfs(int x,int fa)
+// {
+//     siz[x]=1;
+//     sum_dist[x]=0;
 
-    for(int i=0;i<g[u].size();i++)
-    {
-        int v=g[u][i];
-        if(v!=p)
-        {
-            sum_dist[v]=sum_dist[u]-sz[v]+(n-sz[v]);
-            dfs2(v,u);
-        }
-    }
-}
-int main()
-{
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    cin>>n;
-    for(int i=0;i<n-1;i++)
-    {
-        int x,y;cin>>x>>y;
-        g[x].push_back(y);
-        g[y].push_back(x);
-    }
-    dfs1(1,0);
-    ans_node=0x3f3f3f3f;
-    ans_dist=0x3f3f3f3f;
-    dfs2(1,0);
+//     for(int i=0;i<g[x].size();i++)
+//     {
+//         int y=g[x][i];
+//         if(y!=fa)
+//         {
+//             dfs(y,x);
 
-    cout<<ans_node<<" "<<ans_dist;
-    return 0;
-}
+//             siz[x]+=siz[y];
+//             sum_dist[x]+=sum_dist[y]+siz[y];
+//         }
+//     }
+// }
+// void dfs2(int x,int fa)
+// {
+//     if(dist>sum_dist[x]||(dist==sum_dist[x]&&x<ans))
+//     {
+//         dist=sum_dist[x];
+//         ans=x;
+//     }
+
+//     for(int i=0;i<g[x].size();i++)
+//     {
+//         int y=g[x][i];
+//         if(y!=fa)
+//         {
+//             sum_dist[y]=sum_dist[x]-siz[y]+(n-siz[y]);
+//             dfs2(y,x);//别写错了是调用dfs2
+//         }
+//     }
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n;
+//     for(int i=0;i<n-1;i++)
+//     {
+//         int x,y;cin>>x>>y;
+//         g[x].push_back(y);
+//         g[y].push_back(x);
+//     }
+//     dfs(1,0);
+    
+//     //for(int i=1;i<=n;i++)cout<<siz[i];
+    
+//     dfs2(1,0);
+//     cout<<ans<<" "<<dist;
+//     return 0;
+// }
+
+// #include<bits/stdc++.h>
+// using namespace std;
+// int n;
+// const int N=5e4+11;
+// int siz[N];
+// int sum_dist[N];
+// vector<int>g[N];
+// int dist=0x3f3f3f3f,ans=0x3f3f3f3f;
+// void dfs(int u,int fa)
+// {
+//     siz[u]=1;
+//     sum_dist[u]=0;
+
+//     for(int i=0;i<g[u].size();i++)
+//     {
+//         int v=g[u][i];
+//         if(v!=fa)
+//         {
+//             dfs(v,u);
+//             siz[u]+=siz[v];
+//             sum_dist[u]+=sum_dist[v]+siz[v];
+//         }
+//     }
+// }
+// void dfs1(int u,int fa)
+// {
+//     if(sum_dist[u]<dist||(sum_dist[u]==dist&&u<ans))
+//     {
+//         dist=sum_dist[u];
+//         ans=u;
+//     }
+
+//     for(int i=0;i<g[u].size();i++)
+//     {
+//         int v=g[u][i];
+//         if(v!=fa)
+//         {
+
+//             sum_dist[v]=sum_dist[u]-siz[v]+(n-siz[v]);
+//             dfs1(v,u);
+
+//         }
+//     }
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n;
+//     for(int i=0;i<n-1;i++)
+//     {
+//         int a,b;cin>>a>>b;
+//         g[a].push_back(b);
+//         g[b].push_back(a);
+//     }
+//     dfs(1,0);
+
+//     dfs1(1,0);
+
+//     cout<<ans<<" "<<dist;
+//     return 0;
+// }
+
+

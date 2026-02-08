@@ -106,33 +106,74 @@
 // }
 
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// const int N=1e6+11;
+// #define int long long
+// struct edge
+// {
+//     int to,w;
+// };
+// vector<edge>g[N];
+// int sz[N];//sz 是某条边一侧的点数 并不是“节点子树”
+// int n;
+// int ans;
+// void dfs(int u,int p)
+// {
+//     sz[u]=1;
+//     for(auto[v,w]:g[u])
+//     {
+//         if(v!=p)
+//         {
+//             dfs(v,u);
+//             sz[u]+=sz[v];
+//             //注意这行代码容易写错 v是u的儿子 断开这条边后  [ v 的整棵子树 ] | [ 剩下的所有点 ]
+//             ans+=w*abs((sz[v]-(n-sz[v])));
+//         }
+//     }
+// }
+
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n;
+//     for(int i=0;i<n-1;i++)
+//     {
+//         int a,b,c;cin>>a>>b>>c;
+//         g[a].push_back({b,c});
+//         g[b].push_back({a,c});
+//     }
+//     dfs(1,0);
+//     cout<<ans;
+//     return 0;
+// }
+
+
 #include<bits/stdc++.h>
 using namespace std;
-const int N=1e6+11;
 #define int long long
+int n;
+const int N=1e6+66;
 struct edge
 {
     int to,w;
 };
 vector<edge>g[N];
-int sz[N];//sz 是某条边一侧的点数 并不是“节点子树”
-int n;
+int siz[N];
 int ans;
-void dfs(int u,int p)
+void dfs(int x,int fa)
 {
-    sz[u]=1;
-    for(auto[v,w]:g[u])
+    siz[x]=1;
+    for(auto[y,w]:g[x])
     {
-        if(v!=p)
+        if(y!=fa)
         {
-            dfs(v,u);
-            sz[u]+=sz[v];
-            //注意这行代码容易写错 v是u的儿子 断开这条边后  [ v 的整棵子树 ] | [ 剩下的所有点 ]
-            ans+=w*abs((sz[v]-(n-sz[v])));
+            dfs(y,x);
+            siz[x]+=siz[y];
+            ans+=w*abs(siz[y]-(n-siz[y]));
         }
     }
 }
-
 signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
@@ -147,4 +188,3 @@ signed main()
     cout<<ans;
     return 0;
 }
-
