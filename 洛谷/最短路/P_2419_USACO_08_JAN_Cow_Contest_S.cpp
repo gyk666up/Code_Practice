@@ -72,9 +72,53 @@
 // }
 
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// const int N=1e2+22;
+// int win[N][N];
+// int n,m;
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m;
+//     for(int i=0;i<m;i++)
+//     {
+//         int a,b;cin>>a>>b;
+//         win[a][b]=1;
+//     }
+//     for(int k=1;k<=n;k++)
+//     {
+//         for(int i=1;i<=n;i++)
+//         {
+//             for(int j=1;j<=n;j++)
+//             {
+//                 //这个和那个p1037一样容易写错，有好几种写法
+//                 win[i][j]|=win[i][k]&&win[k][j];
+//             }
+//         }
+//     }
+//     int ans=0;
+//     for(int i=1;i<=n;i++)
+//     {
+//         int cnt=0;
+//         for(int j=1;j<=n;j++)
+//         {
+//             if(i==j)continue;//更加严谨
+//             if(win[i][j]||win[j][i])
+//             {
+//                 cnt++;
+//             }
+//         }
+//         if(cnt==n-1)ans++;
+//     }
+//     cout<<ans;
+//     return 0;
+// }
+
+
 #include<bits/stdc++.h>
 using namespace std;
-const int N=1e2+22;
+const int N=200;
 int win[N][N];
 int n,m;
 int main()
@@ -91,23 +135,17 @@ int main()
         for(int i=1;i<=n;i++)
         {
             for(int j=1;j<=n;j++)
-            {
-                //这个和那个p1037一样容易写错，有好几种写法
-                win[i][j]|=win[i][k]&&win[k][j];
-            }
+            win[i][j]|=win[i][k]&&win[k][j];
         }
     }
+
     int ans=0;
     for(int i=1;i<=n;i++)
     {
         int cnt=0;
         for(int j=1;j<=n;j++)
         {
-            if(i==j)continue;//更加严谨
-            if(win[i][j]||win[j][i])
-            {
-                cnt++;
-            }
+            if(win[i][j]||win[j][i])cnt++;
         }
         if(cnt==n-1)ans++;
     }

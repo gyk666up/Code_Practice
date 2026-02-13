@@ -122,12 +122,12 @@
 
 
 
+
 // #include<bits/stdc++.h>
 // using namespace std;
 // string n;
 // int k;
-// bool reach[13][13];
-// int cnt[13];
+// const int N=10;
 // struct BigInt
 // {
 //     vector<int>d;
@@ -139,55 +139,69 @@
 //             d.push_back(x%10);
 //             x/=10;
 //         }
-//     }//不用写；
-
+//     }
 //     void mul(int x)
 //     {
 //         int carry=0;
-//         for(int i=0;i<(int)d.size();i++)
+//         for(int i=0;i<d.size();i++)
 //         {
 //             int t=d[i]*x+carry;
 //             d[i]=t%10;
 //             carry=t/10;
 //         }
+
 //         while(carry)
 //         {
 //             d.push_back(carry%10);
 //             carry/=10;
 //         }
 //     }
+    
+
 //     void print()
 //     {
 //         for(int i=d.size()-1;i>=0;i--)cout<<d[i];
-//         cout<<endl;
 //     }
 // };
-
+// int reach[N][N];
+// int cnt[N];//每种数字多少种可能
 // int main()
 // {
 //     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
 //     cin>>n>>k;
-//     for(int i=0;i<=9;i++)
-//     {
-//         reach[i][i]=1;
-//     }
-
 //     for(int i=0;i<k;i++)
 //     {
 //         int x,y;cin>>x>>y;
-//         reach[x][y]=true;
+//         //reach[x][y]=reach[y][x]=1;
+//         reach[x][y]=1;//有向边不算无向边
 //     }
-    
+//     for(int i=0;i<=9;i++)reach[i][i]=1;
+
+//     //注意中转点要在中间
+//     // for(int i=0;i<=9;i++)
+//     // {
+//     //     for(int j=0;j<=9;j++)
+//     //     {
+//     //         for(int k=0;k<=9;k++)
+//     //         {
+                
+//     //             if(reach[i][k]&&reach[k][j])
+//     //             reach[i][j]|=reach[i][k]&&reach[k][j];
+//     //         }
+//     //     }
+//     // }
 //     for(int k=0;k<=9;k++)
 //     {
 //         for(int i=0;i<=9;i++)
 //         {
 //             for(int j=0;j<=9;j++)
 //             {
-//                 if(reach[i][k]&&reach[k][j])reach[i][j]=1;
+//                 if(reach[i][k]&&reach[k][j])
+//                 reach[i][j]|=(reach[i][k]&reach[k][j]);
 //             }
 //         }
 //     }
+
 //     for(int i=0;i<=9;i++)
 //     {
 //         for(int j=0;j<=9;j++)
@@ -196,22 +210,22 @@
 //         }
 //     }
 //     BigInt ans(1);
-//     for(char c:n)
+//     for(int i=0;i<n.size();i++)
 //     {
-//         int d=c-'0';
+//         int d=n[i]-'0';
 //         ans.mul(cnt[d]);
 //     }
-//     ans.print();//!!!
+//     ans.print();
 //     return 0;
 // }
 
+
 #include<bits/stdc++.h>
 using namespace std;
-string n;
-int k;
 const int N=10;
-int reach[N][N];
-int cnt[N];//每个数字有多少种可能
+int cnt[N];//每种数字有多少种可能
+string n;int k;
+bool reach[N][N];
 struct BigInt
 {
     vector<int>d;
@@ -230,16 +244,18 @@ struct BigInt
         int carry=0;
         for(int i=0;i<d.size();i++)
         {
-            int t=d[i]*x+carry;
+            int t=carry+d[i]*x;
+            d[i]=t%10;
             carry=t/10;
-            d[i]=t%10;//这行代码差点忘了 ^_^😄
         }
+
         while(carry)
         {
             d.push_back(carry%10);
             carry/=10;
         }
     }
+
     void print()
     {
         for(int i=d.size()-1;i>=0;i--)cout<<d[i];
@@ -254,19 +270,15 @@ int main()
         int x,y;cin>>x>>y;
         reach[x][y]=1;
     }
-    //这里容易写错，是从0开始的
     for(int i=0;i<=9;i++)reach[i][i]=1;
+
     for(int k=0;k<=9;k++)
     {
         for(int i=0;i<=9;i++)
         {
             for(int j=0;j<=9;j++)
             {
-                //注意这一行代码和上面代码的区别
-                // if(reach[i][k]&&reach[k][j])reach[i][j]=1;
                 reach[i][j]|=reach[i][k]&&reach[k][j];
-                //但是reach[i][j]|=reach[i][k]&&reach[k][j];不对
-
             }
         }
     }
@@ -277,12 +289,11 @@ int main()
             if(reach[i][j])cnt[i]++;
         }
     }
+
     BigInt ans(1);
-    //这个是n
     for(int i=0;i<n.size();i++)
     {
-        int d=n[i]-'0';
-        ans.mul(cnt[d]);
+        ans.mul(cnt[n[i]-'0']);
     }
     ans.print();
     return 0;

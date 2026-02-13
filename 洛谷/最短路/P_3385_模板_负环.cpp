@@ -119,43 +119,40 @@
 
 #include<bits/stdc++.h>
 using namespace std;
+int t,n,m;
 const int N=2e3+66;
 struct edge
 {
     int to,w;
 };
 vector<edge>g[N];
-int dist[N];
-int cnt[N];
-int inq[N];
-int n,m;
-bool spf(int x)
+int inq[N],cnt[N],dist[N];
+bool spfa(int x)
 {
     memset(dist,0x3f,sizeof dist);
+    memset(inq,false,sizeof inq);
     memset(cnt,0,sizeof cnt);
-    memset(inq,0,sizeof inq);
-
-
     queue<int>q;
     q.push(x);
-    dist[x]=0;//!!!
     inq[x]=1;
+    dist[x]=0;
     while(q.size())
     {
-        int u=q.front();q.pop();
-        inq[u]=0;
-        for(auto[v,w]:g[u])
+        int x=q.front();q.pop();
+        inq[x]=0;
+        for(auto[v,w]:g[x])
         {
-            if(dist[v]>dist[u]+w)
+            if(dist[v]>dist[x]+w)
             {
-                dist[v]=dist[u]+w;
-                cnt[v]++;
-
+                dist[v]=dist[x]+w;
+                //cnt[v]++;
+                cnt[v]=cnt[x]+1;//👉 它不是“入队次数”，而是：，“到 v 的这条更短路径，比到 x 的路径多走了一条边”
                 if(cnt[v]>=n)return true;
+
                 if(inq[v]==0)
                 {
-                    inq[v]=1;
                     q.push(v);
+                    inq[v]=1;
                 }
             }
         }
@@ -165,22 +162,27 @@ bool spf(int x)
 int main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    int t;cin>>t;
+    cin>>t;
     while(t--)
     {
         cin>>n>>m;
         for(int i=1;i<=n;i++)g[i].clear();
-        for(int i=0;i<m;i++)
+        for(int i=1;i<=m;i++)
         {
             int u,v,w;cin>>u>>v>>w;
             if(w>=0)
-            g[u].push_back({v,w}),
-            g[v].push_back({u,w});
-            else g[u].push_back({v,w});
+            {
+                g[u].push_back({v,w});
+                g[v].push_back({u,w});
+            }
+            else
+            {
+                g[u].push_back({v,w});
+            }
         }
-        if(spf(1))cout<<"YES\n";
+        if(spfa(1))cout<<"YES\n";
         else cout<<"NO\n";
     }
-
+    
     return 0;
 }

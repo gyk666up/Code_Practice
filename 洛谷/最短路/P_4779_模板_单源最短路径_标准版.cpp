@@ -61,126 +61,120 @@
 //     return 0;
 // }
 
-//  堆优化n<=1e5+1
-//每次从「还没确定最短路的点」中，选一个当前距离最小的点，把它的最短路“定死”，再用它去更新别人。
+
 // #include<bits/stdc++.h>
 // using namespace std;
 // #define int long long
-
-// int n, m, s;
-// const int N = 1e5 + 66;
-
+// int n,m,s;
 // struct edge
 // {
-//     int to, w;
+//     int to,w;
 // };
-
-// vector<edge> g[N];
+// const int N=1e5+66;
+// vector<edge>g[N];
+// typedef pair<int,int>PII;
 // int dist[N];
 // bool st[N];
-
-// void Dijkstra(int s)
+// void Dijkstra(int x)
 // {
-//     memset(dist, 0x3f, sizeof dist);
-//     memset(st, 0, sizeof st);
-
-//     priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> q;
-//     // pair: {当前距离, 点}
-
-//     dist[s] = 0;
-//     q.push({0, s});
-
-//     while(!q.empty())
+//     priority_queue<PII,vector<PII>,greater<PII>>q;
+//     dist[x]=0;
+    
+//     //注意这两个顺序不能颠倒，因为是先比较first 后比较second
+//     //堆顶“当前距离最小的点”
+//     q.push({0,x});//{ 到这个点的最短距离 , 这个点是谁 }
+//     while(q.size())
 //     {
-//         auto [d, u] = q.top();
-//         q.pop();
+//         auto[d,x]=q.top();q.pop();
 
-//         // 如果这个点已经确定过，跳过
-//         if(st[u]) continue;
-//         st[u] = true;
+//         if(st[x])continue;
 
-//         // 用 u 去松弛邻边
-//         for(auto [v, w] : g[u])
+//         st[x]=1;
+//         for(auto[v,w]:g[x])
 //         {
-//             if(dist[v] > d + w)
+//             if(dist[v]>d+w)
 //             {
-//                 dist[v] = d + w;
-//                 q.push({dist[v], v});
+//                 dist[v]=d+w;
+//                 q.push({dist[v],v});
+//             }
+//         }
+
+//     }
+// }
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m>>s;
+//     for(int i=1;i<=m;i++)
+//     {
+//         int u,v,w;cin>>u>>v>>w;
+//         g[u].push_back({v,w});//单边
+//     }
+//     memset(dist,0x3f,sizeof dist);
+//     Dijkstra(s);
+//     for(int i=1;i<=n;i++)cout<<dist[i]<<" ";
+//     return 0;
+// }
+
+
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// int n,m,s;
+// const int N=1e5+66;
+// struct node
+// {
+//     int to,w;
+// };
+// vector<node>g[N];
+// bool st[N];
+// int dist[N];
+// typedef pair<int,int>PII;
+// //一个点是在“从堆里第一次弹出时”才确定最短路 只有这时候才能标记st[x]=1;
+// void Dijkstra(int x)
+// {
+//     memset(dist,0x3f,sizeof dist);
+//     //st[x]=1;
+//     //❌ 你把 st[] 的使用方式写错了
+// // ❌ 你过早地把点“锁死”了
+// // ❌ 这样会导致最短路算错
+//     dist[x]=0;
+//     //pair<int,int>PII[d,x]分别是到x点距离 和这个点是x
+//     priority_queue<PII,vector<PII>,greater<PII>>q;
+//     q.push({0,s});
+//     while(q.size())
+//     {
+//         auto[d,x]=q.top();q.pop();
+//         if(st[x])continue;
+
+//         st[x]=1;
+//         for(auto[v,w]:g[x])
+//         {
+//             if(!st[v])
+//             {
+//                 if(dist[v]>d+w)
+//                 {
+//                     dist[v]=d+w;
+//                     //st[v]=1;
+//                     q.push({dist[v],v});
+//                 }
+
 //             }
 //         }
 //     }
 // }
-
 // signed main()
 // {
 //     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-
-//     cin >> n >> m >> s;
-//     for(int i = 1; i <= m; i++)
+//     cin>>n>>m>>s;
+//     for(int i=0;i<m;i++)
 //     {
-//         int u, v, w;
-//         cin >> u >> v >> w;
-//         //有向图
-//         g[u].push_back({v, w});
-//        //g[v].push_back({u, w});
+//         int u,v,w;cin>>u>>v>>w;
+//         g[u].push_back({v,w});
 //     }
-
 //     Dijkstra(s);
-
-//     for(int i = 1; i <= n; i++)
-//         cout << dist[i] << " ";
-
+//     for(int i=1;i<=n;i++)cout<<dist[i]<<" ";
 //     return 0;
 // }
 
-#include<bits/stdc++.h>
-using namespace std;
-int n,m,s;
-struct edge
-{
-    int to,w;
-};
-const int N=1e5+55;
-vector<edge>g[N];
 
-int dist[N];
-typedef pair<int,int>PII;
-void Dijkstra(int x)
-{
-    //memset(st,0,sizeof st);
-    memset(dist,0x3f,sizeof dist);
-
-    dist[x]=0;
-
-    priority_queue<PII,vector<PII>,greater<PII>>q;
-    q.push({0,s});//当前距离和这个点
-
-    while(q.size())
-    {
-        auto t=q.top();q.pop();
-        int d=t.first,u=t.second;
-        
-        for(auto [v,w]:g[u])
-        {
-            if(dist[v]>d+w)
-            {
-                dist[v]=d+w;
-                q.push({dist[v],v});
-            }
-        }
-    }
-
-}
-int main()
-{
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    cin>>n>>m>>s;
-    for(int i=0;i<m;i++)
-    {
-        int u,v,w;cin>>u>>v>>w;
-        g[u].push_back({v,w});
-    }
-    Dijkstra(s);
-    for(int i=1;i<=n;i++)cout<<dist[i]<<" ";
-    return 0;
-}
