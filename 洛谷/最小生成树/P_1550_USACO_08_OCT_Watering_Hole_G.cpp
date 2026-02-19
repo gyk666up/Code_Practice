@@ -69,3 +69,65 @@
 // }
 
 
+#include<bits/stdc++.h>
+using namespace std;
+int n;
+const int N=302;
+int fa[N];
+struct edge
+{
+    int x,y,w;
+    bool operator<(const edge&u)
+    {
+        return w<u.w;
+    }
+};
+vector<edge>v;
+int find(int x)
+{
+    if(fa[x]==x)return x;
+    return fa[x]=find(fa[x]);
+}
+void merge(int x,int y)
+{
+    int xx=find(x),yy=find(y);
+    if(xx==yy)return ;
+    fa[yy]=xx;
+}
+int main()
+{
+    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+    cin>>n;
+    for(int i=1;i<=n;i++)fa[i]=i;
+    for(int i=1;i<=n;i++)
+    {
+        int x;cin>>x;
+        v.push_back({0,i,x});
+    }
+    for(int i=1;i<=n;i++)
+    {
+        for(int j=1;j<=n;j++)
+        {
+            int x;cin>>x;
+            if(i<j)
+            v.push_back({i,j,x});
+        }
+    }
+    sort(v.begin(),v.end());
+    
+    int ans=0;
+    for(int i=0;i<v.size();i++)
+    {
+        int x=v[i].x,y=v[i].y,w=v[i].w;
+        if(find(x)!=find(y))
+        {
+            merge(x,y);
+
+            ans+=w;
+        }
+    }
+
+    cout<<ans;
+
+    return 0;
+}

@@ -118,60 +118,61 @@
 
 
 
-#include<bits/stdc++.h>
-using namespace std;
-int n,m;
-struct Edge
-{
-    int x,y,w;
-    bool operator<(const Edge&u)
-    {
-        return w<u.w;
-    }
-};
-const int N=5e3+11;
-int fa[N];
-int find(int x)
-{
-    if(fa[x]==x)return x;
-    return fa[x]=find(fa[x]);
-}
-void merge(int x,int y)
-{
-    int xx=find(x),yy=find(y);
-    if(xx==yy)return;
-    fa[yy]=xx;
-}
-int main()
-{
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    cin>>n>>m;
-    for(int i=1;i<=n;i++)fa[i]=i;
-    vector<Edge>edge(m);
-    for(int i=0;i<m;i++)
-    {
-        cin>>edge[i].x>>edge[i].y>>edge[i].w;
-    }
-    sort(edge.begin(),edge.end());
+// #include<bits/stdc++.h>
+// using namespace std;
+// int n,m;
+// struct Edge
+// {
+//     int x,y,w;
+//     bool operator<(const Edge&u)
+//     {
+//         return w<u.w;
+//     }
+// };
+// const int N=5e3+11;
+// int fa[N];
+// int find(int x)
+// {
+//     if(fa[x]==x)return x;
+//     return fa[x]=find(fa[x]);
+// }
+// void merge(int x,int y)
+// {
+//     int xx=find(x),yy=find(y);
+//     if(xx==yy)return;
+//     fa[yy]=xx;
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m;
+//     for(int i=1;i<=n;i++)fa[i]=i;
+//     vector<Edge>edge(m);
+//     for(int i=0;i<m;i++)
+//     {
+//         cin>>edge[i].x>>edge[i].y>>edge[i].w;
+//     }
+//     sort(edge.begin(),edge.end());
 
-    int ans=0;
-    int cnt=0;
-    for(int i=0;i<m;i++)
-    {
-        int x=edge[i].x,y=edge[i].y,w=edge[i].w;
-        if(find(x)!=find(y))
-        {
-            merge(x,y);
-            ans+=w;
-            cnt++;
-        }
-        //if(cnt==n-1)break;为什么这行代码不写也没出错呢
-        //一旦你已经选满 n-1 条边：整个图已经连通,所有点的 find(x) 都相等,后面的边全部都会被 if 拦下来
-    }
-    if(cnt!=n-1)cout<<"orz";
-    else cout<<ans;
+//     int ans=0;
+//     int cnt=0;
+//     for(int i=0;i<m;i++)
+//     {
+//         int x=edge[i].x,y=edge[i].y,w=edge[i].w;
+//         if(find(x)!=find(y))
+//         {
+//             merge(x,y);
+//             ans+=w;
+//             cnt++;
+//         }
+//         //if(cnt==n-1)break;为什么这行代码不写也没出错呢
+//         //一旦你已经选满 n-1 条边：整个图已经连通,所有点的 find(x) 都相等,后面的边全部都会被 if 拦下来
+//     }
+//     if(cnt!=n-1)cout<<"orz";
+//     else cout<<ans;
     
 
-    return 0;
-}
+//     return 0;
+// }
+
 
