@@ -44,29 +44,38 @@
 
 #include<bits/stdc++.h>
 using namespace std;
-int T,M;
-const int N=1002;
-int t[N],m[N];
+int t,m;
+const int N=2000;
+int w[N],v[N];
 int dp[N][N];
 int main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    cin>>T>>M;
-    for(int i=1;i<=M;i++)
+    cin>>t>>m;
+    //0，1背包
+    for(int i=1;i<=m;i++)cin>>w[i]>>v[i];
+
+    // for(int i=1;i<=m;i++)
+    // {
+    //     for(int j=t;j>=0;j--)
+    //     {
+    //         if(j>=w[i])
+    //         {
+    //             dp[j]=max(dp[j],dp[j-w[i]]+v[i]);
+    //         }
+    //     }
+    // }
+    // cout<<dp[t];
+
+    for(int i=1;i<=m;i++)
     {
-        cin>>t[i]>>m[i];
-    }
-    for(int i=1;i<=M;i++)
-    {
-        for(int j=0;j<=T;j++)
+        for(int j=0;j<=t;j++)
         {
-            if(j<t[i])dp[i][j]=dp[i-1][j];
-            else 
-            {
-                dp[i][j]=max(dp[i-1][j],dp[i-1][j-t[i]]+m[i]);
-            }
+            dp[i][j]=dp[i-1][j];
+            if(j>=w[i])
+            dp[i][j]=max(dp[i-1][j],dp[i-1][j-w[i]]+v[i]);
         }
     }
-    cout<<dp[M][T];
+    cout<<dp[m][t];
     return 0;
 }

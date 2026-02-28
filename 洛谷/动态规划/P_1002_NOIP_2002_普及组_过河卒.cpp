@@ -159,48 +159,123 @@
 //     return 0;
 // }
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// const int N=30;
+// int n,m,mx,my;
+// bool st[N][N];
+// int dx[]={2,2,-2,-2,1,1,-1,-1};
+// int dy[]={1,-1,1,-1,2,-2,2,-2};
+// int ddx[]={0,1};
+// int ddy[]={1,0};
+// typedef pair<int,int>PII;
+// int res=0;
+// bool vaild(int x,int y)
+// {
+//     if(x<0||y<0||x>n||y>m)return false;//大于n，m也是不合法的
+//     if(st[x][y])return false;
 
-#include<bits/stdc++.h>
-using namespace std;
-const int N=30;
-#define int long long 
-bool st[N][N];
-int dp[N][N];//dp[i][j]到i，j有几条路
-int dx[]={1,1,-1,-1,2,2,-2,-2};
-int dy[]={2,-2,2,-2,1,-1,1,-1};
-int n,m,mx,my;
-bool is_valid(int x,int y)
-{
-    if(x<0||x>n||y<0||y>m)return false;
-    if(st[x][y])return false;
-    return true;
-}
-signed main()
-{
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    cin>>n>>m>>mx>>my;
-    st[mx][my]=1;
-    for(int i=0;i<8;i++)
-    {
-        int x=dx[i]+mx;
-        int y=dy[i]+my;
-        st[x][y]=1;
-    }
-    dp[0][0]=1;
-    for(int i=0;i<=n;i++)
-    {
-        for(int j=0;j<=m;j++)
-        {
-            if(i==0&&j==0)continue;
-            if(!is_valid(i,j))continue;
-            else if(i-1<0)dp[i][j]=dp[i][j-1];
-            else if(j-1<0)dp[i][j]=dp[i-1][j];
-            else
-            {
-                dp[i][j]=dp[i-1][j]+dp[i][j-1];
-            }
-        }
-    }
-    cout<<dp[n][m];
-    return 0;
-}
+//     return true;
+// }
+// void bfs()
+// {
+//     queue<PII>q;
+//     q.push({0,0});
+//     st[0][0]=1;
+//     while(q.size())
+//     {
+//         int x=q.front().first,y=q.front().second;q.pop();
+//         if(x==n&&y==m)
+//         {
+//             res++;
+//             continue;
+//         }
+
+//         st[x][y]=1;//只代表当前节点不能走了
+//         for(int i=0;i<2;i++)
+//         {
+//             int xx=ddx[i]+x;
+//             int yy=ddy[i]+y;
+//             if(vaild(xx,yy))
+//             {
+//                 //st[xx][yy]=1;//这会导致子节点不能走
+//                 q.push({xx,yy});
+//             }
+//         }
+//     }
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m>>mx>>my;
+//     st[mx][my]=1;
+//     for(int i=0;i<8;i++)
+//     {
+//         int x=mx+dx[i],y=my+dy[i];
+//         if(x<0||y<0||x>n||y>m)continue;
+//         st[x][y]=1;
+//     }
+//     bfs();
+//     cout<<res;
+//     return 0;
+// }
+
+// //dfs
+// #include<bits/stdc++.h>
+// using namespace std;
+// const int N=30;
+// int n,m,mx,my;
+// bool st[N][N];
+// int dx[]={2,2,-2,-2,1,1,-1,-1};
+// int dy[]={1,-1,1,-1,2,-2,2,-2};
+// int ddx[]={0,1};
+// int ddy[]={1,0};
+// typedef pair<int,int>PII;
+// int ans=0;
+// bool vaild(int x,int y)
+// {
+//     if(x<0||y<0||x>n||y>m)return false;//大于n，m也是不合法的
+//     if(st[x][y])return false;
+
+//     return true;
+// }
+// void dfs(int x,int y)
+// {
+//     if(x==n&&y==m)
+//     {
+//         ans++;
+//         return;
+//     }
+
+//     st[x][y]=1;
+//     for(int i=0;i<2;i++)
+//     {
+//         int xx=ddx[i]+x;
+//         int yy=ddy[i]+y;
+//         if(vaild(xx,yy))
+//         {
+//             dfs(xx,yy);
+//         }
+//     }
+//     st[x][y]=0;
+
+//     return;
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m>>mx>>my;
+//     st[mx][my]=1;
+//     for(int i=0;i<8;i++)
+//     {
+//         if(mx+dx[i]<0||mx+dx[i]>n||my+dy[i]<0||my+dy[i]>m)continue;
+//         st[mx+dx[i]][my+dy[i]]=1;
+//     }
+
+//     dfs(0,0);
+
+//     cout<<ans;
+//     return 0;
+// }
+
+

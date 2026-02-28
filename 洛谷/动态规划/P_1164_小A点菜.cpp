@@ -107,19 +107,20 @@
 //     return 0;
 // }
 
-
-
-//0 1 背包 j倒序  与顺序无关 物品在外 金额在里
+//0-1背包
 #include<bits/stdc++.h>
 using namespace std;
+const int N=10002;
+#define int long long
 int n,m;
-int a[102];
-int dp[1002];//凑i元的方案数
-int main()
+int dp[N];
+int a[N];
+signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>n>>m;
     for(int i=1;i<=n;i++)cin>>a[i];
+
     dp[0]=1;
     for(int i=1;i<=n;i++)
     {

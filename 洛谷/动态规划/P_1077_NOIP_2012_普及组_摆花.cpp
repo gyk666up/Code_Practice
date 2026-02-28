@@ -65,4 +65,66 @@
 // }
 
 
+//摆花时同一种花放在一起，且不同种类的花需按标号的从小到大的顺序依次摆列。
+//限制为组合问题
 
+
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// int n,m;
+// const int N=102;
+// const int p=1e6+7;
+// int a[N];
+// int dp[N][N];//dp[I][J]:前i个花，放j朵花的方案数
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m;
+//     for(int i=1;i<=n;i++)cin>>a[i];
+
+//     dp[0][0]=1;
+//     for(int i=1;i<=n;i++)
+//     {
+//         for(int j=0;j<=m;j++)
+//         {
+//             for(int k=0;k<=min(a[i],j);k++)
+//             {
+//                 dp[i][j]=(dp[i][j]+dp[i-1][j-k])%p;
+//             }
+//         }
+//     }  
+//     cout<<dp[n][m];
+//     return 0;
+// }
+
+#include<bits/stdc++.h>
+using namespace std;
+#define int long long
+int n,m;
+const int N=102;
+const int p=1e6+7;
+int a[N];
+int dp[N][N];//前i朵花放j盆的方案数dp[i][j]
+signed main()
+{
+    // ios::sync_with(0)_stdio(0),cin.tie(0),cout.tie(0);
+    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+    cin>>n>>m;
+    for(int i=1;i<=n;i++)cin>>a[i];
+    //dp[0][0]=1;
+    for(int i=0;i<=n;i++)dp[i][0]=1;
+    for(int i=1;i<=n;i++)
+    {
+        for(int j=0;j<=m;j++)
+        {
+            for(int k=0;k<=min(j,a[i]);k++)
+            {
+                dp[i][j]=(dp[i][j]+dp[i-1][j-k])%p;
+            }
+        }
+    }
+    cout<<dp[n][m];
+
+    return 0;
+}

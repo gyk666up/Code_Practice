@@ -86,23 +86,124 @@
 // }
 
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// const int N=200002;
+// int m[N],n,v;
+// int dp[N];//体积不超过v时的最大价值（体积）
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>v>>n;
+//     for(int i=1;i<=n;i++)cin>>m[i];
+
+//     for(int i=1;i<=n;i++)
+//     {
+//         for(int j=v;j>=0;j--)
+//         {
+//             if(j>=m[i])
+//             dp[j]=max(dp[j],dp[j-m[i]]+m[i]);
+//         }
+//     }
+//     cout<<v-dp[v];
+//     return 0;
+// }
+
+
+
+//dfs,上面的那个dfs更聪明点
+// #include<bits/stdc++.h>
+// using namespace std;
+// const int N=40;
+// int v,n;
+// int a[N];
+// bool st[N];
+// int ans=0x3f3f3f3f;
+// //可以加上记忆化搜索
+// void dfs(int x,int val)
+// {
+//     if(x>n)
+//     {
+//         ans=min(ans,v-val);
+//         return;
+//     }
+
+//     if(val+a[x]<=v)
+//     {
+//         dfs(x+1,val+a[x]);
+
+
+//         dfs(x+1,val);
+//     }
+//     else
+//     {
+//         dfs(x+1,val);
+//     }
+//     return;
+
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>v>>n;
+//     for(int i=1;i<=n;i++)cin>>a[i];
+
+//     dfs(1,0);
+//     cout<<ans;
+//     return 0;
+// }
+
+
+
+
+// #include<bits/stdc++.h>
+// using namespace std;
+// int v,n;
+// const int N=20003;
+// int dp[N];//dp[i]：不超过v的最大体积
+// //0-1背包问题，代价是体积，价值也是体积
+// int a[N];
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>v>>n;
+//     for(int i=1;i<=n;i++)cin>>a[i];
+
+//     for(int i=1;i<=n;i++)
+//     {
+//         for(int j=v;j>=0;j--)
+//         {
+//             if(j>=a[i])
+//             {
+//                 dp[j]=max(dp[j],dp[j-a[i]]+a[i]);
+//             }
+//         }
+//     }
+//     cout<<v-dp[v];
+//     return 0;
+// }
+
+
 #include<bits/stdc++.h>
 using namespace std;
-const int N=200002;
-int m[N],n,v;
-int dp[N];//体积不超过v时的最大价值（体积）
+const int N=2e4+66;
+int v,n;
+int a[N],dp[N];
+
 int main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>v>>n;
-    for(int i=1;i<=n;i++)cin>>m[i];
-
+    for(int i=1;i<=n;i++)
+    {
+        cin>>a[i];
+    }
     for(int i=1;i<=n;i++)
     {
         for(int j=v;j>=0;j--)
         {
-            if(j>=m[i])
-            dp[j]=max(dp[j],dp[j-m[i]]+m[i]);
+            if(j>=a[i])
+            dp[j]=max(dp[j],dp[j-a[i]]+a[i]);
         }
     }
     cout<<v-dp[v];

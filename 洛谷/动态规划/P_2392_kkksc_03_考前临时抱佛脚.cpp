@@ -92,23 +92,106 @@
 // }
 
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// int s[5];
+// int a[29][1000];
+// int dp[21][1000];//前i个习题耗费时间为j
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     for(int i=1;i<=4;i++)cin>>s[i];
+
+//     for(int i=1;i<=4;i++)
+//     {
+//         for(int j=1;j<=s[i];j++)
+//         cin>>a[i][j];
+//     }
+//     int ans=0;
+//     //感觉像4个0 1 背包 体积是sum/2 找背包最大可以装的容量
+//     for(int i=1;i<=4;i++)
+//     {
+//         int sum=0;
+//         memset(dp,0,sizeof dp);
+//         for(int j=1;j<=s[i];j++)
+//         {
+//             sum+=a[i][j];
+//         }
+//         for(int j=1;j<=s[i];j++)
+//         {
+//             for(int k=0;k<=sum/2;k++)
+//             {
+//                 if(k<a[i][j])
+//                 dp[j][k]=dp[j-1][k];
+//                 else
+//                 {
+//                     dp[j][k]=max(dp[j-1][k],dp[j-1][k-a[i][j]]+a[i][j]);
+//                 }
+//             }
+//         }
+//         ans+=sum-dp[s[i]][sum/2];
+//     }
+//     cout<<ans;
+    
+//     return 0;
+// }
+
+
+// #include<bits/stdc++.h>
+// using namespace std;
+// int s[5];
+// const int N=1e4;
+// int a[N][N];
+// int dp[N];
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     for(int i=1;i<=4;i++)cin>>s[i];
+//     for(int i=1;i<=4;i++)
+//     {
+//         for(int j=1;j<=s[i];j++)cin>>a[i][j];
+//     }
+
+//     int ans=0;
+//     for(int i=1;i<=4;i++)
+//     {
+//         int sum=0;
+//         memset(dp,0,sizeof dp);//找最大值，初始化为0
+
+//         for(int j=1;j<=s[i];j++)
+//         {
+//             sum+=a[i][j];
+//         }
+//         for(int j=1;j<=s[i];j++)
+//         {
+//             for(int k=sum/2;k>=a[i][j];k--)
+//             {
+//                 //注意这里是max，我们要找的是不超过sum/2的最大整数
+//                 dp[k]=max(dp[k],dp[k-a[i][j]]+a[i][j]);
+//             }
+//         }
+//         ans+=(sum-dp[sum/2]);
+//     }
+//     cout<<ans;
+//     return 0;
+// }
+
+
 #include<bits/stdc++.h>
 using namespace std;
 int s[5];
-int a[29][1000];
-int dp[21][1000];//前i个习题耗费时间为j
+int a[21][100];
+int dp[1002];
+int ans=0;
 int main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     for(int i=1;i<=4;i++)cin>>s[i];
-
     for(int i=1;i<=4;i++)
     {
-        for(int j=1;j<=s[i];j++)
-        cin>>a[i][j];
+        for(int j=1;j<=s[i];j++)cin>>a[i][j];
     }
-    int ans=0;
-    //感觉像4个0 1 背包 体积是sum/2 找背包最大可以装的容量
+
     for(int i=1;i<=4;i++)
     {
         int sum=0;
@@ -117,21 +200,19 @@ int main()
         {
             sum+=a[i][j];
         }
+
         for(int j=1;j<=s[i];j++)
         {
-            for(int k=0;k<=sum/2;k++)
+            for(int k=sum/2;k>=0;k--)
             {
-                if(k<a[i][j])
-                dp[j][k]=dp[j-1][k];
-                else
+                if(k>=a[i][j])
                 {
-                    dp[j][k]=max(dp[j-1][k],dp[j-1][k-a[i][j]]+a[i][j]);
+                    dp[k]=max(dp[k],dp[k-a[i][j]]+a[i][j]);
                 }
             }
         }
-        ans+=sum-dp[s[i]][sum/2];
+        ans+=sum-dp[sum/2];
     }
     cout<<ans;
-    
     return 0;
 }

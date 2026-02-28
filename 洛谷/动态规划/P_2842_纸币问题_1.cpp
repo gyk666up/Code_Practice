@@ -116,6 +116,87 @@
 //     return 0;
 // }
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// const int N=1e3+11;
+// int a[N];
+// //int dp[N];
+// int dp[N][10002];
+// int n,w;
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>w;
+//     for(int i=1;i<=n;i++)cin>>a[i];
+//     memset(dp,0x3f,sizeof dp);
+//     //dp[0]=0;
+//     // for(int i=1;i<=n;i++)
+//     // {
+//     //     for(int j=0;j<=w;j++)
+//     //     {
+//     //         if(j>=a[i])
+//     //         dp[j]=min(dp[j],dp[j-a[i]]+1);
+//     //     }
+//     // }
+//     // cout<<dp[w];
+//     for(int i=0;i<=n;i++)
+//     {
+//         dp[i][0]=0;
+//     }
 
-#include<bits/stdc++.h>
-using namespae
+//      //这是标准的0/1背包问题 而这道题是完全背包
+//     for(int i=1;i<=n;i++)
+//     {
+//         for(int j=0;j<=w;j++)
+//         {
+//             if(j>=a[i])
+//             {
+//                 dp[i][j]=min(dp[i-1][j],dp[i-1][j-a[i]]+1);
+//             }
+//             else dp[i][j]=dp[i-1][j];
+//         }
+//     }
+//     cout<<dp[n][w];
+//     return 0;
+// }
+
+//二维的方法
+// #include<bits/stdc++.h>
+// using namespace std;
+
+// const int INF = 0x3f3f3f3f;
+// int dp[1005][10005];
+// int a[1005];
+
+// int main()
+// {
+//     ios::sync_with_stdio(0);
+//     cin.tie(0);
+
+//     int n,w;
+//     cin>>n>>w;
+//     for(int i=1;i<=n;i++) cin>>a[i];
+
+//     memset(dp,0x3f,sizeof dp);
+
+//     for(int i=0;i<=n;i++)
+//         dp[i][0]=0;   // 凑0元需要0张
+
+//     for(int i=1;i<=n;i++)
+//     {
+//         for(int j=0;j<=w;j++)
+//         {
+//             dp[i][j]=dp[i-1][j];   // 不选
+
+//             if(j>=a[i])
+//             {
+//                 dp[i][j]=min(dp[i][j],//注意这里写到是i不是i-1
+//                              dp[i][j-a[i]]+1); // 关键！
+//             }
+//         }
+//     }
+
+//     cout<<dp[n][w];
+//     return 0;
+// }
+

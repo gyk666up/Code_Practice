@@ -85,30 +85,34 @@
 //     return 0;
 // }
 
-
-
 #include<bits/stdc++.h>
 using namespace std;
-const int N=1e3+66;
-#define int long long 
+#define int long long
 int n,x;
+const int N=1e3+11;
 int lose[N],win[N],use[N];
-int dp[N];//用药量不超过i的可以获得的最大经验
+int dp[N];
+//0-1背包问题 代价是use 价值是win/lose
 signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>n>>x;
-    for(int i=1;i<=n;i++)cin>>lose[i]>>win[i]>>use[i];
+    for(int i=1;i<=n;i++)
+    {
+        cin>>lose[i]>>win[i]>>use[i];
+    }
+
     for(int i=1;i<=n;i++)
     {
         for(int j=x;j>=0;j--)
         {
-            if(j>=use[i])//这里容易写错 dp[j]=max(dp[j],dp[j-use[i]]+win[i])
-            dp[j]=max(dp[j]+lose[i],dp[j-use[i]]+win[i]);
+            if(j>=use[i])
+            dp[j]=max(dp[j-use[i]]+win[i],dp[j]+lose[i]);
             else
-            dp[j]+=lose[i];
+            dp[j]=dp[j]+lose[i];
         }
     }
     cout<<5ll*dp[x];
+
     return 0;
 }
