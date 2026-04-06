@@ -43,32 +43,72 @@
 // }
 
 
-//2025/12/16 问题不大 但还有一些细节问题
+// //2025/12/16 问题不大 但还有一些细节问题
+// #include<bits/stdc++.h>
+// using namespace std;
+// int n;
+// int ans=0;
+// const int N=1e5+11;
+// int a[N][11];
+// int b[11];
+
+// void dfs(int x,int sum)
+// {
+//     //这种写法是错误的 和下面的对比一下 有什么区别
+//     // if(x>10&&sum==n)
+//     // {
+//     //     ans++;
+//     //     for(int i=1;i<=n;i++)a[ans][i]=b[i];
+//     //     return;
+//     // }
+
+//     if(x>10)
+//     {
+//         if(sum==n)
+//         {
+//             ans++;
+//             //这里容易写错成 for(int i=1;i<=n;i++)
+//             for(int i=1;i<=10;i++)a[ans][i]=b[i];
+//         }
+//         return;
+//     }
+//     for(int i=1;i<=3;i++)
+//     {
+//         b[x]=i;
+//         dfs(x+1,sum+i);
+//     }
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n;
+//     dfs(1,0);
+//     cout<<ans<<endl;
+//     for(int i=1;i<=ans;i++)
+//     {
+//         for(int j=1;j<=10;j++)cout<<a[i][j]<<" ";
+//         cout<<endl;
+//     }
+//     return 0;
+// }
+
+
 #include<bits/stdc++.h>
 using namespace std;
 int n;
-int ans=0;
-const int N=1e5+11;
-int a[N][11];
-int b[11];
-
+int ans;
+const int N=1e5+11;;
+int a[N][10];
+int b[10];
 void dfs(int x,int sum)
 {
-    //这种写法是错误的 和下面的对比一下 有什么区别
-    // if(x>10&&sum==n)
-    // {
-    //     ans++;
-    //     for(int i=1;i<=n;i++)a[ans][i]=b[i];
-    //     return;
-    // }
-
     if(x>10)
     {
         if(sum==n)
         {
             ans++;
-            //这里容易写错成 for(int i=1;i<=n;i++)
-            for(int i=1;i<=10;i++)a[ans][i]=b[i];
+            for(int i=1;i<=10;i++)
+            a[ans][i]=b[i];   
         }
         return;
     }
@@ -77,16 +117,20 @@ void dfs(int x,int sum)
         b[x]=i;
         dfs(x+1,sum+i);
     }
+    return;
 }
 int main()
 {
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>n;
     dfs(1,0);
     cout<<ans<<endl;
     for(int i=1;i<=ans;i++)
     {
-        for(int j=1;j<=10;j++)cout<<a[i][j]<<" ";
+        for(int j=1;j<=10;j++)
+        {
+            if(j>1)cout<<" ";
+            cout<<a[i][j];
+        }
         cout<<endl;
     }
     return 0;

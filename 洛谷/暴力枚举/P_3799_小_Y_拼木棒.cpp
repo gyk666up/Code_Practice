@@ -155,56 +155,121 @@
 // }
 
 
-//2025/12/18
+// //2025/12/18
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// int n;
+// const int p=1e9+7;
+// const int N=1e5+11;
+// int a[N];
+// int nums[N];
+// int C(int n,int x)
+// {
+//     return (x==1?n:n*(n-1)/2);
+// }
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n;
+//     int maxa=0;
+//     for(int i=1;i<=n;i++)
+//     {
+//         cin>>a[i];
+//         nums[a[i]]++;
+//         maxa=max(a[i],maxa);
+//     }
+//     int ans=0;
+
+//     //四根两个一样长的，然后其余的两个之和等于这一根
+//     for(int i=2;i<=maxa;i++)//枚举长边
+//     {
+//         if(nums[i]>=2)
+//         {
+//             int times=C(nums[i],2);
+//             for(int j=1;j<=i/2;j++)
+//             {
+//                 int k=i-j;
+//                 if(j!=k)
+//                 {
+//                     if(nums[j]>=1&&nums[k]>=1)
+//                     {
+//                         ans+=times*C(nums[j],1)*C(nums[k],1);
+//                     }
+//                 }
+//                 else
+//                 {
+//                     if(nums[j]>=2)
+//                     ans+=times*C(nums[j],2);
+//                 }
+//             }
+//             ans%=p;
+//         }
+//     }
+//     cout<<ans;
+//     return 0;
+// }
+
 #include<bits/stdc++.h>
 using namespace std;
 #define int long long
-int n;
 const int p=1e9+7;
+int n;
 const int N=1e5+11;
-int a[N];
-int nums[N];
-int C(int n,int x)
+int ans;
+int C(int n,int m)
 {
-    return (x==1?n:n*(n-1)/2);
+    //一个条件都不能拉下
+    if(m>n)return 0;
+    if(m==0||m==n)return 1;
+    if(n-m<m)m=n-m;
+    return C(n-1,m-1)+C(n-1,m);
+    //C(n,m)=C(n,n-m);
+    //return (m==1)?n:(n-1)*n/2;
 }
+int nums[N];//存不同长度的木棍
 signed main()
 {
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>n;
-    int maxa=0;
+    int maxlen=-1;
     for(int i=1;i<=n;i++)
     {
-        cin>>a[i];
-        nums[a[i]]++;
-        maxa=max(a[i],maxa);
+        int x;cin>>x;
+        nums[x]++;
+        maxlen=max(maxlen,x);
     }
-    int ans=0;
+    // //其中有两个的和等于另外一边的长度(枚举这两个较短的一根)
+    // for(int i=1;i<=maxlen/2;i++)
+    // {
+    //     int l=i;
+    //     if(nums[l]&&num[i-i])
+    //     {
+    //         if()
+    //     }
+    // }
+    //枚举三角形的边长感觉会更好一点
 
-    //四根两个一样长的，然后其余的两个之和等于这一根
-    for(int i=2;i<=maxa;i++)//枚举长边
+    for(int l=2;l<=maxlen;l++)
     {
-        if(nums[i]>=2)
+        if(nums[l]>=2)
         {
-            int times=C(nums[i],2);
-            for(int j=1;j<=i/2;j++)
+            int temp1=C(nums[l],2);
+            for(int i=1;i<=l/2;i++)//两个棍
             {
-                int k=i-j;
-                if(j!=k)
+                int a=i,b=l-i;
+                if(a!=b)
                 {
-                    if(nums[j]>=1&&nums[k]>=1)
+                    if(nums[a]&&nums[b])
                     {
-                        ans+=times*C(nums[j],1)*C(nums[k],1);
+                        ans+=temp1*(C(nums[a],1)*C(nums[b],1))%p;
                     }
                 }
-                else
-                {
-                    if(nums[j]>=2)
-                    ans+=times*C(nums[j],2);
-                }
+                else ans+=(temp1*(C(nums[a],2)))%p;
             }
+            //ans=(ans+temp)%p;//这样写的不对有可能temp就是最上面的C(nums[l],2)即使没找到短的两条边，也会加上
             ans%=p;
         }
+        
     }
     cout<<ans;
     return 0;

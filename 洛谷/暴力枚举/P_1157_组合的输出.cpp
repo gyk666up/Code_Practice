@@ -28,33 +28,63 @@
 //     return 0;
 // }
 
-//方法2
+// //方法2
+
+// #include<bits/stdc++.h>
+// using namespace std;
+// int n,r;
+// int b[30];
+// void dfs(int x,int start)
+// {
+//     if(x>r)
+//     {
+//         for(int i=1;i<=r;i++)
+//         {
+//             cout<<setw(3)<<b[i];
+//         }
+//         cout<<endl;
+//         return;
+//     }
+
+//     for(int i=start;i<=n;i++)
+//     {
+//         b[x]=i;
+//         dfs(x+1,i+1);
+//     }
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>r;
+//     dfs(1,1);
+//     return 0;
+// }
 
 #include<bits/stdc++.h>
 using namespace std;
 int n,r;
-int b[30];
+const int N=22;
+int a[N];
 void dfs(int x,int start)
 {
     if(x>r)
     {
         for(int i=1;i<=r;i++)
         {
-            cout<<setw(3)<<b[i];
+            cout<<setw(3)<<a[i];
         }
         cout<<endl;
-        return;
+        return ;
     }
 
     for(int i=start;i<=n;i++)
     {
-        b[x]=i;
+        a[x]=i;
         dfs(x+1,i+1);
     }
 }
 int main()
 {
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>n>>r;
     dfs(1,1);
     return 0;

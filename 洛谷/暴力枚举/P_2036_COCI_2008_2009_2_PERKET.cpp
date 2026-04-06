@@ -87,8 +87,47 @@
 // }
 
 
+//2026/4 秒了
+#include<bits/stdc++.h>
+using namespace std;
+int n;
+const int N=20;
+int s[N],b[N];
+bool st[N];
+int min_=0x3f3f3f3f;
+void dfs(int x)
+{
+    if(x>n)
+    {
+        int suan=1,ku=0;
+        bool has_=false;
+        for(int i=1;i<=n;i++)
+        {
+            if(st[i])
+            {
+                has_=1;
+                suan*=s[i];
+                ku+=b[i];
+            }
+        }
+        if(has_)min_=min(min_,abs(suan-ku));
+        return;
+    }
 
-
+    st[x]=1;
+    dfs(x+1);
+    st[x]=0;
+    
+    dfs(x+1);
+}
+int main()
+{
+    cin>>n;
+    for(int i=1;i<=n;i++)cin>>s[i]>>b[i];
+    dfs(1);
+    cout<<min_;
+    return 0;
+}
 
 
 

@@ -144,19 +144,20 @@
 
 #include<bits/stdc++.h>
 using namespace std;
-const int N=300;
+const int N=100;
 int s[5];
 int a[5][N];
-int ans1=0x3f3f3f3f;
-int ans;
-int l,r;
+int l=0,r=0;
+int ans=0;
+int temp;
 void dfs(int x,int y)
 {
     if(y>s[x])
     {
-        ans1=min(ans1,max(l,r));
+        temp=min(temp,max(l,r));
         return;
     }
+
     l+=a[x][y];
     dfs(x,y+1);
     l-=a[x][y];
@@ -164,28 +165,22 @@ void dfs(int x,int y)
     r+=a[x][y];
     dfs(x,y+1);
     r-=a[x][y];
-
-    return;
 }
 int main()
 {
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     for(int i=1;i<=4;i++)cin>>s[i];
+
     for(int i=1;i<=4;i++)
     {
-        for(int j=1;j<=s[i];j++)
-        {
-            cin>>a[i][j];
-        }
+        for(int j=1;j<=s[i];j++)cin>>a[i][j];
     }
-    
     for(int i=1;i<=4;i++)
     {
-        ans1=0x3f3f3f3f;
         l=0,r=0;
+        temp=0x3f3f3f3f;
         dfs(i,1);
-        ans+=ans1;
+        ans+=temp;
     }
-    cout<<ans;
+    cout<<ans<<endl;
     return 0;
 }

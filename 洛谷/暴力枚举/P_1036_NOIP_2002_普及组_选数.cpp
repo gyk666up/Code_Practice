@@ -149,13 +149,58 @@
 // }
 
 //这个方法还不是很熟练
+// #include<bits/stdc++.h>
+// using namespace std;
+// int n,k;
+// const int N=30;
+// int a[N];
+// int b[N];
+// int ans=0;
+// bool is_prime(int x)
+// {
+//     if(x<=1)return false;
+//     for(int i=2;i*i<=x;i++)
+//     {
+//         if(x%i==0)return false;
+//     }
+//     return true;
+// }
+// void dfs(int x,int start)
+// {
+//     if(x>k)
+//     {
+//         int temp=0;
+//         for(int i=1;i<=k;i++)temp+=b[i];
+//         if(is_prime(temp))ans++;
+//         return;
+//     }
+
+//     for(int i=start;i<=n;i++)
+//     {
+//         //这里容易写错 b[x]=a[i]
+//         b[x]=a[i];
+//         dfs(x+1,i+1);
+//     }
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>k;
+//     for(int i=1;i<=n;i++)cin>>a[i];
+
+//     dfs(1,1);
+    
+//     cout<<ans;
+//     return 0;
+// }
+
 #include<bits/stdc++.h>
 using namespace std;
-int n,k;
 const int N=30;
+int n,k;
 int a[N];
 int b[N];
-int ans=0;
+int ans;
 bool is_prime(int x)
 {
     if(x<=1)return false;
@@ -165,7 +210,7 @@ bool is_prime(int x)
     }
     return true;
 }
-void dfs(int x,int start)
+void dfs(int x,int start)//跟顺序无关
 {
     if(x>k)
     {
@@ -177,19 +222,15 @@ void dfs(int x,int start)
 
     for(int i=start;i<=n;i++)
     {
-        //这里容易写错 b[x]=a[i]
         b[x]=a[i];
         dfs(x+1,i+1);
     }
 }
 int main()
 {
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>n>>k;
     for(int i=1;i<=n;i++)cin>>a[i];
-
     dfs(1,1);
-    
     cout<<ans;
     return 0;
 }

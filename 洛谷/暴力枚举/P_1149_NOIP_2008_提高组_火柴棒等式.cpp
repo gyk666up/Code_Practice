@@ -105,51 +105,102 @@
 // }
 
 
-//2025/12/16 这道题也掌握的不是很好
+// //2025/12/16 这道题也掌握的不是很好
+// #include<bits/stdc++.h>
+// using namespace std;
+// int n;
+// int nums[10]={6,2,5,5,4,5,6,3,7,6};
+// int a[4];
+// int ans=0;
+// int getmany(int x)
+// {
+//     //这行代码很细节
+//     if(x==0)return nums[0];
+//     int need=0;
+//     while(x)
+//     {
+//         need+=nums[x%10];
+//         x/=10;
+//     }
+//     return need;
+// }
+// void dfs(int x,int sum)
+// {
+//     if(sum>n)return;//这个剪枝很细节也很关键
+//     if(x>3)
+//     {
+//         if(sum==n)
+//         {
+//             if(a[1]+a[2]==a[3])ans++;
+//         }
+//         return;
+//     }
+
+//     //这里有从0开始
+//     for(int i=0;i<1000;i++)
+//     {
+//         a[x]=i;
+//         int need=getmany(a[x]);
+//         dfs(x+1,sum+need);
+//     }
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n;
+//     n-=4;
+//     //指数型枚举
+//     dfs(1,0);
+//     cout<<ans;
+//     return 0;
+// }
+
+//指数型枚举
 #include<bits/stdc++.h>
 using namespace std;
+int b[4];
+int num[]={6,2,5,5,4,5,6,3,7,6};
 int n;
-int nums[10]={6,2,5,5,4,5,6,3,7,6};
-int a[4];
-int ans=0;
-int getmany(int x)
+int ans;
+int getneed(int x)
 {
-    //这行代码很细节
-    if(x==0)return nums[0];
-    int need=0;
+    if(x==0)return num[0];
+    int temp=0;
     while(x)
     {
-        need+=nums[x%10];
+        temp+=num[x%10];
         x/=10;
     }
-    return need;
+    return temp;
 }
-void dfs(int x,int sum)
+void dfs(int x,int cnt)
 {
-    if(sum>n)return;//这个剪枝很细节也很关键
+    if(cnt>n)return;//这个剪纸是必须的
     if(x>3)
     {
-        if(sum==n)
+        if(b[1]+b[2]==b[3]&&cnt==n)
         {
-            if(a[1]+a[2]==a[3])ans++;
+            ans++;
         }
         return;
     }
 
-    //这里有从0开始
-    for(int i=0;i<1000;i++)
+    // for(int i=0;i<=9;i++)
+    // {
+    //     b[x]=i;
+    //     dfs(x+1);
+    // }
+    for(int i=0;i<=1000;i++)
     {
-        a[x]=i;
-        int need=getmany(a[x]);
-        dfs(x+1,sum+need);
+        b[x]=i;
+        int need_=getneed(i);
+        dfs(x+1,cnt+need_);
     }
 }
 int main()
 {
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>n;
     n-=4;
-    //指数型枚举
     dfs(1,0);
     cout<<ans;
     return 0;

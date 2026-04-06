@@ -1,6 +1,7 @@
 //#pragma GCC optimize(2,3,"inline") //洛谷中这行代码不能用
-
-
+//最后一个点卡了
+//不能用常规的素数判断
+//也可以在本地提前跑出来，得到结果，写出数组的形式，直接输出
 #include<bits/stdc++.h>
 using namespace std;
 bool is_prime(int x)
@@ -27,17 +28,22 @@ int main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     int a,b;cin>>a>>b;
-    for(int i=a;i<=b;i+=2)
+    for(int i=a;i<=b;i++)
     {
+
+        //注意这个好细节，
+        if(i==9989900) //如果到了这个数，就break 
+		{
+			break;
+		}
+        //偶数一定不是素数
+        if(i%2==0)continue;
+         if(i==1)continue;
          if(i==2)
          {
             cout<<i<<endl;
             continue;
          }
-        //偶数一定不是素数(除了2)
-        if(i%2==0)continue;
-        if(i==1)continue;
-        
         if(!is_hui(i))continue;
         if(is_prime(i))
         {
@@ -47,5 +53,10 @@ int main()
     }
     return 0;
 }
+       
+
+
+
+
        
     

@@ -201,3 +201,50 @@
 //     return 0;
 // }
 
+
+//全排列，正确的做法是直接从给定的排列作为起点,注意这个是如何通过算法来实现的
+#include<bits/stdc++.h>
+using namespace std;
+const int N=10002;
+bool st[N];
+int a[N];
+int n,m;
+int res=0;
+void dfs(int x)
+{
+    if(x>n)
+    {
+        res++;
+        if(res==m+1)
+        {
+            for(int i=1;i<=n;i++)
+            {
+                if(i>1)cout<<" ";
+                cout<<a[i];
+            }
+        }
+        return;
+    }
+
+    for(int i=1;i<=n;i++)
+    {
+        if(!res)i=a[x];
+        //注意这里千万不能写成 else 否则死循环不会往下递归
+        if(!st[i])
+        {
+            st[i]=1;
+            a[x]=i;
+            dfs(x+1);
+            st[i]=0;
+        }
+           
+    }
+    
+}
+int main()
+{
+    cin>>n>>m;
+    for(int i=1;i<=n;i++)cin>>a[i];
+    dfs(1);
+    return 0;
+}
