@@ -184,25 +184,49 @@
 //     return 0;
 // }
 
-//这个方法更聪明一点
+// //这个方法更聪明一点
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// int n,c;
+// const int N=2e5+11;
+// int a[N];
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>c;
+//     for(int i=1;i<=n;i++)cin>>a[i];
+//     sort(a+1,a+1+n);
+//     int ans=0;
+//     for(int i=1;i<=n;i++)
+//     {
+//         int B=a[i];
+//         int A=B+c;
+//          ans+=upper_bound(a+1,a+1+n,A)-lower_bound(a+1,a+1+n,A);
+//     }
+//     cout<<ans;
+//     return 0;
+// }
+
 #include<bits/stdc++.h>
 using namespace std;
-#define int long long
-int n,c;
 const int N=2e5+11;
+#define int long long
 int a[N];
 signed main()
 {
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    cin>>n>>c;
-    for(int i=1;i<=n;i++)cin>>a[i];
-    sort(a+1,a+1+n);
+    int n,c;cin>>n>>c;
     int ans=0;
+    map<int,int>mp;
     for(int i=1;i<=n;i++)
     {
-        int B=a[i];
-        int A=B+c;
-         ans+=upper_bound(a+1,a+1+n,A)-lower_bound(a+1,a+1+n,A);
+        int x;cin>>x;
+        a[i]=x;
+        mp[x]++;
+    }
+    for(int i=1;i<=n;i++)
+    {
+        ans+=mp[a[i]+c];
     }
     cout<<ans;
     return 0;

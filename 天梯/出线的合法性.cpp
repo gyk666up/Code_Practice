@@ -48,43 +48,87 @@
 
 //还是不熟
 //思路：如果不是 top<x 一直压入 退出 while 后判断栈顶元素是否是x 如果不是的话 肯定就不符合
+// #include<bits/stdc++.h>
+// using namespace std;
+// const int N=1002;
+// int a[N];
+// int main()
+// {
+//     int m,n,k;cin>>m>>n>>k;
+//     while(k--)
+//     {
+//         for(int i=0;i<n;i++)cin>>a[i];
+//         stack<int>s;
+//         bool f=1;
+//         int curr_push=1;//即将压入栈的数字
+//         for(int i=0;i<n;i++)
+//         {
+//             int x=a[i];
+//             while(s.empty()||s.top()<x)
+//             {
+//                 s.push(curr_push);
+//                 if(s.size()>m)
+//                 {
+//                     f=0;
+//                     break;
+//                 }
+//                 curr_push++;
+//                 if(curr_push>n)break;//没有可以压入栈的元素了
+//             }
+
+//             if(!f||s.empty()||s.top()!=x)
+//             {
+//                 f=0;
+//                 break;
+//             }
+//             s.pop();//说明此时栈顶元素是x，可以弹出
+//         }
+//         if(f)cout<<"YES\n";
+//         else cout<<"NO\n";
+//     }
+//     return 0;
+// }
+
 #include<bits/stdc++.h>
 using namespace std;
 const int N=1002;
 int a[N];
+int m,n,k;
 int main()
 {
-    int m,n,k;cin>>m>>n>>k;
+    cin>>m>>n>>k;
     while(k--)
     {
-        for(int i=0;i<n;i++)cin>>a[i];
-        stack<int>s;
+        for(int i=1;i<=n;i++)cin>>a[i];//出栈顺序
+
         bool f=1;
-        int curr_push=1;//即将压入栈的数字
-        for(int i=0;i<n;i++)
+        stack<int>s;
+        int next_push=1;
+        for(int i=1;i<=n;i++)
         {
             int x=a[i];
             while(s.empty()||s.top()<x)
             {
-                s.push(curr_push);
+                s.push(next_push);
                 if(s.size()>m)
                 {
                     f=0;
                     break;
                 }
-                curr_push++;
-                if(curr_push>n)break;//没有可以压入栈的元素了
+                next_push++;
+                if(next_push>n)break;
             }
-
-            if(!f||s.empty()||s.top()!=x)
+            if(s.empty()||s.top()!=x)
             {
                 f=0;
                 break;
             }
-            s.pop();//说明此时栈顶元素是x，可以弹出
+            //说明s.top()==x
+            s.pop();
         }
         if(f)cout<<"YES\n";
         else cout<<"NO\n";
+        
     }
     return 0;
 }

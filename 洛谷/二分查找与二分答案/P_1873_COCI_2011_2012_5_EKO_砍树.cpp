@@ -75,39 +75,79 @@
 
 
 
-//2025/12/18
+// //2025/12/18
+// #include<bits/stdc++.h>
+// using namespace std;
+// int n,m;
+// #define int long long
+// const int N=1e6+11;
+// int a[N];
+// bool check(int x)
+// {
+//     int ans=0;
+//     for(int i=1;i<=n;i++)
+//     {
+//         if(a[i]<=x)continue;
+//         ans+=a[i]-x;
+//     }
+//     if(ans>=m)return true;
+//     return false;
+// }
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m;
+//     int maxa=0;
+//     for(int i=1;i<=n;i++)
+//     {
+//         cin>>a[i];
+//         maxa=max(maxa,a[i]);
+//     }
+//     int l=0,r=maxa+1;
+//     while(l+1!=r)
+//     {
+//         int mid=(l+r)/2;//枚举锯片的高度
+//         if(check(mid))l=mid;
+//         else r=mid;
+//     }
+//     cout<<l;
+//     return 0;
+// }
+
+
+//2026/4/8 easy哈哈哈哈
 #include<bits/stdc++.h>
 using namespace std;
-int n,m;
-#define int long long
 const int N=1e6+11;
+#define int long long
 int a[N];
+int n,m;
 bool check(int x)
 {
     int ans=0;
     for(int i=1;i<=n;i++)
     {
-        if(a[i]<=x)continue;
-        ans+=a[i]-x;
+        if(a[i]>x)ans+=a[i]-x;
     }
     if(ans>=m)return true;
     return false;
 }
 signed main()
 {
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>n>>m;
-    int maxa=0;
-    for(int i=1;i<=n;i++)
-    {
-        cin>>a[i];
-        maxa=max(maxa,a[i]);
-    }
-    int l=0,r=maxa+1;
+    for(int i=1;i<=n;i++)cin>>a[i];
+    sort(a+1,a+1+n);
+    //枚举锯片的高度
+    int l=0,r=*max_element(a+1,a+1+n)+1;
+
+    //锯片的高度越高可以获得的木材数量越少
     while(l+1!=r)
     {
-        int mid=(l+r)/2;//枚举锯片的高度
-        if(check(mid))l=mid;
+        int mid=(l+r)/2;
+        if(check(mid))
+        {
+            l=mid;
+        }
         else r=mid;
     }
     cout<<l;

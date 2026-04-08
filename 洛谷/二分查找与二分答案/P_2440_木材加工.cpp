@@ -44,8 +44,6 @@
 //     return 0;
 // }
 
-
-////问题不大
 #include<bits/stdc++.h>
 using namespace std;
 const int N=1e5+11;
@@ -53,22 +51,24 @@ int a[N];
 int n,k;
 bool check(int x)
 {
-    int cnt=0;
-    for(int i=1;i<=n;i++)cnt+=a[i]/x;
-    if(cnt>=k)return true;
+    int ans=0;
+    for(int i=1;i<=n;i++)
+    {
+        ans+=(a[i]/x);
+    }
+    if(ans>=k)return true;
     return false;
 }
 int main()
 {
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>n>>k;
-    int maxa=0;
-    for(int i=1;i<=n;i++)
-    {
-        cin>>a[i];
-        maxa=max(maxa,a[i]);
-    }
-    int l=0,r=maxa+1;
+    for(int i=1;i<=n;i++)cin>>a[i];
+    sort(a+1,a+1+n);
+    
+    //枚举l的最大值 l越长根数越多
+    //1 2 3 4
+    //4 3 3 1
+    int l=0,r=0x3f3f3f3f;
     while(l+1!=r)
     {
         int mid=(l+r)/2;

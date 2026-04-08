@@ -147,21 +147,78 @@
 
 
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// int n,m;
+// const int N=1e6+11;
+// int a[N];
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m;
+//     for(int i=1;i<=n;i++)cin>>a[i];
+//     while(m--)
+//     {
+//         int x;cin>>x;
+//         int id=lower_bound(a+1,a+1+n,x)-a;
+//         if(a[id]!=x)cout<<-1<<" ";
+//         else cout<<id<<" ";
+//     }
+//     return 0;
+// }
+
+
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// int n,m;
+// const int N=1e6+11;
+// int a[N];
+// int target;
+// bool check(int x)
+// {
+//     if(a[x]<target)return true;
+//     return false;
+// }
+// signed main()
+// {
+//     cin>>n>>m;
+//     for(int i=1;i<=n;i++)cin>>a[i];
+//     sort(a+1,a+1+n);
+    
+//     while(m--)
+//     {
+//         cin>>target;
+//         int l=0,r=n+1;
+//         while(l+1!=r)
+//         {
+//             int mid=(l+r)/2;
+//             if(check(mid)) l=mid;
+//            else  r=mid;
+//         }
+//         if(a[l+1]!=target)cout<<"-1 ";
+//         else cout<<(l+1)<<" ";
+//     }
+    
+//     return 0;
+// }
+
+
 #include<bits/stdc++.h>
 using namespace std;
-int n,m;
 const int N=1e6+11;
+#define int long long
 int a[N];
-int main()
+signed main()
 {
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    cin>>n>>m;
+    int n,m;cin>>n>>m;
     for(int i=1;i<=n;i++)cin>>a[i];
+    sort(a+1,a+1+n);
     while(m--)
     {
         int x;cin>>x;
         int id=lower_bound(a+1,a+1+n,x)-a;
-        if(a[id]!=x)cout<<-1<<" ";
+        if(a[id]!=x)cout<<"-1 ";
         else cout<<id<<" ";
     }
     return 0;

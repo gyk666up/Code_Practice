@@ -1,0 +1,14 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     "/Users/gyk/Desktop/Code/不等式"
+relocations:
+  - { offset: 0x2479, size: 0x8, addend: 0x0, symName: __ZStL8__ioinit, symObjAddr: 0xF968, symBinAddr: 0x100008064, symSize: 0x0 }
+  - { offset: 0x24A9, size: 0x8, addend: 0x0, symName: _grid, symObjAddr: 0x63C, symBinAddr: 0x100008000, symSize: 0x0 }
+  - { offset: 0x24D1, size: 0x8, addend: 0x0, symName: _row_used, symObjAddr: 0xF969, symBinAddr: 0x100008065, symSize: 0x0 }
+  - { offset: 0x24E7, size: 0x8, addend: 0x0, symName: _col_used, symObjAddr: 0xF987, symBinAddr: 0x100008083, symSize: 0x0 }
+  - { offset: 0x25EC, size: 0x8, addend: 0x0, symName: __GLOBAL__sub_I__________.cpp, symObjAddr: 0x6DC, symBinAddr: 0x100000D68, symSize: 0x14 }
+  - { offset: 0x2603, size: 0x8, addend: 0x0, symName: __Z41__static_initialization_and_destruction_0v, symObjAddr: 0x6A0, symBinAddr: 0x100000D2C, symSize: 0x3C }
+  - { offset: 0x2621, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x57C, symBinAddr: 0x100000C6C, symSize: 0xC0 }
+  - { offset: 0x263F, size: 0x8, addend: 0x0, symName: __Z3dfsii, symObjAddr: 0x2FC, symBinAddr: 0x1000009EC, symSize: 0x280 }
+  - { offset: 0x2701, size: 0x8, addend: 0x0, symName: __Z5checkiii, symObjAddr: 0x0, symBinAddr: 0x1000006F0, symSize: 0x2FC }
+...

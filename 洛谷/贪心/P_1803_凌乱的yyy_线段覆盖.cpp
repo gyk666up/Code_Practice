@@ -86,39 +86,35 @@
 //     return 0;
 // }
 
-
 #include<bits/stdc++.h>
 using namespace std;
 const int N=1e6+11;
 struct node
 {
-    int st,end;
+    int st,ed;
     bool operator<(const node&u)
     {
-        return end<u.end;
+        return ed<u.ed;
     }
 }dat[N];
-int n;
-int ans;
 int main()
 {
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    cin>>n;
+    int n;cin>>n;
     for(int i=1;i<=n;i++)
     {
-        cin>>dat[i].st>>dat[i].end;
+        cin>>dat[i].st>>dat[i].ed;
     }
     sort(dat+1,dat+1+n);
-    ans++;
-    int end=dat[1].end;
-    for(int i=2;i<=n;i++)
+    int cnt=0;
+    int last=0;//下一个的开始时间》=上一个的结束时间就OK
+    for(int i=1;i<=n;i++)
     {
-        if(dat[i].st>=end)
+        if(dat[i].st>=last)
         {
-            end=dat[i].end;
-            ans++;
+            cnt++;
+            last=dat[i].ed;
         }
     }
-    cout<<ans;
+    cout<<cnt;
     return 0;
 }

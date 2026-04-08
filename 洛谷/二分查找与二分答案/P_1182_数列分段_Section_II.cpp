@@ -54,16 +54,68 @@
 
 
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// int n,m;
+// const int N=1e5+11;
+// int a[N];
+// bool check(int x)
+// {
+//     int cnt=1,sum=0;//段数至少为1 
+//     for(int i=1;i<=n;i++)
+//     {
+//         if(sum+a[i]<=x)
+//         {
+//             sum+=a[i];
+//         }
+//         else
+//         {
+//             cnt++;
+//             sum=a[i];
+//         }
+//     }
+//     if(cnt>m)return 1;
+//     else return false;
+// }
+// // 5 |3  3  2
+// // 1 2  3  4
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m;
+//     int l=0,r=0;
+//     for(int i=1;i<=n;i++)
+//     {
+//         cin>>a[i];
+//         l=max(a[i],l);//注意这里是最大值
+//         r+=a[i];
+//     }
+//     l--,r++;
+//     //最大就是一段 最小就是数组中最大的元素
+//     //注意这里可不能排序！！！ 否则分组的时候就会对结果产生影响
+//     //sort(a+1,a+1+n);
+//     while(l+1!=r)
+//     {
+//         int mid=(l+r)/2;
+//         if(check(mid))l=mid;
+//         else r=mid;
+//     }
+//     cout<<r;
+//     return 0;
+    
+// }
+
 #include<bits/stdc++.h>
 using namespace std;
-#define int long long
 int n,m;
 const int N=1e5+11;
 int a[N];
 bool check(int x)
 {
-    int cnt=1,sum=0;//段数至少为1 
-    for(int i=1;i<=n;i++)
+    int cnt=1;
+    int sum=0;
+    for(int i=1;i+1<=n;i++)
     {
         if(sum+a[i]<=x)
         {
@@ -75,26 +127,20 @@ bool check(int x)
             sum=a[i];
         }
     }
-    if(cnt>m)return 1;
-    else return false;
+    if(cnt>m)return true;
+    return false;
 }
-// 5 |3  3  2
-// 1 2  3  4
-signed main()
+int main()
 {
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>n>>m;
-    int l=0,r=0;
-    for(int i=1;i<=n;i++)
-    {
-        cin>>a[i];
-        l=max(a[i],l);//注意这里是最大值
-        r+=a[i];
-    }
-    l--,r++;
-    //最大就是一段 最小就是数组中最大的元素
-    //注意这里可不能排序！！！ 否则分组的时候就会对结果产生影响
-    //sort(a+1,a+1+n);
+    for(int i=1;i<=n;i++)cin>>a[i];
+
+    //sort(a+1,a+1+n); 这样可不能排序啊
+    //枚举每个段最大的和 看分的段数
+    // 1| 2 3 4
+    // 5| 4 4 3 
+    // >m true
+    int l=0,r=0x3f3f3f3f;
     while(l+1!=r)
     {
         int mid=(l+r)/2;
@@ -103,5 +149,4 @@ signed main()
     }
     cout<<r;
     return 0;
-    
 }

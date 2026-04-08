@@ -105,7 +105,6 @@
 
 
 
-<<<<<<< HEAD
 // //这道题掌握的不是很好 12//18
 // //使用二分算法之前一定要先排序
 // #include<bits/stdc++.h>
@@ -145,67 +144,38 @@
 //     return 0;
 // }
 
-
-=======
-//这道题掌握的不是很好 12//18
-//使用二分算法之前一定要先排序
->>>>>>> 910700d7e6c08f10eaba22dc51f3fd35dfed6e15
 #include<bits/stdc++.h>
 using namespace std;
-#define int long long
-int m,n;
 const int N=1e5+11;
-<<<<<<< HEAD
+#define int long long
 int a[N];
-=======
-int sc[N];
-int ans=0;
->>>>>>> 910700d7e6c08f10eaba22dc51f3fd35dfed6e15
-bool check(int x,int target)
+int m,n;
+bool check(int x,int y)
 {
-    if(x<=target)return true;
+    if(x<=y)return true;
     return false;
 }
 signed main()
 {
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>m>>n;
-<<<<<<< HEAD
     for(int i=1;i<=m;i++)cin>>a[i];
     sort(a+1,a+1+m);
+    //找最后一个<=x
     int ans=0;
-    for(int i=1;i<=n;i++)
-=======
-    for(int i=1;i<=m;i++)cin>>sc[i];
-    sort(sc+1,sc+1+m);
     while(n--)
->>>>>>> 910700d7e6c08f10eaba22dc51f3fd35dfed6e15
     {
         int x;cin>>x;
         int l=0,r=m+1;
         while(l+1!=r)
         {
             int mid=(l+r)/2;
-<<<<<<< HEAD
             if(check(a[mid],x))l=mid;
             else r=mid;
-        }
-        int temp1=abs(a[l]-x);
-        int temp2=abs(a[l+1]-x);
 
-        //主要是区间包括a[0]这个不合法的元素
-        if(x<a[1])ans+=a[1]-x;
-        else ans+=min(temp1,temp2);
-        ans+=min(temp1,temp2);
-=======
-            if(check(sc[mid],x))l=mid;
-            else r=mid;
         }
-        int temp1=abs(sc[l]-x);
-        int temp2=abs(sc[l+1]-x);
-        if(x<sc[1])ans+=sc[1]-x;
-        else ans+=min(temp1,temp2);
->>>>>>> 910700d7e6c08f10eaba22dc51f3fd35dfed6e15
+        //注意两种极端情况，一种x比所有分数都小，另一种x比所有分数都大
+        if(x<a[1])ans+=a[1]-x;//假设所有学校分数都比学生 $x$ 低。推演：二分结束后，l 会指向 $m$（最后一个学校）。此时 l+1 就是 $m+1$。问题：在全局变量中，a[m+1] 的默认值是 0。后果：a[m+1] - x 会变成一个非常小的负数，min 函数会毫不犹豫地选中这个负数，导致你的总分算错。 所以第二项我们取了个abs
+        else ans+=min(abs(a[l]-x),abs(a[l+1]-x));
     }
     cout<<ans;
     return 0;

@@ -54,6 +54,10 @@
 //     return 0;
 // }
 
+
+
+
+
 // //这道题不熟 重点掌握！！！
 // //暴力 枚举
 // #include <iostream>
@@ -93,25 +97,6 @@
 
 
 // 2025.12.18 这道题掌握的不好 重点复习
-//
-// 不对
-// #include<bits/stdc++.h>
-// using namespace std;
-// int main()
-// {
-// 	ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-// 	int a,b,c,d;cin>>a>>b>>c>>d;
-// 	for(double i=-100;i<=100;i+=0.0001)
-// 	{
-// 		if(a*i*i*i+b*i*i+c*i+d<=0&&a*(i+1)*(i+1)*(i+1)+b*(i+1)*(i+1)+c*(i+1)+d>=0)
-// 		{
-// 			cout<<fixed<<setprecision(2)<<i<<" ";
-// 			i+=1;
-// 		}
-// 	}
-// 	return 0;
-// }
-
 
 
 // #include<bits/stdc++.h>
@@ -128,25 +113,19 @@
 // 		}
 // 	}
 // 	return 0;
-<<<<<<< HEAD
 // }
+
+
 
 #include<bits/stdc++.h>
 using namespace std;
-double a,b,c,d;
 int main()
 {
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    cin>>a>>b>>c>>d;
-    for(double i=-100;i<=100;i+=0.0001)
+    double a,b,c,d;cin>>a>>b>>c>>d;
+    for(double i=-100;i<=100;i+=0.00001)
     {
-        if(abs(a*i*i*i+b*i*i+c*i+d)<0.0001)
-        {
-            cout<<fixed<<setprecision(2)<<i<<" ";
-        }
+        if(abs(a*i*i*i+b*i*i+c*i+d)<0.00001)
+        cout<<fixed<<setprecision(2)<<i<<" ";
     }
     return 0;
 }
-=======
-// }
->>>>>>> 910700d7e6c08f10eaba22dc51f3fd35dfed6e15

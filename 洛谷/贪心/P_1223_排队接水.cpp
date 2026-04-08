@@ -47,47 +47,129 @@
 // }
 
 
-//不难，就是等待时间好好想一下就行了
+// //不难，就是等待时间好好想一下就行了
+// #include<bits/stdc++.h>
+// using namespace std;
+// const int N=1004;
+// struct node
+// {
+//     int t;
+//     int id;
+//     bool operator<(const node&u)
+//     {
+//         if(t!=u.t)return t<u.t;
+//         else return id<u.id;
+//     }
+// }dat[N];
+// int n;
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     //要想等待时间最短的话,用时越短的越往前放
+//     cin>>n;
+//     for(int i=1;i<=n;i++)
+//     {
+//         dat[i].id=i;
+//         cin>>dat[i].t;
+//     }
+//     sort(dat+1,dat+1+n);
+//     for(int i=1;i<=n;i++)cout<<dat[i].id<<" ";
+//     cout<<endl;
+//     double ans=0;
+//     double wait=0;
+//     for(int i=2;i<=n;i++)
+//     {
+//         wait+=dat[i-1].t;
+//         ans+=wait;
+//     }
+
+    
+//     // for(int i=1;i<=n;i++)
+//     // {
+//     //     ans+=dat[i].t*(n-i);
+//     // }
+//     cout<<fixed<<setprecision(2)<<ans/n;
+//     return 0;
+// }
+
 #include<bits/stdc++.h>
 using namespace std;
-const int N=1004;
+int n;
+const int N=1e4+11;
 struct node
 {
-    int t;
     int id;
+    int t;
+    //int wait;
     bool operator<(const node&u)
     {
         if(t!=u.t)return t<u.t;
         else return id<u.id;
     }
 }dat[N];
-int n;
 int main()
 {
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    //要想等待时间最短的话,用时越短的越往前放
     cin>>n;
     for(int i=1;i<=n;i++)
     {
         dat[i].id=i;
         cin>>dat[i].t;
     }
+    double ans=0;//等待时间
     sort(dat+1,dat+1+n);
-    for(int i=1;i<=n;i++)cout<<dat[i].id<<" ";
-    cout<<endl;
-    double ans=0;
-    double wait=0;
-    for(int i=2;i<=n;i++)
+    for(int i=1;i<=n;i++)
     {
-        wait+=dat[i-1].t;
-        ans+=wait;
+        if(i>1)cout<<" ";
+        cout<<dat[i].id;
     }
-
-    
+    cout<<endl;
     // for(int i=1;i<=n;i++)
     // {
-    //     ans+=dat[i].t*(n-i);
+
     // }
+
+    int temp=0;
+    // for(int i=1;i<=n;i++)
+    // {
+    //     ans+=temp;
+    //     temp+=dat[i].t;
+    // }
+    //每个人的等待时间是前面所有人接水时间的和
+
+    for(int i=1;i<=n;i++)
+    {
+        ans+=dat[i].t*(n-i);
+    }
     cout<<fixed<<setprecision(2)<<ans/n;
+
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
