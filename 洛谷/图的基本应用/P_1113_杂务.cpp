@@ -174,39 +174,97 @@
 // }
     
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// int n;
+// const int N=10002;
+// int dp[N];
+// int t[N];
+// int earliest[N];//每项杂物最早的完成时间=最早开始时间+当前任务所需的时间
+// int in_degree[N];
+// vector<int>g[N];
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n;
+//     for(int i=1;i<=n;i++)
+//     {
+//         int id,len;cin>>id>>len;
+//         int pre;
+//         t[id]=len;
+//         while(cin>>pre)
+//         {
+//             if(pre==0)break;
+//             in_degree[id]++;
+//             g[pre].push_back(id);
+//         }
+//     }
+//     queue<int>q;
+//     for(int i=1;i<=n;i++)
+//     {
+//         if(in_degree[i]==0)
+//         {
+//             earliest[i]=t[i];
+//             q.push(i);
+//         }
+//     }
+//     while(q.size())
+//     {
+//         int x=q.front();q.pop();
+//         for(int i=0;i<g[x].size();i++)
+//         {
+//             int y=g[x][i];
+//             earliest[y]=max(earliest[x],earliest[y]);
+
+//             in_degree[y]--;
+//             if(in_degree[y]==0)
+//             {
+//                 earliest[y]+=t[y];
+//                 q.push(y);
+//             }
+//         }
+//     }
+//     int ans=0;
+//     for(int i=1;i<=n;i++)ans=max(ans,earliest[i]);
+//     cout<<ans;
+//     return 0;
+// }
+
+
+//拓扑排序
 #include<bits/stdc++.h>
 using namespace std;
-int n;
 const int N=10002;
-int dp[N];
+int indegree[N];//前置工作
 int t[N];
-int earliest[N];//每项杂物最早的完成时间=最早开始时间+当前任务所需的时间
-int in_degree[N];
 vector<int>g[N];
+int n;
+int earliest[N];//每项工作最早完成时间=前置工作的最早时间+这项工作的完成时间
 int main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>n;
     for(int i=1;i<=n;i++)
     {
-        int id,len;cin>>id>>len;
-        int pre;
-        t[id]=len;
-        while(cin>>pre)
+        int id;cin>>id;
+        cin>>t[id];
+        int x;
+        while(cin>>x)//只要 C++ 成功地从键盘读取了一个数字，并且把它安全地放进了变量 x 里，那么这次读取就是“成功”的，cin 的状态就是健康的，转化成的布尔值就是 true。
         {
-            if(pre==0)break;
-            in_degree[id]++;
-            g[pre].push_back(id);
+            if(x==0)break;
+            g[x].push_back(id);
+            indegree[id]++;
         }
     }
     queue<int>q;
     for(int i=1;i<=n;i++)
     {
-        if(in_degree[i]==0)
+        if(indegree[i]==0)
         {
-            earliest[i]=t[i];
             q.push(i);
+            earliest[i]=t[i];
         }
+
     }
     while(q.size())
     {
@@ -214,18 +272,18 @@ int main()
         for(int i=0;i<g[x].size();i++)
         {
             int y=g[x][i];
-            earliest[y]=max(earliest[x],earliest[y]);
+            earliest[y]=max(earliest[y],earliest[x]);
+            indegree[y]--;
 
-            in_degree[y]--;
-            if(in_degree[y]==0)
+            if(indegree[y]==0)
             {
                 earliest[y]+=t[y];
                 q.push(y);
             }
         }
+        
     }
-    int ans=0;
-    for(int i=1;i<=n;i++)ans=max(ans,earliest[i]);
-    cout<<ans;
+    // for(int i=1;i<=n;i++)cout<<earliest[i]<<" ";
+    cout<<*max_element(earliest+1,earliest+1+n);
     return 0;
 }

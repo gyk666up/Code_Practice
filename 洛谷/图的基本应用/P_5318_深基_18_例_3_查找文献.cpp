@@ -139,66 +139,66 @@
 // }
 
 
-//2026/1/9
-#include<bits/stdc++.h>
-using namespace std;
-int n,m;
-const int N=1e5+11;
-vector<int>g[N];
-bool st[N];
-void dfs(int x)
-{
-    st[x]=1;
-    if(x==1)cout<<x;
-    else cout<<" "<<x;
+// //2026/1/9
+// #include<bits/stdc++.h>
+// using namespace std;
+// int n,m;
+// const int N=1e5+11;
+// vector<int>g[N];
+// bool st[N];
+// void dfs(int x)
+// {
+//     st[x]=1;
+//     if(x==1)cout<<x;
+//     else cout<<" "<<x;
     
-    for(int i=0;i<g[x].size();i++)
-    {
-        int y=g[x][i];
-        if(!st[y])
-        {
-            dfs(y);
-        }
-    }
-}
-void bfs(int x)
-{
-    memset(st,0,sizeof st);
-    st[x]=1;
-    queue<int>q;
-    q.push(x);
-    while(q.size())
-    {
-        int x=q.front();q.pop();
-        if(x==1)cout<<x;
-        else cout<<" "<<x;
-        for(int i=0;i<g[x].size();i++)
-        {
-            int y=g[x][i];
-            if(st[y]==0)
-            {
-                st[y]=1;
-                q.push(y);
-            }
-        }
+//     for(int i=0;i<g[x].size();i++)
+//     {
+//         int y=g[x][i];
+//         if(!st[y])
+//         {
+//             dfs(y);
+//         }
+//     }
+// }
+// void bfs(int x)
+// {
+//     memset(st,0,sizeof st);
+//     st[x]=1;
+//     queue<int>q;
+//     q.push(x);
+//     while(q.size())
+//     {
+//         int x=q.front();q.pop();
+//         if(x==1)cout<<x;
+//         else cout<<" "<<x;
+//         for(int i=0;i<g[x].size();i++)
+//         {
+//             int y=g[x][i];
+//             if(st[y]==0)
+//             {
+//                 st[y]=1;
+//                 q.push(y);
+//             }
+//         }
         
-    }
-}
-int main()
-{
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    cin>>n>>m;
-    for(int i=0;i<m;i++)
-    {
-        int x,y;cin>>x>>y;
-        g[x].push_back(y);
-    }
-    for(int i=1;i<=n;i++)
-    {
-        sort(g[i].begin(),g[i].end());
-    }
-    dfs(1);
-    cout<<endl;
-    bfs(1);
-    return 0;
-}
+//     }
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m;
+//     for(int i=0;i<m;i++)
+//     {
+//         int x,y;cin>>x>>y;
+//         g[x].push_back(y);
+//     }
+//     for(int i=1;i<=n;i++)
+//     {
+//         sort(g[i].begin(),g[i].end());
+//     }
+//     dfs(1);
+//     cout<<endl;
+//     bfs(1);
+//     return 0;
+// }

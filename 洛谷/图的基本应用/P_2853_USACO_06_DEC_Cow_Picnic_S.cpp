@@ -130,26 +130,26 @@
 using namespace std;
 const int N=1002;
 int k,n,m;
+int t[N];//记录每个牧场到达的次数
+vector<int>g[N];
 int milk[N];
 bool vis[N];
-int times[N];//统计每个农场可以到达的次数
-vector<int>g[N];
 void bfs(int x)
 {
-    vis[x]=1;
-    times[x]++;
     queue<int>q;
     q.push(x);
+    vis[x]=1;
     while(q.size())
     {
         int x=q.front();q.pop();
+        t[x]++;
         for(int i=0;i<g[x].size();i++)
         {
             int y=g[x][i];
-            if(vis[y]==0)
+            if(!vis[y])
             {
                 vis[y]=1;
-                times[y]++;
+                //t[y]++;
                 q.push(y);
             }
         }
@@ -159,25 +159,23 @@ int main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>k>>n>>m;
-    for(int i=1;i<=k;i++)
-    {
-       cin>>milk[i];
-    }
+    for(int i=1;i<=k;i++) cin>>milk[i];
     for(int i=0;i<m;i++)
     {
-        int a,b;cin>>a>>b;
-        g[a].push_back(b);
+        int x,y;cin>>x>>y;
+        g[x].push_back(y);
     }
+
     for(int i=1;i<=k;i++)
     {
         memset(vis,0,sizeof vis);
-        bfs(milk[i]);
+        bfs(milk[i]);//牧场 有奶牛的牧场
     }
-    int ans=0;
+    int cnt=0;
     for(int i=1;i<=n;i++)
     {
-        if(times[i]==k)ans++;
+        if(t[i]==k)cnt++;
     }
-    cout<<ans;
+    cout<<cnt;
     return 0;
 }

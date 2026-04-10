@@ -197,14 +197,93 @@
 
 
 
-//这道题还是不会
+// //这道题还是不会
+// #include<bits/stdc++.h>
+// using namespace std;
+// typedef pair<int,int>PII;
+// vector<PII>eq;
+// vector<PII>neq;
+// vector<int>all;
+// const int N=2e5+11;
+// int fa[N];
+// int find(int x)
+// {
+//     if(fa[x]==x)return x;
+//     return fa[x]=find(fa[x]);
+// }
+// void merge(int x,int y)
+// {
+//     int xx=find(x),yy=find(y);
+//     if(xx==yy)return ;
+//     fa[yy]=xx;
+// }
+// int discretize(int x)
+// {
+//     return lower_bound(all.begin(),all.end(),x)-all.begin()+1;
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     int t;cin>>t;
+//     while(t--)
+//     {
+//         eq.clear();
+//         neq.clear();
+//         all.clear();
+//         int n;cin>>n;
+//         for(int i=0;i<n;i++)
+//         {
+//             int a,b,e;cin>>a>>b>>e;
+//             if(e==1)
+//             {
+//                 eq.push_back({a,b});
+//             }
+//             else
+//             neq.push_back({a,b});
+
+//             all.push_back(a);
+//             all.push_back(b);
+//         }
+//         sort(all.begin(),all.end());
+
+//         all.erase(unique(all.begin(),all.end()),all.end());
+
+//         int m=all.size();
+//         for(int i=1;i<=m;i++)fa[i]=i;//并查集注意初始化
+//         for(int i=0;i<eq.size();i++)
+//         {
+//             int x=discretize(eq[i].first);
+//             int y=discretize(eq[i].second);
+//             merge(x,y);
+//         }
+
+//         bool flg=1;
+//         for(int i=0;i<neq.size();i++)
+//         {
+//             int x=discretize(neq[i].first);
+//             int y=discretize(neq[i].second);
+
+//             if(find(x)==find(y))
+//             {
+//                 flg=0;
+//                 break;
+//             }
+//         }
+//         if(flg)cout<<"YES\n";
+//         else cout<<"NO\n";
+//     }
+//     return 0;
+// }
+
+
+
 #include<bits/stdc++.h>
 using namespace std;
+const int N=2e5+11;
 typedef pair<int,int>PII;
 vector<PII>eq;
 vector<PII>neq;
 vector<int>all;
-const int N=2e5+11;
 int fa[N];
 int find(int x)
 {
@@ -214,7 +293,7 @@ int find(int x)
 void merge(int x,int y)
 {
     int xx=find(x),yy=find(y);
-    if(xx==yy)return ;
+    if(xx==yy)return;
     fa[yy]=xx;
 }
 int discretize(int x)
@@ -223,7 +302,6 @@ int discretize(int x)
 }
 int main()
 {
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     int t;cin>>t;
     while(t--)
     {
@@ -233,44 +311,39 @@ int main()
         int n;cin>>n;
         for(int i=0;i<n;i++)
         {
-            int a,b,e;cin>>a>>b>>e;
-            if(e==1)
-            {
-                eq.push_back({a,b});
-            }
-            else
-            neq.push_back({a,b});
-
-            all.push_back(a);
-            all.push_back(b);
+            int x,y,e;cin>>x>>y>>e;
+            if(e==1)eq.push_back({x,y});
+            else neq.push_back({x,y});
+            all.push_back(x);
+            all.push_back(y);
         }
+
+        //离散化处理
         sort(all.begin(),all.end());
-
-        all.erase(unique(all.begin(),all.end()),all.end());
-
+        all.erase(unique(all.begin(),all.end()));
         int m=all.size();
-        for(int i=1;i<=m;i++)fa[i]=i;//并查集注意初始化
+        for(int i=1;i<=m;i++)fa[i]=i;
         for(int i=0;i<eq.size();i++)
         {
             int x=discretize(eq[i].first);
             int y=discretize(eq[i].second);
             merge(x,y);
         }
-
-        bool flg=1;
+        bool f=1;
         for(int i=0;i<neq.size();i++)
         {
-            int x=discretize(neq[i].first);
-            int y=discretize(neq[i].second);
-
-            if(find(x)==find(y))
+            int x=neq[i].first,y=neq[i].second;
+            int xx=discretize(x);
+            int yy=discretize(y);
+            if(find(xx)==find(yy))
             {
-                flg=0;
+                f=0;
                 break;
             }
         }
-        if(flg)cout<<"YES\n";
+        if(f)cout<<"YES\n";
         else cout<<"NO\n";
     }
+    
     return 0;
 }

@@ -100,50 +100,119 @@
 //     return 0;
 // }
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// const int N=1e5+11;
+// int n,m;
+// vector<int>g[N];
+// int a[N];//记录每个点能到达的编号最大的点
+// bool st[N];
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m;
+//     for(int i=0;i<m;i++)
+//     {
+//         int u,v;cin>>u>>v;
+//         //g[u].push_back(v);
+//         g[v].push_back(u);
+//     }
+//     for(int i=1;i<=n;i++)a[i]=i;
+//     for(int max_id=n;max_id>=1;max_id--)
+//     {
+//         if(st[max_id]==0)
+//         {
+//             st[max_id]=1;
+//             a[max_id]=max_id;//每个点至少可以访问到自己
+//             queue<int>q;
+//             q.push(max_id);
+//             while(q.size())
+//             {
+//                 int x=q.front();q.pop();
+//                 for(int i=0;i<g[x].size();i++)
+//                 {
+//                     int y=g[x][i];
+//                     if(!st[y])
+//                     {
+//                         st[y]=1;
+//                         //a[y]=a[x];//或者a[y]=max_id;
+//                         a[y]=max_id;
+//                         q.push(y);
+//                     }
+//                 }
+//             }
+//         }
+//     }
+//     for(int i=1;i<=n;i++)cout<<a[i]<<" ";
+
+//     return 0;
+// }
+
+//一个个点dfs 就会t的
+//思路反向建边，从大往下dfs 
 #include<bits/stdc++.h>
 using namespace std;
 const int N=1e5+11;
-int n,m;
 vector<int>g[N];
-int a[N];//记录每个点能到达的编号最大的点
 bool st[N];
-int main()
+int n,m;
+int max_node[N];//记录每个点能到达的最大点
+// void dfs(int x)
+// {
+//     st[x]=1;
+//     for(int i=0;i<g[x].size();i++)
+//     {
+//         int y=g[x][i];
+//         if(!st[y])
+//         {
+//             //st[y]=1;
+//             max_node[y]=max(max_node[x],max_node[y]);
+//             dfs(y);
+//         }
+        
+//     }
+// }
+void bfs(int x)
 {
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    cin>>n>>m;
-    for(int i=0;i<m;i++)
+    queue<int>q;
+    q.push(x);
+    st[x]=1;
+    while(q.size())
     {
-        int u,v;cin>>u>>v;
-        //g[u].push_back(v);
-        g[v].push_back(u);
-    }
-    for(int i=1;i<=n;i++)a[i]=i;
-    for(int max_id=n;max_id>=1;max_id--)
-    {
-        if(st[max_id]==0)
+        int x=q.front();q.pop();
+        for(int i=0;i<g[x].size();i++)
         {
-            st[max_id]=1;
-            a[max_id]=max_id;//每个点至少可以访问到自己
-            queue<int>q;
-            q.push(max_id);
-            while(q.size())
+            int y=g[x][i];
+            if(!st[y])
             {
-                int x=q.front();q.pop();
-                for(int i=0;i<g[x].size();i++)
-                {
-                    int y=g[x][i];
-                    if(!st[y])
-                    {
-                        st[y]=1;
-                        //a[y]=a[x];//或者a[y]=max_id;
-                        a[y]=max_id;
-                        q.push(y);
-                    }
-                }
+                st[y]=1;
+                max_node[y]=max(max_node[y],max_node[x]);
+                q.push(y);
             }
+            
         }
     }
-    for(int i=1;i<=n;i++)cout<<a[i]<<" ";
-
+}
+int main()
+{
+    cin>>n>>m;
+    for(int i=1;i<=m;i++)
+    {
+        int u,v;cin>>u>>v;
+        g[v].push_back(u);
+    }
+    for(int i=n;i>=1;i--)
+    {
+        // max_node[i]=i;//肯定能到达自己 写在这个不对
+        //dfs(i);
+        if(!st[i])
+        {
+            max_node[i]=i;//肯定能到达自己
+            //反向建边 + 从大到小遍历”的精髓在于：一个点只要被访问到了，那肯定是被它能到达的“最大节点”访问到的。一旦被访问过，以后就不需要再动它了。
+            bfs(i);
+            //dfs(i);
+        }
+    }
+    for(int i=1;i<=n;i++)cout<<max_node[i]<<" ";
     return 0;
 }

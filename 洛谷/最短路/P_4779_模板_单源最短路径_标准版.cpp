@@ -62,53 +62,117 @@
 // }
 
 
+
+// //方式 1 堆优化版本
+// //小根堆保贪心，过时距离快 continue
 // #include<bits/stdc++.h>
 // using namespace std;
 // #define int long long
-// int n,m,s;
+// const int N=1e5+11;
+// bool st[N];
 // struct edge
 // {
 //     int to,w;
 // };
-// const int N=1e5+66;
+// int n,m,s;
 // vector<edge>g[N];
-// typedef pair<int,int>PII;
+// typedef pair<int,int>PII;//一维是距离 二维是另一个端点
 // int dist[N];
-// bool st[N];
 // void Dijkstra(int x)
 // {
+//     memset(dist,0x3f,sizeof dist);
+//     dist[s]=0;
 //     priority_queue<PII,vector<PII>,greater<PII>>q;
-//     dist[x]=0;
-    
-//     //注意这两个顺序不能颠倒，因为是先比较first 后比较second
-//     //堆顶“当前距离最小的点”
-//     q.push({0,x});//{ 到这个点的最短距离 , 这个点是谁 }
+//     q.push({0,x});
 //     while(q.size())
 //     {
-//         auto[d,x]=q.top();q.pop();
-
+//         auto t=q.top();q.pop();
+//         int x=t.second;
+//         int d=t.first;
 //         if(st[x])continue;
-
 //         st[x]=1;
-//         for(auto[v,w]:g[x])
+//         for(auto[y,w]:g[x])
 //         {
-//             if(dist[v]>d+w)
+//             if(dist[y]>d+w)
 //             {
-//                 dist[v]=d+w;
-//                 q.push({dist[v],v});
+//                 dist[y]=d+w;
+//                 q.push({dist[y],y});
 //             }
 //         }
-
 //     }
 // }
 // signed main()
 // {
 //     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
 //     cin>>n>>m>>s;
+   
 //     for(int i=1;i<=m;i++)
 //     {
 //         int u,v,w;cin>>u>>v>>w;
-//         g[u].push_back({v,w});//单边
+//         g[u].push_back({v,w});
+//         //g[]
+//     }
+//     Dijkstra(s);
+//     for(int i=1;i<=n;i++)cout<<dist[i]<<" ";
+//     return 0;
+// }
+
+// //方式二 队列
+// #include<bits/stdc++.h>
+// using namespace std;
+// const int N=1e5+11;
+// struct edge
+// {
+//     int to,w;
+// };
+// vector<edge>g[N];
+// bool st[N];
+// int n,m,s;
+// int dist[N];
+// void Dijkstra(int x)
+// {
+//     dist[x]=0;
+//     queue<int>q;
+//     q.push(x);
+//     while(q.size())
+//     {
+//         // int x=q.front();q.pop();
+//         // for(auto[v,w]:g[x])
+//         // {
+//         //     // if(st[v])continue;
+//         //     // st[v]=1;
+//         //     if(dist[v]>dist[x]+w)
+//         //     {
+//         //         dist[v]=dist[x]+w;
+//         //         q.push(v);
+//         //     }
+//         // }
+
+//     int x=q.front(); q.pop();
+//     st[x] = 0; // 🌟 灵魂操作：出队时注销登记，允许以后再来排队 否则会被重复压入队
+
+//     for(auto[v,w]:g[x])
+//     {
+//         if(dist[v]>dist[x]+w)
+//         {
+//             dist[v]=dist[x]+w;
+//             if(!st[v]) // 🌟 门卫：不在队伍里，才去排队
+//             {
+//                 q.push(v);
+//                 st[v] = 1; // 登记入队
+//             }
+//         }
+//     }
+//     }
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m>>s;
+//     for(int i=0;i<m;i++)
+//     {
+//         int u,v,w;cin>>u>>v>>w;
+//         g[u].push_back({v,w});
 //     }
 //     memset(dist,0x3f,sizeof dist);
 //     Dijkstra(s);
@@ -116,56 +180,50 @@
 //     return 0;
 // }
 
-
+// //朴素 Dijkstra
 // #include<bits/stdc++.h>
 // using namespace std;
-// #define int long long
-// int n,m,s;
-// const int N=1e5+66;
-// struct node
+// const int N=1e5+11;
+// struct edge
 // {
 //     int to,w;
 // };
-// vector<node>g[N];
-// bool st[N];
+// vector<edge>g[N];
 // int dist[N];
-// typedef pair<int,int>PII;
-// //一个点是在“从堆里第一次弹出时”才确定最短路 只有这时候才能标记st[x]=1;
+// bool st[N];
+// int n,m,s;
 // void Dijkstra(int x)
 // {
-//     memset(dist,0x3f,sizeof dist);
-//     //st[x]=1;
-//     //❌ 你把 st[] 的使用方式写错了
-// // ❌ 你过早地把点“锁死”了
-// // ❌ 这样会导致最短路算错
 //     dist[x]=0;
-//     //pair<int,int>PII[d,x]分别是到x点距离 和这个点是x
-//     priority_queue<PII,vector<PII>,greater<PII>>q;
-//     q.push({0,s});
-//     while(q.size())
+//     for(int i=1;i<=n;i++)
 //     {
-//         auto[d,x]=q.top();q.pop();
-//         if(st[x])continue;
-
-//         st[x]=1;
-//         for(auto[v,w]:g[x])
+//         int closen=-1,closenvalue=0x3f3f3f3f;
+//         for(int i=1;i<=n;i++)
 //         {
-//             if(!st[v])
+//             if(!st[i]&&dist[i]<closenvalue)
 //             {
-//                 if(dist[v]>d+w)
-//                 {
-//                     dist[v]=d+w;
-//                     //st[v]=1;
-//                     q.push({dist[v],v});
-//                 }
-
+//                 closen=i;
+//                 closenvalue=dist[i];
 //             }
 //         }
+
+//         if(closen==-1)return;
+//         st[closen]=1;
+
+//         for(auto[y,w]:g[closen])
+//         {
+//             if(dist[y]>dist[closen]+w)
+//             {
+//                 dist[y]=dist[closen]+w;
+//             }
+//         }
+
 //     }
 // }
-// signed main()
+// int main()
 // {
 //     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     memset(dist,0x3f,sizeof dist);
 //     cin>>n>>m>>s;
 //     for(int i=0;i<m;i++)
 //     {
@@ -176,5 +234,3 @@
 //     for(int i=1;i<=n;i++)cout<<dist[i]<<" ";
 //     return 0;
 // }
-
-

@@ -129,15 +129,44 @@
 // }
 
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// const int N=2e4+11;
+// int a[N];
+// int b[N];
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     int n;cin>>n;
+//     for(int i=1;i<=n;i++)
+//     {
+//         cin>>a[i]>>b[i];
+//     }
+//     sort(a+1,a+1+n);
+//     sort(b+1,b+1+n);
+
+//     int ans=0;
+//     for(int i=1;i+1<=n;i++)
+//     {
+//         ans+=b[i]-a[i];
+//         if(b[i]>a[i+1])
+//         {
+//             ans-=b[i]-a[i+1];
+//         }
+//     }
+//     ans+=(b[n]-a[n]);
+//     cout<<ans;
+//     return 0;
+// }
+
 #include<bits/stdc++.h>
 using namespace std;
-#define int long long
 const int N=2e4+11;
-int a[N];
-int b[N];
+#define int long long
+int a[N],b[N];
 signed main()
 {
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     int n;cin>>n;
     for(int i=1;i<=n;i++)
     {
@@ -147,15 +176,23 @@ signed main()
     sort(b+1,b+1+n);
 
     int ans=0;
-    for(int i=1;i+1<=n;i++)
+    for(int i=1;i<=n;i++)
     {
         ans+=b[i]-a[i];
-        if(b[i]>a[i+1])
+        //−2 31≤a<b<2 31 b[i-1]是0 如果 a[i]是负数的话会算错
+        if(i>1&&b[i-1]>a[i])
         {
-            ans-=b[i]-a[i+1];
+            ans-=b[i-1]-a[i];
         }
     }
-    ans+=(b[n]-a[n]);
-    cout<<ans;
+
+    // for(int i=1;i+1<=n;i++)
+    // {
+    //     ans+=b[i]-a[i];
+    //     if(b[i]>a[i+1])ans-=b[i]-a[i+1];
+    // }
+
+    cout<<ans+b[n]-a[n];
+
     return 0;
 }

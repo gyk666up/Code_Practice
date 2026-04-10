@@ -161,44 +161,102 @@
 
 
 //思路当走到一个模坐标相同但实际坐标不同的点 就说明可以到达无限远
+// #include<bits/stdc++.h>
+// using namespace std;
+// const int N=2000;
+// bool st[N][N];
+// typedef pair<int,int>PII;
+// PII vis[N][N];
+// char s[N][N];
+// int dx[]={0,0,1,-1};
+// int dy[]={1,-1,0,0};
+// int mod(int x,int y)
+// {
+//     return (x%y+y)%y;
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     int n,m;
+//     while(cin>>n>>m){
+//     memset(s,0,sizeof s);
+//     memset(st,0,sizeof st);
+//     int stx=-1,sty=-1;
+//     for(int i=0;i<n;i++)
+//     {
+//         for(int j=0;j<m;j++)
+//         {
+//             cin>>s[i][j];
+//             if(s[i][j]=='S')
+//             {
+//                 stx=i,sty=j;
+//             }
+//         }
+//     }
+//     queue<PII>q;
+//     q.push({stx,sty});
+//     st[stx][sty]=1;
+//     vis[stx][sty]={stx,sty};
+//     bool ok=0;
+//     while(q.size()&&!ok)
+//     {
+//         auto t=q.front();q.pop();
+//         int x=t.first,y=t.second;
+//         for(int i=0;i<4;i++)
+//         {
+//             int xx=dx[i]+x;
+//             int yy=dy[i]+y;
+            
+//             int modx=mod(xx,n);
+//             int mody=mod(yy,m);
+//             //if(s[xx][yy]=='#')continue;
+
+//             if(s[modx][mody]=='#')continue;
+//             if(!st[modx][mody])
+//             {
+//                 st[modx][mody]=1;
+//                 vis[modx][mody]={xx,yy};
+//                 //q.push({modx,mody});
+//                 q.push({xx,yy});//压入真实坐标
+//             }
+//             else
+//             {
+//                 if(vis[modx][mody].first!=xx||vis[modx][mody].second!=yy)
+//                 {
+//                     ok=1;
+//                     break;
+//                 }
+//             }
+//         }
+//     }
+//     if(ok)cout<<"Yes\n";
+//     else cout<<"No\n";
+// }
+//     return 0;
+// }
+
+
 #include<bits/stdc++.h>
 using namespace std;
+int n,m;
 const int N=2000;
-bool st[N][N];
 typedef pair<int,int>PII;
-PII vis[N][N];
-char s[N][N];
+char g[N][N];
 int dx[]={0,0,1,-1};
 int dy[]={1,-1,0,0};
-int mod(int x,int y)
+bool st[N][N];//模坐标 当模坐标相同，真实坐标不同的时候说明可以无限到达
+PII vis[N][N];//存模坐标相等的点
+
+bool f=0;
+int mod(int x,int k)
 {
-    return (x%y+y)%y;
+    return (x%k+k)%k;
 }
-int main()
+void bfs(int x,int y)
 {
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    int n,m;
-    while(cin>>n>>m){
-    memset(s,0,sizeof s);
-    memset(st,0,sizeof st);
-    int stx=-1,sty=-1;
-    for(int i=0;i<n;i++)
-    {
-        for(int j=0;j<m;j++)
-        {
-            cin>>s[i][j];
-            if(s[i][j]=='S')
-            {
-                stx=i,sty=j;
-            }
-        }
-    }
     queue<PII>q;
-    q.push({stx,sty});
-    st[stx][sty]=1;
-    vis[stx][sty]={stx,sty};
-    bool ok=0;
-    while(q.size()&&!ok)
+    q.push({x,y});
+    while(q.size())
     {
         auto t=q.front();q.pop();
         int x=t.first,y=t.second;
@@ -206,31 +264,53 @@ int main()
         {
             int xx=dx[i]+x;
             int yy=dy[i]+y;
-            
-            int modx=mod(xx,n);
-            int mody=mod(yy,m);
-            //if(s[xx][yy]=='#')continue;
+            int mod_x=mod(xx,n);
+            int mod_y=mod(yy,m);
+            if(mod_x<0||mod_y<0||mod_x>=n||mod_y>=m)continue;
+            if(g[mod_x][mod_y]=='#')continue;
 
-            if(s[modx][mody]=='#')continue;
-            if(!st[modx][mody])
+            if(!st[mod_x][mod_y])
             {
-                st[modx][mody]=1;
-                vis[modx][mody]={xx,yy};
-                //q.push({modx,mody});
-                q.push({xx,yy});//压入真实坐标
+               st[mod_x][mod_y]=1;
+               vis[mod_x][mod_y]={xx,yy};
+               q.push({xx,yy});
             }
-            else
+            else 
             {
-                if(vis[modx][mody].first!=xx||vis[modx][mody].second!=yy)
+                if(vis[mod_x][mod_y].first!=xx||vis[mod_x][mod_y].second!=yy)//真实坐标没走过 摸坐标走过 可以永远走下去
                 {
-                    ok=1;
-                    break;
+                    f=1;
+                    return;
                 }
+               // else 摸坐标走过，真实坐标也走过 那就直接跳过就行了
             }
         }
     }
-    if(ok)cout<<"Yes\n";
-    else cout<<"No\n";
 }
+int main()
+{
+    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+    while(cin>>n>>m)
+    {
+        memset(vis,0,sizeof vis);
+        memset(st,0,sizeof st);
+        int I,J;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                cin>>g[i][j];
+                if(g[i][j]=='S')I=i,J=j;
+            }
+        }
+
+        f=0;
+        bfs(I,J);
+
+        if(f)cout<<"Yes\n";
+        else cout<<"No\n";
+    }
+
+
     return 0;
 }

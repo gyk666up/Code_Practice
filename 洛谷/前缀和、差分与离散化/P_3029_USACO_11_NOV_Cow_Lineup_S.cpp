@@ -338,7 +338,9 @@
 
 #include<bits/stdc++.h>
 using namespace std;
-const int N=5e4+66;
+const int N=5e4+11;
+#define int long long
+int n;
 struct cow
 {
     int x,id;
@@ -347,40 +349,42 @@ struct cow
         return x<u.x;
     }
 };
-int main()
+vector<cow>cows;
+signed main()
 {
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    int n;cin>>n;
-    vector<cow>cows(n);
-    set<int>kinds;
-    for(int i=0;i<n;i++)
+    cin>>n;
+    set<int>kinds;//统计品种数目
+
+    int maxlen=-1;
+    for(int i=1;i<=n;i++)
     {
-        cin>>cows[i].x>>cows[i].id;
-        kinds.insert(cows[i].id);
+        int x,y;cin>>x>>y;
+        kinds.insert(y);
+        cows.push_back({x,y});
+        //maxlen=max(maxlen,x);
     }
-    int m=kinds.size();
     sort(cows.begin(),cows.end());
+    int all=kinds.size();
     int l=0;
-    int curr_kinds=0;
-    map<int,int>mp;
     int ans=0x3f3f3f3f;
+    map<int,int>mp;//统计窗口内容信息 品种
+    int curr_kinds=0;
     for(int r=0;r<n;r++)
     {
+        int x=cows[r].x;
         int id=cows[r].id;
         if(mp[id]==0)curr_kinds++;
         mp[id]++;
-
-
-        while(curr_kinds==m)
+        while(curr_kinds==all)
         {
-            ans=min(ans,cows[r].x-cows[l].x);
             mp[cows[l].id]--;
+            //移动左指针
             if(mp[cows[l].id]==0)curr_kinds--;
-
+            ans=min(ans,cows[r].x-cows[l].x);
             l++;
         }
     }
-    cout<<ans;
     
+    cout<<ans;
     return 0;
 }

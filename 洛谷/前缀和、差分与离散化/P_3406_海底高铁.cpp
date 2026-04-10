@@ -195,44 +195,50 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define int long long
-const int N=1e5+66;
-int path[N];
-struct edge
+const int N=1e5+11;
+struct node
 {
-    int a,b,c;
-    int cnt;
-}dat[N];
+    int a;
+    int b,c;
+    int t;//经过的次数
+}dat[N];//下标是铁路 1 对应 1 和城市 2 
 int n,m;
+int path[N];
 int diff[N];
 signed main()
 {
-    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>n>>m;
-    for(int i=1;i<=m;i++)cin>>path[i];
 
+    //差分统计次数
+    for(int i=1;i<=m;i++)cin>>path[i];
     for(int i=1;i<=n-1;i++)
     {
         cin>>dat[i].a>>dat[i].b>>dat[i].c;
     }
 
-    for(int i=1;i+1<=m;i++)
+    //不能直接对 pathsort
+    //统计经过的次数
+    for(int i=1;i<=m-1;i++)
     {
-        int A=path[i],B=path[i+1];
-        if(A>B)swap(A,B);
-
-        diff[A]++;
-        diff[B]--;
+        int a=path[i],b=path[i+1]; //第i 段铁路对应城市i 和i+1
+        if(a>b)swap(a,b);
+        // 城市 1 到城市 3 只需经过铁路 1 和铁路 2 就可以看
+        diff[a]++;
+        //diff[b+1]--;//这里非常容易错
+        diff[b]--;
     }
+
     int ans=0;
+    // 当a*t>=b*t+c 时买卡划算
     for(int i=1;i<=n-1;i++)
     {
-        dat[i].cnt=dat[i-1].cnt+diff[i];
-        int n=dat[i].cnt;
-        int cost1=n*dat[i].a;
-        int cost2=n*dat[i].b+dat[i].c;
-        ans+=min(cost1,cost2);
+        dat[i].t=dat[i-1].t+diff[i];
+        if(dat[i].a*dat[i].t>=dat[i].b*dat[i].t+dat[i].c)
+        {
+            ans+=dat[i].b*dat[i].t+dat[i].c;
+        }
+        else ans+=dat[i].a*dat[i].t;
     }
-
     cout<<ans;
     return 0;
 }

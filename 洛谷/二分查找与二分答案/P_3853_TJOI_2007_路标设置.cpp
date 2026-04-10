@@ -75,7 +75,7 @@ bool check(int x)
     int ans=0;
     for(int i=1;i<=n;i++)
     {
-        //注意这个得先下取整
+        //注意这个得-1 不算向下取整
         if(a[i]-a[i-1]>x)ans+=(a[i]-a[i-1]-1)/x;
     }
     if(l-a[n]>x)ans++;
