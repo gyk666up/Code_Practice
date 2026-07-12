@@ -106,22 +106,79 @@
 
 
 
-//本质上就是把所有和坐标相关的都放到一个数组做映射
-//离散化+前缀和
+// //本质上就是把所有和坐标相关的都放到一个数组做映射
+// //离散化+前缀和
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// typedef pair<int,int> PII;
+// int n,m;
+// vector<int>all;
+// vector<PII>query;
+// vector<PII>add;
+//数组开到 3e5 + 11 的根本原因是：参与离散化的坐标总数在最坏情况下会达到 $n + 2m$，即 $3 \times 10^5$ 个，而不仅仅是 $n$ 个。
+// const int N=3e5+11;//注意这里的数组大小
+// int a[N];//映射后的新坐标
+// int prefix[N];
+// int find(int x)
+// {
+//     return lower_bound(all.begin(),all.end(),x)-all.begin()+1;//1-based
+// }
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m;
+//     for(int i=1;i<=n;i++)
+//     {
+//         int x,c;cin>>x>>c;
+//         all.push_back(x);
+//         add.push_back({x,c});
+//     }
+//     for(int i=1;i<=m;i++)
+//     {
+//         int l,r;cin>>l>>r;
+//         all.push_back(l);
+//         all.push_back(r);
+//         query.push_back({l,r});
+//     }
+//     sort(all.begin(),all.end());
+//     all.erase(unique(all.begin(),all.end()),all.end());
+
+//     for(auto item:add)
+//     {
+//         int x=find(item.first);
+//         a[x]+=item.second;
+//     }
+//     for(int i=1;i<=all.size();i++)
+//     {
+//         prefix[i]=prefix[i-1]+a[i];
+//     }
+
+//     for(auto item:query)
+//     {
+//         int x=find(item.first),y=find(item.second);//离散后的坐标
+//         cout<<prefix[y]-prefix[x-1]<<endl;
+//     }
+//     return 0;
+// }
+
+
+//把所有坐标都离散化，同时保证
 #include<bits/stdc++.h>
 using namespace std;
 #define int long long
-typedef pair<int,int> PII;
-int n,m;
-vector<int>all;
+const int N=1e6+11;//记录所有出现的下标//注意数组的大小，以及原因
+int a[N];
+typedef pair<int,int>PII;
 vector<PII>query;
 vector<PII>add;
-const int N=3e5+11;//注意这里的数组大小
-int a[N];//映射后的新坐标
+vector<int>all;
 int prefix[N];
-int find(int x)
+int n,m;
+int discreatize(int x)
 {
-    return lower_bound(all.begin(),all.end(),x)-all.begin()+1;//1-based
+    //返回1-based
+    return lower_bound(all.begin(),all.end(),x)-all.begin()+1;
 }
 signed main()
 {
@@ -130,33 +187,30 @@ signed main()
     for(int i=1;i<=n;i++)
     {
         int x,c;cin>>x>>c;
-        all.push_back(x);
         add.push_back({x,c});
+        all.push_back(x);
     }
     for(int i=1;i<=m;i++)
     {
         int l,r;cin>>l>>r;
+        query.push_back({l,r});
         all.push_back(l);
         all.push_back(r);
-        query.push_back({l,r});
     }
     sort(all.begin(),all.end());
     all.erase(unique(all.begin(),all.end()),all.end());
-
-    for(auto item:add)
+    for(auto[x,c]:add)
     {
-        int x=find(item.first);
-        a[x]+=item.second;
+        x=discreatize(x);
+        a[x]+=c;
     }
-    for(int i=1;i<=all.size();i++)
+    //for(int i=1;i<=1e5+1;i++)prefix[i]=prefix[i-1]+a[i];
+    for(int i=1;i<=all.size();i++)prefix[i]=prefix[i-1]+a[i];
+    for(auto[l,r]:query)
     {
-        prefix[i]=prefix[i-1]+a[i];
-    }
-
-    for(auto item:query)
-    {
-        int x=find(item.first),y=find(item.second);//离散后的坐标
-        cout<<prefix[y]-prefix[x-1]<<endl;
+        l=discreatize(l);
+        r=discreatize(r);
+        cout<<prefix[r]-prefix[l-1]<<endl;
     }
     return 0;
 }

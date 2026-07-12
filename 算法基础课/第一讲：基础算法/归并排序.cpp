@@ -34,36 +34,74 @@
 // }
 
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// const int N=1e6+11;
+// int a[N];
+// int temp[N];
+// int n;
+// void mergesort(int l,int r)
+// {
+//     if(l==r)return ;
+//     int mid=(l+r)/2;
+//     int i=l,j=mid+1;int k=0;
+//     mergesort(l,mid);mergesort(mid+1,r);
+
+//     while(i<=mid&&j<=r)
+//     {
+//         if(a[i]<=a[j])temp[k++]=a[i++];
+//         else temp[k++]=a[j++];
+//     }
+//     while(i<=mid)temp[k++]=a[i++];
+//     while(j<=r)temp[k++]=a[j++];
+//     //归并
+//     for(int i=l,j=0;i<=r;)a[i++]=temp[j++];
+// }
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n;
+//     for(int i=1;i<=n;i++)cin>>a[i];
+//     mergesort(1,n);
+//     for(int i=1;i<=n;i++)cout<<a[i]<<" ";
+//     return 0;
+// }
+
+//2026/7/9 还可以
 #include<bits/stdc++.h>
 using namespace std;
 #define int long long
-const int N=1e6+11;
+const int N=1e5+11;
 int a[N];
-int temp[N];
 int n;
-void mergesort(int l,int r)
+int temp[N];
+void merge_sort(int a[],int l,int r)
 {
-    if(l==r)return ;
-    int mid=(l+r)/2;
-    int i=l,j=mid+1;int k=0;
-    mergesort(l,mid);mergesort(mid+1,r);
-
+    if(l==r)return;
+    int mid=(l+r)>>1;
+    int i=l,j=mid+1;
+    merge_sort(a,i,mid);
+    merge_sort(a,mid+1,r);
+    int k=0;
     while(i<=mid&&j<=r)
     {
-        if(a[i]<=a[j])temp[k++]=a[i++];
+        if(a[i]<a[j])
+        temp[k++]=a[i++];
         else temp[k++]=a[j++];
     }
     while(i<=mid)temp[k++]=a[i++];
     while(j<=r)temp[k++]=a[j++];
-    //归并
-    for(int i=l,j=0;i<=r;)a[i++]=temp[j++];
+    for(int k=0;k<r-l+1;k++)
+    a[l+k]=temp[k];
+    return;
 }
 signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>n;
     for(int i=1;i<=n;i++)cin>>a[i];
-    mergesort(1,n);
+    merge_sort(a,1,n);
     for(int i=1;i<=n;i++)cout<<a[i]<<" ";
     return 0;
 }

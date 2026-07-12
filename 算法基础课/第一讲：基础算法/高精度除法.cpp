@@ -32,39 +32,76 @@
 //     return 0;
 // }
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// string a;int b;
+// int d=0;//除数
+// int r=0;//余数
+// vector<int>div(vector<int>A,int b)
+// {
+//     vector<int>C;
+//     //除法得从高位开始
+//     reverse(A.begin(),A.end());
+    
+//     for(int i=0;i<A.size();i++)
+//     {
+//         d=(r*10+A[i])/b;
+//         C.push_back(d);
+//         r=(r*10+A[i])%b;
+//     }
+//     //现在是高位在前
+//     reverse(C.begin(),C.end());
+//     while(C.size()>1&&C.back()==0)C.pop_back();
+//     return C;
+// }
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     vector<int>A;
+//     cin>>a>>b;
+//     for(int i=a.size()-1;i>=0;i--)A.push_back(a[i]-'0');
+//     vector<int>C=div(A,b);
+    
+//     for(int i=C.size()-1;i>=0;i--)cout<<C[i];
+//     cout<<endl;
+//     cout<<r;
+//     return 0;
+// }
+
 #include<bits/stdc++.h>
 using namespace std;
 #define int long long
-string a;int b;
-int d=0;//除数
-int r=0;//余数
-vector<int>div(vector<int>A,int b)
+string A;int b;
+    int r=0;//余数
+    int d=0;//商数
+void divid(string A,int b)
 {
-    vector<int>C;
-    //除法得从高位开始
-    reverse(A.begin(),A.end());
-    
-    for(int i=0;i<A.size();i++)
+    vector<int>a;
+    for(int i=0;i<A.size();i++)a.push_back(A[i]-'0');
+    int x=0;
+
+    vector<int>c;
+    for(int i=0;i<a.size();i++)
     {
-        d=(r*10+A[i])/b;
-        C.push_back(d);
-        r=(r*10+A[i])%b;
+        d=(r*10+a[i])/b;
+        r=(r*10+a[i])%b;
+        c.push_back(d);
     }
-    //现在是高位在前
-    reverse(C.begin(),C.end());
-    while(C.size()>1&&C.back()==0)C.pop_back();
-    return C;
+    //得删去前导 0
+    reverse(c.begin(),c.end());
+    while(c.size()>1&&c.back()==0)c.pop_back();
+    reverse(c.begin(),c.end());
+    for(int i=0;i<c.size();i++)cout<<c[i];//这个才是商
+    cout<<endl;
+    cout<<r;
 }
 signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    vector<int>A;
-    cin>>a>>b;
-    for(int i=a.size()-1;i>=0;i--)A.push_back(a[i]-'0');
-    vector<int>C=div(A,b);
-    
-    for(int i=C.size()-1;i>=0;i--)cout<<C[i];
-    cout<<endl;
-    cout<<r;
+    cin>>A>>b;
+    divid(A,b);
+    //cout<<r<<endl<<d;
+    //cout<<d<<endl<<r;
     return 0;
 }

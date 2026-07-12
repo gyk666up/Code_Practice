@@ -29,34 +29,69 @@
 //     return 0;
 // }
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// string a;int b;
+// vector<int>A;
+// vector<int>mul(vector<int>&A,int b)
+// {
+//     int t=0;
+//     vector<int>C;
+
+//     for(int i=0;i<A.size()||t;i++)
+//     {
+//         if(i<A.size())t=A[i]*b+t;
+//         C.push_back(t%10);
+//         t/=10;
+//     }
+//     while(C.size()>1&&C.back()==0)C.pop_back();
+//     return C;
+    
+// }
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>a>>b;
+//     for(int i=a.size()-1;i>=0;i--)A.push_back(a[i]-'0');
+//     //for(int i=b.size()-1;i>=0;i--)B.push_back(b[i]);
+//     vector<int>C=mul(A,b);
+
+//     for(int i=C.size()-1;i>=0;i--)cout<<C[i];
+//     return 0;
+// }
+
 #include<bits/stdc++.h>
 using namespace std;
 #define int long long
-string a;int b;
-vector<int>A;
-vector<int>mul(vector<int>&A,int b)
+string A;
+int b;
+void mult(string A,int b)
 {
+    vector<int>a;
+    for(int i=A.size()-1;i>=0;i--)a.push_back(A[i]-'0');
     int t=0;
-    vector<int>C;
-
-    for(int i=0;i<A.size()||t;i++)
+    vector<int>c;
+    for(int i=0;i<a.size();i++)
     {
-        if(i<A.size())t=A[i]*b+t;
-        C.push_back(t%10);
+        int d=a[i]*b+t;
+
+        c.push_back(d%10);
+        t=d/10;
+    }
+    while(t>0)
+    {
+        c.push_back(t%10);
         t/=10;
     }
-    while(C.size()>1&&C.back()==0)C.pop_back();
-    return C;
-    
+    while(c.size()>1&&c.back()==0)c.pop_back();
+    reverse(c.begin(),c.end());
+    for(int i=0;i<c.size();i++)cout<<c[i];
 }
 signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    cin>>a>>b;
-    for(int i=a.size()-1;i>=0;i--)A.push_back(a[i]-'0');
-    //for(int i=b.size()-1;i>=0;i--)B.push_back(b[i]);
-    vector<int>C=mul(A,b);
-
-    for(int i=C.size()-1;i>=0;i--)cout<<C[i];
+    cin>>A>>b;
+    mult(A,b);
     return 0;
 }
