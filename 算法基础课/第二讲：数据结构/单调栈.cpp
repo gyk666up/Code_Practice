@@ -41,13 +41,58 @@
 // }
 
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// int n;
+// const int N=1e6+11;
+// int stk[N];
+// int tt=0;
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n;
+//     for(int i=1;i<=n;i++)
+//     {
+//         int x;cin>>x;
+//         while(tt>0&&stk[tt]>=x)tt--;
+//         if(tt)cout<<stk[tt]<<" ";
+//         else cout<<-1<<" ";
+
+//         stk[++tt]=x;
+//     }
+//     return 0;
+// }
+
+// //单调栈不熟
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// const int N=1e5+66;
+// int n;
+// int stk[N];
+// int tt=0;
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n;
+//     for(int i=1;i<=n;i++)
+//     {
+//         int x;cin>>x;
+//         while(tt>0&&stk[tt]>=x)tt--;
+
+//         if(tt>0)cout<<stk[tt]<<" ";
+//         else cout<<-1<<" ";
+//         stk[++tt]=x;
+//     }
+//     return 0;
+// }
+
 #include<bits/stdc++.h>
 using namespace std;
 #define int long long
+stack<int>stk;
 int n;
-const int N=1e6+11;
-int stk[N];
-int tt=0;
 signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
@@ -55,11 +100,11 @@ signed main()
     for(int i=1;i<=n;i++)
     {
         int x;cin>>x;
-        while(tt>0&&stk[tt]>=x)tt--;
-        if(tt)cout<<stk[tt]<<" ";
-        else cout<<-1<<" ";
-
-        stk[++tt]=x;
+        while(stk.size()&&stk.top()>=x)stk.pop();
+        if(stk.size())cout<<stk.top();
+        else cout<<-1;
+        cout<<" ";
+        stk.push(x);
     }
     return 0;
 }

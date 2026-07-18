@@ -66,28 +66,93 @@
 //     return 0;
 // }
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// const int N=1e6+11;
+// int n,m;
+// char s[N],p[N];
+// int ne[N];
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>p+1>>m>>s+1;
+//     //求 ne 数组
+//     for(int i=2,j=0;i<=n;i++)
+//     {
+//         while(j&&p[i]!=p[j+1])j=ne[j];//如果不相等就一直回退，直至p[i]==p[j+1]
+//         if(p[i]==p[j+1])j++;
+//         ne[i]=j;
+//     }
+
+//     for(int i=1,j=0;i<=m;i++)
+//     {
+//         while(j&&s[i]!=p[j+1])j=ne[j];
+//         if(s[i]==p[j+1])j++;
+//         if(j==n)
+//         {
+//             cout<<i-n<<" ";
+//             j=ne[j];
+//         }
+//     }
+//     return 0;
+// }
+
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// const int N=1e5+11;
+// int ne[N];
+// char s[N],p[N];
+// int n,m;
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>p+1;
+//     cin>>m>>s+1;
+//     for(int i=2,j=0;i<=n;i++)
+//     {
+//         while(j>0&&p[i]!=p[j+1])j=ne[j];
+//         if(p[i]==p[j+1])j++;
+//         ne[i]=j;
+//     }
+
+//     for(int i=1,j=0;i<=m;i++)
+//     {
+//         while(j>0&&s[i]==p[j+1])j=ne[j];
+//         if(s[i]==p[j+1])j++;
+//         if(j==n)
+//         {
+//             cout<<i-n<<" ";
+//             j=ne[j];
+//         }
+//     }
+//     return 0;
+// }
+
 #include<bits/stdc++.h>
 using namespace std;
 #define int long long
 const int N=1e6+11;
-int n,m;
 char s[N],p[N];
+int n,m;
 int ne[N];
 signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    cin>>n>>p+1>>m>>s+1;
-    //求 ne 数组
+    cin>>n>>p+1;
+    cin>>m>>s+1;
+
     for(int i=2,j=0;i<=n;i++)
     {
-        while(j&&p[i]!=p[j+1])j=ne[j];//如果不相等就一直回退，直至p[i]==p[j+1]
+        while(j>0&&p[i]!=p[j+1])j=ne[j];
         if(p[i]==p[j+1])j++;
         ne[i]=j;
     }
 
     for(int i=1,j=0;i<=m;i++)
     {
-        while(j&&s[i]!=p[j+1])j=ne[j];
+        while(j>0&&s[i]!=p[j+1])j=ne[j];
         if(s[i]==p[j+1])j++;
         if(j==n)
         {
