@@ -38,22 +38,60 @@
 // }
 
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// const int N=202;
+// int dist[N][N];
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     int n,m,q;cin>>n>>m>>q;
+//     memset(dist,0x3f,sizeof dist);
+//     for(int i=1;i<=n;i++)dist[i][i]=0;
+//     while(m--)
+//     {
+//         int x,y,z;cin>>x>>y>>z;
+//         dist[x][y]=min(dist[x][y],z);
+//     }
+
+//     for(int k=1;k<=n;k++)
+//     {
+//         for(int i=1;i<=n;i++)
+//         {
+//             for(int j=1;j<=n;j++)
+//             {
+//                 dist[i][j]=min(dist[i][j],dist[i][k]+dist[k][j]);
+//             }
+//         }
+//     }
+//     while(q--)
+//     {
+//         int x,y;cin>>x>>y;
+//         if(dist[x][y]>1e9)cout<<"impossible\n";
+//         else cout<<dist[x][y]<<endl;
+//     }
+//     return 0;
+// }
+
 #include<bits/stdc++.h>
 using namespace std;
-const int N=202;
+#define int long long
+const int N=2002;
 int dist[N][N];
-int main()
+int n,m,k;
+signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-    int n,m,q;cin>>n>>m>>q;
+    cin>>n>>m>>k;
     memset(dist,0x3f,sizeof dist);
-    for(int i=1;i<=n;i++)dist[i][i]=0;
-    while(m--)
+    for(int i=0;i<m;i++)
     {
         int x,y,z;cin>>x>>y>>z;
+        //dist[x][y]=dist[y][x]=min(dist[x][y],z);
         dist[x][y]=min(dist[x][y],z);
-    }
 
+    }
+    for(int i=1;i<=n;i++)dist[i][i]=0;
     for(int k=1;k<=n;k++)
     {
         for(int i=1;i<=n;i++)
@@ -64,7 +102,7 @@ int main()
             }
         }
     }
-    while(q--)
+    for(int i=0;i<k;i++)
     {
         int x,y;cin>>x>>y;
         if(dist[x][y]>1e9)cout<<"impossible\n";

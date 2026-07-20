@@ -104,23 +104,79 @@
 //     return 0;
 // }
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// const int N=1e3+11;
+// int g[N][N];
+// int dist[N];//距离🌳的距离
+// bool st[N];
+// int n,m;
+// int prim()
+// {
+//     memset(dist,0x3f,sizeof dist);
+//     dist[1]=0;
+
+//     int res=0;
+//     for(int i=0;i<n;i++)
+//     {
+//         int t=-1;
+//         for(int j=1;j<=n;j++)
+//         {
+//             if(!st[j]&&(t==-1||dist[t]>dist[j]))
+//             {
+//                 t=j;
+//             }
+//         }
+//         if(dist[t]>1e9)return 0x3f3f3f3f;
+        
+//         st[t]=1;
+//         res+=dist[t];
+//         //更新它周围的点
+//         for(int j=1;j<=n;j++)
+//         {
+//             if(!st[j])
+//             {
+//                 dist[j]=min(dist[j],g[t][j]);
+//             }
+//         }
+//     }
+//     return res;
+// }
+// int main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m;
+//     memset(g,0x3f,sizeof g);
+//     for(int i=1;i<=n;i++)g[i][i]=0;
+//     for(int i=1;i<=m;i++)
+//     {
+//         int u,v,w;cin>>u>>v>>w;
+//         g[u][v]=g[v][u]=min(g[u][v],w);
+//     }
+//     int ans=prim();
+//     if(ans>1e9)cout<<"impossible\n";
+//     else cout<<ans;
+    
+//     return 0;
+// }
+
+
 #include<bits/stdc++.h>
 using namespace std;
 const int N=1e3+11;
-int g[N][N];
-int dist[N];//距离🌳的距离
 bool st[N];
+int dist[N];//记录生成树的距离
+int g[N][N];
 int n,m;
+int t;
 int prim()
 {
     memset(dist,0x3f,sizeof dist);
     dist[1]=0;
-    queue<int>q;
-    q.push(1);
     int res=0;
     for(int i=0;i<n;i++)
     {
-        int t=-1;
+        t=-1;
         for(int j=1;j<=n;j++)
         {
             if(!st[j]&&(t==-1||dist[t]>dist[j]))
@@ -128,11 +184,11 @@ int prim()
                 t=j;
             }
         }
+
         if(dist[t]>1e9)return 0x3f3f3f3f;
-        
-        st[t]=1;
         res+=dist[t];
-        //更新它周围的点
+        st[t]=1;
+
         for(int j=1;j<=n;j++)
         {
             if(!st[j])
@@ -147,8 +203,7 @@ int main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>n>>m;
-    memset(g,0x3f,sizeof g);
-    for(int i=1;i<=n;i++)g[i][i]=0;
+    memset(g,0x3f,sizeof g);//注意别忘记这个初始化
     for(int i=1;i<=m;i++)
     {
         int u,v,w;cin>>u>>v>>w;
@@ -157,6 +212,5 @@ int main()
     int ans=prim();
     if(ans>1e9)cout<<"impossible\n";
     else cout<<ans;
-    
     return 0;
 }

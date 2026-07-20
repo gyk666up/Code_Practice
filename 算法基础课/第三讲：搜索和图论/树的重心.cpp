@@ -133,30 +133,139 @@
 //     return 0;
 // }
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// const int N=1e5+11;
+// vector<int>g[N];
+// int n;
+// int ans=0x3f3f3f3f;
+// //记录以x 为根节点的数的子节点数量
+// bool st[N];
+// int dfs(int x)
+// {
+//     int sum=1,res=0;
+//     for(int i=0;i<g[x].size();i++)
+//     {
+//         int y=g[x][i];
+//         if(st[y])continue;
+//         st[y]=1;
+//         int s=dfs(y);
+//         res=max(res,s);
+//         sum+=s;
+//     }
+//     res=max(res,n-sum);
+//     ans=min(ans,res);
+//     return sum;
+// }
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n;
+//     for(int i=1;i<=n-1;i++)
+//     {
+//         int a,b;cin>>a>>b;
+//         g[a].push_back(b);
+//         g[b].push_back(a);
+//     }
+//     dfs(1);
+//     st[1]=1;
+//     cout<<ans;
+//     return 0;
+// }
+
+
+// //这道题不熟
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// const int N=1e5+11;
+// int n;
+// vector<int>g[N];
+// bool st[N];//标记这个节点是否访问过
+// int siz[N];
+// int ans=0x3f3f3f3f;
+// // void dfs(int x)
+// // {
+// //     siz[x]=1;
+// //     st[x]=1;
+// //     int res=0;
+// //     int sum=1;
+// //     for(int i=0;i<g[x].size();i++)
+// //     {
+// //         int y=g[x][i];
+// //         if(!st[y])
+// //         {
+// //             dfs(y);
+// //             siz[x]+=siz[y];
+// //             res=max(res,siz[y]);//最大子树
+// //             sum+=siz[y];
+// //             st[y]=0;
+// //         }
+// //     }
+
+// //     res=max(res,n-sum);
+// //     ans=min(ans,res);
+
+// // }
+
+// void dfs(int x,int fa)
+// {
+//     siz[x]=1;
+//     int res=0;
+
+//     for(int i=0;i<g[x].size();i++)
+//     {
+//         int y=g[x][i];
+//         if(y!=fa)
+//         {
+//             dfs(y,x);
+//             siz[x]+=siz[y];
+//             res=max(res,siz[y]);
+//         }
+//     }
+//     res=max(res,n-siz[x]);
+//     ans=min(ans,res);
+// }
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n;
+//     for(int i=0;i<n-1;i++)
+//     {
+//         int x,y;cin>>x>>y;
+//         g[x].push_back(y);
+//         g[y].push_back(x);
+//     }
+//     dfs(1,-1);
+//     cout<<ans;
+//     return 0;
+// }
+
+
+
 #include<bits/stdc++.h>
 using namespace std;
-#define int long long
+#define int long long 
 const int N=1e5+11;
 vector<int>g[N];
+int siz[N];
 int n;
 int ans=0x3f3f3f3f;
-//记录以x 为根节点的数的子节点数量
-bool st[N];
-int dfs(int x)
+void dfs(int x,int fa)
 {
-    int sum=1,res=0;
+    siz[x]=1;
+    int res=0;//统计 x 为根节点的时候，子树节点最大的数量
     for(int i=0;i<g[x].size();i++)
     {
         int y=g[x][i];
-        if(st[y])continue;
-        st[y]=1;
-        int s=dfs(y);
-        res=max(res,s);
-        sum+=s;
+        if(y==fa)continue;
+        dfs(y,x);
+        siz[x]+=siz[y];
+        res=max(res,siz[y]);
     }
-    res=max(res,n-sum);
+    res=max(res,n-siz[x]);
     ans=min(ans,res);
-    return sum;
 }
 signed main()
 {
@@ -168,8 +277,7 @@ signed main()
         g[a].push_back(b);
         g[b].push_back(a);
     }
-    dfs(1);
-    st[1]=1;
+    dfs(1,-1);
     cout<<ans;
     return 0;
 }

@@ -203,12 +203,190 @@
 // }
 
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// string s;
+// int dx[]={0,0,1,-1};
+// int dy[]={1,-1,0,0};
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     for(int i=0;i<9;i++)
+//     {
+//         char x;cin>>x;
+//         s+=x;
+//     }
+//     //queue<int>q;
+//     // int idx=s.find('x');
+//     // q.push(idx);
+//     // while(q.size())
+//     // {
+//     //     int x=q.front();q.pop();
+        
+//     // }
+
+//     //状态应该是整个数组
+//     queue<string>q;
+//     string ed="12345678x";
+//     q.push(s);
+//     unordered_map<string,int>dist;
+//     dist[s]=0;
+//     while(q.size())
+//     {
+//         string t=q.front();q.pop();
+//         if(t==ed)
+//         {
+//             cout<<dist[t];
+//             return 0;
+//         }
+//         int k=t.find('x');
+//         int x=k/3,y=k%3;
+//         int distance=dist[t];//用一个变量存下 dist，因为后面 t 发生变化了
+//         for(int i=0;i<4;i++)
+//         {
+//             int xx=x+dx[i],yy=y+dy[i];
+//             if(xx<0||xx>2||yy<0||yy>2)continue;
+//             int z=xx*3+yy;
+//             swap(t[k],t[z]);
+//             if(dist[t]==0)//注意这个，不要重复更新
+//             {   
+//                 dist[t]=distance+1;
+//                 q.push(t);
+//             }
+
+//             swap(t[k],t[z]);//还原t，是上一步的状态
+//         }
+//     }
+//     cout<<-1;
+//     return 0;
+// }
+
+
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// queue<string>q;
+// string ed="12345678x";
+// string s;
+// int dx[]={0,0,1,-1};
+// int dy[]={1,-1,0,0};
+// unordered_map<string,int>dist;
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     for(int i=0;i<9;i++)
+//     {
+//         char x;cin>>x;
+//         s+=x;
+//     }
+//     q.push(s);
+//     dist[s]=0;
+//     while(q.size())
+//     {
+//         string t=q.front();q.pop();
+//         if(t==ed)
+//         {
+//             cout<<dist[t];
+//             return 0;
+//         }
+//         int k=t.find('x');
+//         int x=k/3,y=k%3;
+//         int distance=dist[t];
+//         for(int i=0;i<4;i++)
+//         {
+//             int xx=dx[i]+x;
+//             int yy=dy[i]+y;
+//             if(xx<0||xx>2||yy<0||yy>2)continue;
+//             int z=xx*3+yy;
+//             swap(t[k],t[z]);
+//             if(dist[t]==0)
+//             {
+//                 dist[t]=distance+1;
+//                 q.push(t);
+//             }
+//             swap(t[k],t[z]);
+//         }
+//     }
+//     cout<<-1;
+//     return 0;
+// }
+
+
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// const int N=100;
+// string s;
+// char g[N][N];
+// int dx[]={0,0,1,-1};
+// int dy[]={1,-1,0,0};
+// typedef pair<int,int>PII;
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     //cin>>s;
+//     for(int i=0;i<9;i++)
+//     {
+//         char x;cin>>x;
+//         s+=x;
+//     }
+//     string ed="12345678x";
+//     // int t=s.find('x');
+//     // int x=t/3,y=t%3;
+//     // queue<PII>q;
+//     // q.push({x,y});
+//     // while(q.size())
+//     // {
+//     //     int x=q.front().first,y=q.front().second;q.pop();
+//     //     for(int i=0;i<4;i++)
+//     //     {
+//     //         int xx=dx[i]+x,yy=dy[i]+y;
+//     //         tx=xx/3,ty=xx%3;
+
+//     //     }
+//     // }
+//     queue<string>q;
+//     q.push(s);
+//     map<string,int>dist;
+//     dist[s]=0;
+    
+//     while(q.size())
+//     {
+//         string s=q.front();q.pop();
+//         string origin=s;
+//         if(s==ed)
+//         {
+//             cout<<dist[s]<<endl;
+//             return 0;
+//         }
+//         int t=s.find('x');
+//         int tx=t/3,ty=t%3;
+//         for(int i=0;i<4;i++)
+//         {
+//             int xx=tx+dx[i],yy=ty+dy[i];
+//             if(xx<0||xx>2||yy<0||yy>2)continue;
+//             int new_t=xx*3+yy;
+//             swap(s[t],s[new_t]);
+//             if(dist[s]==0)
+//             {
+//                 dist[s]=dist[origin]+1;
+//                 q.push(s);
+//             }
+//             swap(s[t],s[new_t]);
+//         }
+//     }
+//     cout<<-1;
+//     return 0;
+// }
+
 #include<bits/stdc++.h>
 using namespace std;
 #define int long long
 string s;
-int dx[]={0,0,1,-1};
-int dy[]={1,-1,0,0};
+unordered_map<string,int>dist;
+int dx[]={1,-1,0,0};
+int dy[]={0,0,1,-1};
 signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
@@ -217,45 +395,37 @@ signed main()
         char x;cin>>x;
         s+=x;
     }
-    //queue<int>q;
-    // int idx=s.find('x');
-    // q.push(idx);
-    // while(q.size())
-    // {
-    //     int x=q.front();q.pop();
-        
-    // }
-
-    //状态应该是整个数组
-    queue<string>q;
     string ed="12345678x";
+    queue<string>q;
     q.push(s);
-    unordered_map<string,int>dist;
+    
     dist[s]=0;
     while(q.size())
     {
-        string t=q.front();q.pop();
-        if(t==ed)
+        string s=q.front();q.pop();
+        string origin=s;
+        if(s==ed)
         {
-            cout<<dist[t];
+            cout<<dist[s];
             return 0;
         }
-        int k=t.find('x');
-        int x=k/3,y=k%3;
-        int distance=dist[t];//用一个变量存下 dist，因为后面 t 发生变化了
+        int t=s.find('x');
+        int x=t/3,y=t%3;
         for(int i=0;i<4;i++)
         {
-            int xx=x+dx[i],yy=y+dy[i];
+            int xx=dx[i]+x;
+            int yy=dy[i]+y;
+            // 0 1 2 
             if(xx<0||xx>2||yy<0||yy>2)continue;
-            int z=xx*3+yy;
-            swap(t[k],t[z]);
-            if(dist[t]==0)//注意这个，不要重复更新
-            {   
-                dist[t]=distance+1;
-                q.push(t);
+            
+            int new_=xx*3+yy;
+            swap(s[t],s[new_]);
+            if(dist[s]==0)
+            {
+                q.push(s);
+                dist[s]=dist[origin]+1;
             }
-
-            swap(t[k],t[z]);//还原t，是上一步的状态
+            swap(s[t],s[new_]);
         }
     }
     cout<<-1;

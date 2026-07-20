@@ -104,13 +104,62 @@
 //     return 0;
 // }
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// const int N=1e5+11;
+// vector<int>g[N];
+// int in_degree[N];
+// int n,m;
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m;
+//     while(m--)
+//     {
+//         int x,y;cin>>x>>y;
+//         g[x].push_back(y);
+//         in_degree[y]++;
+//     }
+//     queue<int>q;
+//     for(int i=1;i<=n;i++)
+//     {
+//         if(in_degree[i]==0)q.push(i);
+//     }
+//     vector<int>ans;
+//     while(q.size())
+//     {
+//         int x=q.front();q.pop();
+//         //cout<<x<<" ";
+//         ans.push_back(x);
+//         for(int y:g[x])
+//         {
+//             in_degree[y]--;
+//             if(in_degree[y]==0)
+//             {
+//                 q.push(y);
+//             }
+//         }
+//     }
+//     if(ans.size()!=n)cout<<-1;
+//     else
+//     {
+//         for(int i=0;i<ans.size();i++)
+//         {
+//             cout<<ans[i]<<" ";
+//         }
+//     }
+//     return 0;
+// }
+
 #include<bits/stdc++.h>
 using namespace std;
 #define int long long
+int n,m;
 const int N=1e5+11;
 vector<int>g[N];
-int in_degree[N];
-int n,m;
+int indegree[N];
+bool st[N];
 signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
@@ -119,12 +168,12 @@ signed main()
     {
         int x,y;cin>>x>>y;
         g[x].push_back(y);
-        in_degree[y]++;
+        indegree[y]++;
     }
     queue<int>q;
     for(int i=1;i<=n;i++)
     {
-        if(in_degree[i]==0)q.push(i);
+        if(indegree[i]==0)q.push(i);
     }
     vector<int>ans;
     while(q.size())
@@ -132,17 +181,18 @@ signed main()
         int x=q.front();q.pop();
         //cout<<x<<" ";
         ans.push_back(x);
-        for(int y:g[x])
+        for(int i=0;i<g[x].size();i++)
         {
-            in_degree[y]--;
-            if(in_degree[y]==0)
+            int y=g[x][i];
+            indegree[y]--;
+            if(indegree[y]==0)
             {
                 q.push(y);
             }
         }
     }
     if(ans.size()!=n)cout<<-1;
-    else
+    else 
     {
         for(int i=0;i<ans.size();i++)
         {

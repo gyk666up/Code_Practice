@@ -53,19 +53,77 @@
 //     return 0;
 // }
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// const int N=1e4+11;
+// typedef pair<int,int>PII;
+// vector<PII>g[N];
+// int dist[N];
+// int n,m;
+// int cnt[N];
+// bool st[N];
+// bool spfa()
+// {
+//     queue<int>q;
+//     for(int i=1;i<=n;i++)
+//     {
+//         q.push(i);
+//         st[i]=1;
+//     }
+//     while(q.size())
+//     {
+//         int x=q.front();q.pop();
+//         st[x]=false;
+//         for(const auto&[y,w]:g[x])//注意这个能压缩时间
+//         {
+//             if(dist[y]>dist[x]+w)
+//             {
+//                 dist[y]=dist[x]+w;
+//                 cnt[y]=cnt[x]+1;
+//                 if(cnt[y]>=n)return true;
+//                 if(!st[y])
+//                 {
+//                     st[y]=1;
+//                     q.push(y);
+//                 }
+//             }
+//         }
+//     }
+//     return false;
+// }
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m;
+//     while(m--)
+//     {
+//         int x,y,z;cin>>x>>y>>z;
+//         g[x].push_back({y,z});
+//     }
+//     if(spfa())cout<<"Yes\n";
+//     else cout<<"No\n";
+//     return 0;
+// }
+
+
+//没环的图最多有n-1 条边经过
 #include<bits/stdc++.h>
 using namespace std;
 #define int long long
-const int N=1e4+11;
-typedef pair<int,int>PII;
-vector<PII>g[N];
+const int N=1e5+11;
 int dist[N];
-int n,m;
-int cnt[N];
 bool st[N];
+typedef pair<int,int>PII;
+int n,m;
+vector<PII>g[N];
+int cnt[N];
 bool spfa()
 {
+    memset(dist,0x3f,sizeof dist);
+    dist[1]=0;
     queue<int>q;
+    // q.push(1);st[1]=1;
     for(int i=1;i<=n;i++)
     {
         q.push(i);
@@ -74,19 +132,24 @@ bool spfa()
     while(q.size())
     {
         int x=q.front();q.pop();
-        st[x]=false;
-        for(const auto&[y,w]:g[x])//注意这个能压缩时间
+        st[x]=0;
+        for(auto[y,w]:g[x])
         {
             if(dist[y]>dist[x]+w)
             {
                 dist[y]=dist[x]+w;
-                cnt[y]=cnt[x]+1;
-                if(cnt[y]>=n)return true;
+                // cnt[y]++;
+                cnt[y]=cnt[x]+1;//注意这里的！！！
+                if(cnt[y]>=n)
+                {
+                    return true;
+                }
                 if(!st[y])
                 {
                     st[y]=1;
                     q.push(y);
                 }
+
             }
         }
     }
@@ -96,7 +159,7 @@ signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>n>>m;
-    while(m--)
+    for(int i=1;i<=m;i++)
     {
         int x,y,z;cin>>x>>y>>z;
         g[x].push_back({y,z});

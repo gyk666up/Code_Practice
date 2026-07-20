@@ -46,21 +46,67 @@
 //     else cout<<dist[n];
 //     return 0;
 // }
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// typedef pair<int,int>PII;
+// const int N=1e5+11;
+// int n,m;
+// vector<PII>g[N];
+// int dist[N];
+// bool st[N];
+// void spfa()
+// {
+//     memset(dist,0x3f,sizeof dist);
+//     dist[1]=0;
+//     queue<int>q;
+//     q.push(1);
+//     while(q.size())
+//     {
+//         int x=q.front();q.pop();
+//         st[x]=0;
+//         for(auto[y,w]:g[x])
+//         {
+//             if(dist[y]>dist[x]+w)
+//             {
+//                 dist[y]=dist[x]+w;
+//                 if(!st[y])q.push(y);
+//             }
+//         }
+//     }
+// }
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m;
+//     while(m--)
+//     {
+//         int x,y,z;cin>>x>>y>>z;
+//         g[x].push_back({y,z});
+//     }
+//     spfa();
+//     if(dist[n]>1e9)cout<<"impossible\n";
+//     else cout<<dist[n]<<endl;
+//     return 0;
+// }
+
+
 #include<bits/stdc++.h>
-using namespace std;
+using namespace  std;
 #define int long long
-typedef pair<int,int>PII;
 const int N=1e5+11;
-int n,m;
-vector<PII>g[N];
+typedef pair<int,int>PII;
 int dist[N];
-bool st[N];
+vector<PII>g[N];
+bool st[N];//判断是否在队列
+int n,m;
 void spfa()
 {
     memset(dist,0x3f,sizeof dist);
     dist[1]=0;
     queue<int>q;
     q.push(1);
+    st[1]=1;
     while(q.size())
     {
         int x=q.front();q.pop();
@@ -70,7 +116,11 @@ void spfa()
             if(dist[y]>dist[x]+w)
             {
                 dist[y]=dist[x]+w;
-                if(!st[y])q.push(y);
+                if(st[y]==0)
+                {
+                    st[y]=1;
+                    q.push(y);
+                }
             }
         }
     }
@@ -79,13 +129,14 @@ signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>n>>m;
-    while(m--)
+    for(int i=0;i<m;i++)
     {
         int x,y,z;cin>>x>>y>>z;
         g[x].push_back({y,z});
+        // g[y].push_back({x,z});
     }
     spfa();
-    if(dist[n]>1e9)cout<<"impossible\n";
-    else cout<<dist[n]<<endl;
+    if(dist[n]>1e9/2)cout<<"impossible\n";
+    else cout<<dist[n];
     return 0;
 }

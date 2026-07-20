@@ -108,64 +108,150 @@
 //     else cout<<dist[n];
 //    // for(int i=1;i<=n;i++)cout<<"DIST"<<dist[i]<<endl;
 //     return 0;
+// // }
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define  int long long
+// typedef pair<int,int>PII;
+// const int N=1e5+11;
+// bool st[N];
+// vector<PII>g[N];
+// int dist[N];
+// int n,m;
+// // void Dijkstra()
+// // {
+// //     memset(dist,0x3f,sizeof dist);
+// //     dist[1]=0;
+// //     for(int i=1;i<=n;i++)
+// //     {
+// //         int ansnode=-1,anssum=0x3f3f3f3f;
+// //         for(int j=1;j<=n;j++)
+// //         {
+// //             if(!st[j]&&dist[j]<anssum)
+// //             {
+// //                 //dist[j]=anssum;
+// //                 anssum=dist[j];
+// //                 ansnode=j;
+// //             }
+// //         }
+
+// //         if(ansnode==-1)return;
+// //         st[ansnode]=1;
+
+// //         for(auto[y,w]:g[ansnode])
+// //         {
+// //             if(dist[y]>dist[ansnode]+w)
+// //             {
+// //                 dist[y]=dist[ansnode]+w;
+// //             }
+// //         }
+// //     }
+// // }
+// void Dijkstra()
+// {
+//     //第一维是距离
+//     priority_queue<PII,vector<PII>,greater<PII>>q;
+//     //q.push(1);
+//     memset(dist,0x3f,sizeof dist);
+//     dist[1]=0;
+//     q.push({0,1});
+//     while(q.size())
+//     {
+//         int d=q.top().first,x=q.top().second;q.pop();
+//         if(st[x])continue;
+//         st[x]=1;
+//         for(auto[y,w]:g[x])
+//         {
+//             if(dist[y]>d+w)
+//             {
+//                 dist[y]=d+w;
+//                 q.push({dist[y],y});
+//             }
+//         }
+//     }
 // }
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m;
+//     while(m--)
+//     {
+//         int x,y,z;cin>>x>>y>>z;
+//         g[x].push_back({y,z});
+//     }
+//     Dijkstra();
+//     if(dist[n]>1e9)cout<<-1;
+//     else cout<<dist[n];
+//     return 0;
+// }
+
+
+
+
+
+
+
+//注意是小根堆
 #include<bits/stdc++.h>
 using namespace std;
-#define  int long long
+#define int long long
+const int N=1000;
 typedef pair<int,int>PII;
-const int N=1e5+11;
-bool st[N];
-vector<PII>g[N];
 int dist[N];
+vector<PII>g[N];
+bool st[N];
 int n,m;
 // void Dijkstra()
 // {
 //     memset(dist,0x3f,sizeof dist);
 //     dist[1]=0;
+    
 //     for(int i=1;i<=n;i++)
 //     {
-//         int ansnode=-1,anssum=0x3f3f3f3f;
+//         int ansnode=-1,ansdist=0x3f3f3f3f;
 //         for(int j=1;j<=n;j++)
 //         {
-//             if(!st[j]&&dist[j]<anssum)
+//             if(!st[j]&&dist[j]<ansdist)
 //             {
-//                 //dist[j]=anssum;
-//                 anssum=dist[j];
 //                 ansnode=j;
+//                 ansdist=dist[j];
 //             }
 //         }
-
-//         if(ansnode==-1)return;
+//         if(ansnode==-1)return ;
 //         st[ansnode]=1;
 
-//         for(auto[y,w]:g[ansnode])
+//         for(auto[y,d]:g[ansnode])
 //         {
-//             if(dist[y]>dist[ansnode]+w)
+//             if(dist[y]>dist[ansnode]+d)
 //             {
-//                 dist[y]=dist[ansnode]+w;
+//                 dist[y]=dist[ansnode]+d;
 //             }
 //         }
 //     }
 // }
+
 void Dijkstra()
 {
-    //第一维是距离
-    priority_queue<PII,vector<PII>,greater<PII>>q;
-    //q.push(1);
     memset(dist,0x3f,sizeof dist);
+    // priority_queue<PII>q;//边  点
+    priority_queue<PII,vector<PII>,greater<PII>>q;
     dist[1]=0;
     q.push({0,1});
     while(q.size())
     {
-        int d=q.top().first,x=q.top().second;q.pop();
+        int dd=q.top().first,x=q.top().second;q.pop();
         if(st[x])continue;
+        //// 如果该点已经被作为最近点更新过邻居了，直接跳过（解决冗余入队问题）
         st[x]=1;
-        for(auto[y,w]:g[x])
+        for(auto[y,d]:g[x])
         {
-            if(dist[y]>d+w)
+            if(dist[y]>dist[x]+d)
             {
-                dist[y]=d+w;
+                //  dist[y]=dd+d;
+                 dist[y]=dist[x]+d;
                 q.push({dist[y],y});
+               
+                
             }
         }
     }
@@ -174,7 +260,7 @@ signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>n>>m;
-    while(m--)
+    for(int i=0;i<m;i++)
     {
         int x,y,z;cin>>x>>y>>z;
         g[x].push_back({y,z});
@@ -184,15 +270,6 @@ signed main()
     else cout<<dist[n];
     return 0;
 }
-
-
-
-
-
-
-
-
-
 
 
 

@@ -49,17 +49,58 @@
 //     return 0;
 // }
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// typedef pair<int,int>PII;
+// const int N=102;
+// int dx[]={1,-1,0,0};
+// int dy[]={0,0,-1,1};
+// int n,m;
+// bool st[N][N];
+// int g[N][N];
+// int dist[N][N];
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n>>m;
+//     for(int i=1;i<=n;i++)
+//     {
+//         for(int j=1;j<=m;j++)cin>>g[i][j];
+//     }
+//     queue<PII>q;
+//     q.push({1,1});
+//     st[1][1]=1;
+//     while(q.size())
+//     {
+//         int x=q.front().first,y=q.front().second;q.pop();
+//         for(int i=0;i<4;i++)
+//         {
+//             int xx=dx[i]+x;
+//             int yy=dy[i]+y;
+//             if(xx<1||xx>n||yy<1||yy>m)continue;
+//             if(st[xx][yy])continue;
+//             if(g[xx][yy]==1)continue;
+//             st[xx][yy]=1;
+//             q.push({xx,yy});
+//             dist[xx][yy]=dist[x][y]+1;
+//         }
+//     }
+//     cout<<dist[n][m];
+//     return 0;
+// }
+
+
 #include<bits/stdc++.h>
 using namespace std;
-#define int long long
+// #define int long long
 typedef pair<int,int>PII;
 const int N=102;
-int dx[]={1,-1,0,0};
-int dy[]={0,0,-1,1};
-int n,m;
-bool st[N][N];
 int g[N][N];
 int dist[N][N];
+int n,m;
+int dx[]={0,0,1,-1};
+int dy[]={1,-1,0,0};
 signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
@@ -70,20 +111,21 @@ signed main()
     }
     queue<PII>q;
     q.push({1,1});
-    st[1][1]=1;
+    memset(dist,0x3f,sizeof dist);
+    dist[1][1]=0;
     while(q.size())
     {
-        int x=q.front().first,y=q.front().second;q.pop();
+        auto t=q.front();q.pop();
+        int x=t.first,y=t.second;
         for(int i=0;i<4;i++)
         {
             int xx=dx[i]+x;
             int yy=dy[i]+y;
-            if(xx<1||xx>n||yy<1||yy>m)continue;
-            if(st[xx][yy])continue;
+            if(xx<1||yy<1||xx>n||yy>m)continue;
+            if(dist[xx][yy]!=0x3f3f3f3f)continue;
             if(g[xx][yy]==1)continue;
-            st[xx][yy]=1;
-            q.push({xx,yy});
             dist[xx][yy]=dist[x][y]+1;
+            q.push({xx,yy});
         }
     }
     cout<<dist[n][m];

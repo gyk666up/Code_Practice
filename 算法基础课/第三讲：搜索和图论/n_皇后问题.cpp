@@ -134,13 +134,102 @@
 //     return 0;
 // }
 
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// const int N=20;
+// int dg[N],udg[N];//主对角线 :x+y 为常数 ，副对角线：差为常数
+// int col[N];//按行搜索
+// char g[N][N];
+// int n;
+// void dfs(int x)
+// {
+//     if(x>n)
+//     {
+//         for(int i=1;i<=n;i++)
+//         {
+//             for(int j=1;j<=n;j++)
+//             cout<<g[i][j];
+//             cout<<endl;
+//         }
+//         cout<<endl;
+//     }
+
+//     for(int y=1;y<=n;y++)
+//     {
+//         if(col[y]||dg[x+y]||udg[x-y+n])continue;
+//         col[y]=dg[x+y]=udg[x-y+n]=1;
+//         g[x][y]='Q';
+//         dfs(x+1);
+//         g[x][y]='.';
+//         col[y]=dg[x+y]=udg[x-y+n]=0;
+//     }
+// }
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n;
+//     for(int i=1;i<=n;i++)
+//     {
+//         for(int j=1;j<=n;j++)g[i][j]='.';
+//     }
+//     dfs(1);
+//     return 0;
+// }
+
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define int long long
+// const int N=10;
+// char g[N][N];
+// int n;
+// bool dg[N],udg[N];//判断这个位置能不能放
+// bool col[N];//判断列是否合适 
+// void dfs(int x)
+// {
+//     if(x>n)
+//     {
+//         for(int i=1;i<=n;i++)
+//         {
+//             for(int j=1;j<=n;j++)cout<<g[i][j];
+//             cout<<endl;
+//         }
+//         cout<<endl;
+//         return;
+//     }
+
+//     for(int y=1;y<=n;y++)
+//     {
+//         if(col[y]||udg[x-y+n]||dg[x+y])continue;
+//         col[y]=dg[x+y]=udg[x-y+n]=1;
+//         g[x][y]='Q';
+//         dfs(x+1);
+//         g[x][y]='.';
+//         col[y]=dg[x+y]=udg[x-y+n]=0;
+//     }
+// }
+// signed main()
+// {
+//     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+//     cin>>n;
+//     for(int i=1;i<=n;i++)
+//     {
+//         for(int j=1;j<=n;j++)g[i][j]='.';
+//     }
+
+//     dfs(1);
+
+//     return 0;
+// }
+
+
 #include<bits/stdc++.h>
 using namespace std;
 #define int long long
-const int N=20;
-int dg[N],udg[N];//主对角线 :x+y 为常数 ，副对角线：差为常数
-int col[N];//按行搜索
+const int N=100;
 char g[N][N];
+bool dg[N],udg[N];
+int col[N];
 int n;
 void dfs(int x)
 {
@@ -149,26 +238,32 @@ void dfs(int x)
         for(int i=1;i<=n;i++)
         {
             for(int j=1;j<=n;j++)
-            cout<<g[i][j];
+            {
+                cout<<g[i][j];
+            }
             cout<<endl;
         }
         cout<<endl;
+        return ;
     }
 
     for(int y=1;y<=n;y++)
-    {
-        if(col[y]||dg[x+y]||udg[x-y+n])continue;
-        col[y]=dg[x+y]=udg[x-y+n]=1;
+    {   //副对角线   对角线
+        if(dg[x-y+n]||udg[x+y]||g[x][y]!='.'||col[y])continue;//判断这个正对角线和斜对角线是否对齐
         g[x][y]='Q';
+        col[y]=1;
+        dg[x-y+n]=udg[x+y]=1;
         dfs(x+1);
         g[x][y]='.';
-        col[y]=dg[x+y]=udg[x-y+n]=0;
-    }
+        col[y]=0;
+        dg[x-y+n]=udg[x+y]=0;
+    }   
 }
 signed main()
 {
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     cin>>n;
+    
     for(int i=1;i<=n;i++)
     {
         for(int j=1;j<=n;j++)g[i][j]='.';
